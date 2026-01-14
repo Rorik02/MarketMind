@@ -1,14 +1,14 @@
 {
-    "player_name": "Szymon",
-    "player_surname": "Rorat",
+    "player_name": "test",
+    "player_surname": "123",
     "player_age": 25,
     "date_of_birth": "2000-01-01",
     "gender": "Male",
-    "avatar": "male2.png",
+    "avatar": "male1.png",
     "mode": "Standard",
     "difficulty": "Easy",
     "balance": 100000,
     "knowledge_level": 1,
     "prestige": 1,
-    "created": "2025-12-18 13:09"
+    "created": "2025-12-18 14:34"
 }

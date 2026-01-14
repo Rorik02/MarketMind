@@ -144,6 +144,8 @@ class LoadGameWindow(QDialog):
             self, "Game Loaded",
             f"Loaded save:\n{data['player_name']} {data['player_surname']} ({data['mode']})"
         )
+        if self.parent and hasattr(self.parent, 'start_game'):
+            self.parent.start_game(data)
         self.close()
 
     # === DELETE SAVE ===

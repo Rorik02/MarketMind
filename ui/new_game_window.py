@@ -322,6 +322,12 @@ class NewGameWindow(QDialog):
         with open(os.path.join(self.saves_dir, filename), "w") as f:
             json.dump(save_data, f, indent=4)
 
+        # Update the last save in theme manager
         self.theme.set_last_save(filename)
-        QMessageBox.information(self, "Game Created", f"New game saved as:\n{filename}")
+        
+        # Trigger the transition to GameView in MainWindow
+        if self.parent and hasattr(self.parent, 'start_game'):
+            self.parent.start_game(save_data)
+            
+        # Close the dialog
         self.close()

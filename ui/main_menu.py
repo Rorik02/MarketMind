@@ -23,6 +23,9 @@ class MainMenu(QWidget):
         self.last_save_data = None
         self.init_ui()
 
+        self.apply_theme() #
+        self.update_last_save_info() #
+
     def init_ui(self):
         """Build full layout."""
         # === MAIN HORIZONTAL LAYOUT ===
@@ -188,9 +191,16 @@ class MainMenu(QWidget):
         self.last_save_info.show()
         self.btn_continue.setEnabled(True)
 
-        self.last_save_player.setText(f"👤 {data['player_name']} {data['player_surname']}")
-        self.last_save_details.setText(f"💰 Balance: ${data['balance']:,}  |  Age: {data['player_age']}  |  Mode: {data['mode']}")
-        self.last_save_time.setText(f"🕒 Last Played: {data['created']}")
+        name = data.get('player_name', 'Unknown')
+        surname = data.get('player_surname', '')
+        balance = data.get('balance', 0)
+        age = data.get('player_age', '??')
+        mode = data.get('mode', 'Standard')
+        created = data.get('created', 'N/A')
+
+        self.last_save_player.setText(f"👤 {name} {surname}")
+        self.last_save_details.setText(f"💰 Balance: ${balance:,}  |  Age: {age}  |  Mode: {mode}")
+        self.last_save_time.setText(f"🕒 Last Played: {created}")
 
     # === BUTTON ACTIONS ===
     def continue_last_save(self):
@@ -204,17 +214,18 @@ class MainMenu(QWidget):
             f"{self.last_save_data['player_name']} {self.last_save_data['player_surname']} "
             f"({self.last_save_data['mode']})"
         )
-        # TODO: transition to GameView
+        if self.parent and hasattr(self.parent, 'start_game'):
+            self.parent.start_game(self.last_save_data)
 
     def open_new_game(self):
-        win = NewGameWindow(self, self.theme)
+        win = NewGameWindow(self.parent, self.theme)
         win.exec()
         self.theme.load_theme()
         self.apply_theme()
         self.update_last_save_info()
 
     def open_load_game(self):
-        win = LoadGameWindow(self, self.theme)
+        win = LoadGameWindow(self.parent, self.theme)
         win.exec()
         self.theme.load_theme()
         self.apply_theme()
@@ -226,6 +237,18 @@ class MainMenu(QWidget):
         self.theme.load_theme()
         self.apply_theme()
 
+    def show_main_menu(self):
+        """Switch from Game View back to the Main Menu."""
+        if hasattr(self, 'game_view') and self.game_view:
+            self.game_view.deleteLater()
+            self.game_view = None
+            
+        # Import inside the method to avoid circular imports
+        from ui.main_menu import MainMenu
+        # Re-initialize the Main Menu and pass 'self' as parent
+        self.menu = MainMenu(self) 
+        self.setCentralWidget(self.menu) #
+
     def exit_game(self):
         """Close the entire application."""
         confirm = QMessageBox.question(
@@ -236,3 +259,5 @@ class MainMenu(QWidget):
             app = QApplication.instance()
             if app is not None:
                 app.quit()
+
+
