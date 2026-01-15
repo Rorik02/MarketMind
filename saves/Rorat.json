@@ -1,0 +1,19 @@
+{
+    "player_name": "Szymon",
+    "player_surname": "Rorat",
+    "player_age": 24,
+    "date_of_birth": "2002-03-21",
+    "gender": "Male",
+    "avatar": "male1.png",
+    "mode": "Standard",
+    "difficulty": "Easy",
+    "balance": 55100000.0,
+    "knowledge_level": 1,
+    "prestige": 1,
+    "created": "2030-02-22 11:03",
+    "owned_properties": [
+        "prop_00",
+        "prop_13"
+    ],
+    "primary_home": "prop_13"
+}

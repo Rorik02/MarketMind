@@ -1,0 +1,212 @@
+[
+    {
+        "id": "prop_00",
+        "name": "Kamienica pogórnicza",
+        "location": "ul. Szybikowa, Zabrze",
+        "price": 0,
+        "upkeep": 450,
+        "prestige": 0,
+        "image": "mine_house.png",
+        "description": "Twoje pierwsze cztery kąty w historycznej, choć nieco zaniedbanej kamienicy."
+    },
+    {
+        "id": "prop_01",
+        "name": "Kawalerka",
+        "location": "ul. Mała, Łódź",
+        "price": 120000,
+        "upkeep": 600,
+        "prestige": 5,
+        "image": "studio_apt.png",
+        "description": "Przytulna i nowoczesna kawalerka. Idealna dla singla zaczynającego karierę."
+    },
+    {
+        "id": "prop_02",
+        "name": "Mieszkanie na obrzeżach",
+        "location": "ul. Polna, Warszawa (Białołęka)",
+        "price": 280000,
+        "upkeep": 950,
+        "prestige": 12,
+        "image": "suburb_apt.png",
+        "description": "Spokojna okolica z dala od zgiełku miasta. Więcej przestrzeni za rozsądną cenę."
+    },
+    {
+        "id": "prop_03",
+        "name": "Mieszkanie w bloku",
+        "location": "ul. Wspólna, Poznań",
+        "price": 450000,
+        "upkeep": 1200,
+        "prestige": 20,
+        "image": "block_apt.png",
+        "description": "Klasyczne mieszkanie w dobrze skomunikowanej dzielnicy."
+    },
+    {
+        "id": "prop_04",
+        "name": "Mały dom jednorodzinny (A)",
+        "location": "ul. Ogrodowa, Kraków",
+        "price": 750000,
+        "upkeep": 2100,
+        "prestige": 40,
+        "image": "house_small_a.png",
+        "description": "Uroczy dom z małym ogródkiem. Pierwszy krok do prawdziwej prywatności."
+    },
+    {
+        "id": "prop_05",
+        "name": "Mały dom jednorodzinny (B)",
+        "location": "ul. Cicha, Gdańsk",
+        "price": 920000,
+        "upkeep": 2400,
+        "prestige": 50,
+        "image": "house_small_b.png",
+        "description": "Solidny dom w nadmorskiej dzielnicy. Prestiż i komfort dla rodziny."
+    },
+    {
+        "id": "prop_06",
+        "name": "Mieszkanie w wieżowcu",
+        "location": "Al. Jerozolimskie, Warszawa",
+        "price": 1500000,
+        "upkeep": 3500,
+        "prestige": 80,
+        "image": "skyscraper_apt.png",
+        "description": "Widok na panoramę stolicy z 20. piętra. Poczuj puls miasta."
+    },
+    {
+        "id": "prop_07",
+        "name": "Nowoczesny apartament",
+        "location": "ul. Szklana, Wrocław",
+        "price": 2200000,
+        "upkeep": 4800,
+        "prestige": 120,
+        "image": "modern_apt.png",
+        "description": "Przeszklone ściany i inteligentny system zarządzania domem."
+    },
+    {
+        "id": "prop_08",
+        "name": "Nowoczesny apartament (Lux)",
+        "location": "ul. Złota 44, Warszawa",
+        "price": 4500000,
+        "upkeep": 7500,
+        "prestige": 250,
+        "image": "ultra_apt.png",
+        "description": "Jeden z najbardziej prestiżowych adresów w kraju. Luksus bez kompromisów."
+    },
+    {
+        "id": "prop_09",
+        "name": "Dom nad jeziorem",
+        "location": "ul. Mazurska, Mikołajki",
+        "price": 5800000,
+        "upkeep": 8200,
+        "prestige": 300,
+        "image": "lake_house.png",
+        "description": "Prywatny pomost i zapach lasu. Idealna odskocznia od biznesu."
+    },
+    {
+        "id": "prop_10",
+        "name": "Dom nad morzem",
+        "location": "ul. Klifowa, Gdynia Orłowo",
+        "price": 8500000,
+        "upkeep": 12000,
+        "prestige": 450,
+        "image": "sea_house.png",
+        "description": "Rezydencja na samym klifie. Szum fal budzi Cię każdego ranka."
+    },
+    {
+        "id": "prop_11",
+        "name": "Penthouse",
+        "location": "Sky Tower, Wrocław",
+        "price": 12000000,
+        "upkeep": 18000,
+        "prestige": 600,
+        "image": "penthouse.png",
+        "description": "Wierzchołek luksusu. Własny basen na dachu wieżowca."
+    },
+    {
+        "id": "prop_12",
+        "name": "Luksusowa willa",
+        "location": "Konstancin-Jeziorna",
+        "price": 25000000,
+        "upkeep": 35000,
+        "prestige": 900,
+        "image": "villa_lux.png",
+        "description": "Ogromna posiadłość w najbardziej elitarnym sąsiedztwie."
+    },
+    {
+        "id": "prop_13",
+        "name": "Willa (M. Śródziemne)",
+        "location": "Costa del Sol, Hiszpania",
+        "price": 45000000,
+        "upkeep": 60000,
+        "prestige": 1500,
+        "image": "villa_mediterranean.png",
+        "description": "Śródziemnomorska architektura, gaj oliwny i błękitna woda."
+    },
+    {
+        "id": "prop_14",
+        "name": "Willa (Ocean Atlantycki)",
+        "location": "Miami Beach, USA",
+        "price": 78000000,
+        "upkeep": 95000,
+        "prestige": 2800,
+        "image": "villa_miami.png",
+        "description": "Nowoczesna bryła ze szkła i betonu tuż przy plaży w Miami."
+    },
+    {
+        "id": "prop_15",
+        "name": "Rezydencja (prywatny teren)",
+        "location": "Beverly Hills, USA",
+        "price": 120000000,
+        "upkeep": 150000,
+        "prestige": 4500,
+        "image": "mansion_beverly.png",
+        "description": "Dom gwiazd. Kinowa sala, 12 sypialni i lądowisko dla helikopterów."
+    },
+    {
+        "id": "prop_16",
+        "name": "Pałac",
+        "location": "ul. Królewska, okolice Paryża",
+        "price": 350000000,
+        "upkeep": 450000,
+        "prestige": 10000,
+        "image": "palace_france.png",
+        "description": "Historyczna posiadłość z ogrodami w stylu wersalskim."
+    },
+    {
+        "id": "prop_17",
+        "name": "Rezydencja z własnym terenem",
+        "location": "The Hamptons, USA",
+        "price": 520000000,
+        "upkeep": 600000,
+        "prestige": 18000,
+        "image": "estate_hamptons.png",
+        "description": "Ogromny teren z prywatnym lasem i polem golfowym."
+    },
+    {
+        "id": "prop_18",
+        "name": "Posiadłość Ultra Luxury",
+        "location": "Emirates Hills, Dubaj",
+        "price": 850000000,
+        "upkeep": 1100000,
+        "prestige": 30000,
+        "image": "dubai_ultra.png",
+        "description": "Złote wykończenia, podziemny garaż na 50 aut i widok na Burj Khalifa."
+    },
+    {
+        "id": "prop_19",
+        "name": "Posiadłość na wyspie",
+        "location": "Necker Island, Karaiby",
+        "price": 1400000000,
+        "upkeep": 1800000,
+        "prestige": 65000,
+        "image": "island_mansion.png",
+        "description": "Cała wyspa należy do Ciebie. Szczyt izolacji i luksusu."
+    },
+    {
+        "id": "prop_20",
+        "name": "Dom na Wyspie Świata",
+        "location": "The World Islands, Dubaj",
+        "price": 2800000000,
+        "upkeep": 3500000,
+        "prestige": 120000,
+        "image": "world_island_dubai.png",
+        "description": "Inżynieryjny majstersztyk na sztucznym archipelagu. Najdroższy adres na planecie."
+    }
+]

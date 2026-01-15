@@ -204,18 +204,30 @@ class MainMenu(QWidget):
 
     # === BUTTON ACTIONS ===
     def continue_last_save(self):
+        """Ładuje ostatni zapis i uruchamia widok gry."""
         if not self.last_save_data:
             QMessageBox.warning(self, "No Save", "No previous save found.")
             return
+
+        # Sprawdzamy czy w danych zapisu jest startowa posiadłość, jeśli nie - dodajemy ją
+        if 'owned_properties' not in self.last_save_data:
+            self.last_save_data['owned_properties'] = ["prop_00"] # Nasza kamienica
+            self.last_save_data['primary_home'] = "prop_00"
+
+        # Informacja dla gracza
         QMessageBox.information(
             self,
             "Continue Game",
             f"Loading last save:\n"
-            f"{self.last_save_data['player_name']} {self.last_save_data['player_surname']} "
-            f"({self.last_save_data['mode']})"
+            f"{self.last_save_data.get('player_name', 'Player')} {self.last_save_data.get('player_surname', '')} "
+            f"(${self.last_save_data.get('balance', 0):,})"
         )
+
+        # TO JEST KLUCZOWE: Wywołanie startu gry w oknie głównym
         if self.parent and hasattr(self.parent, 'start_game'):
             self.parent.start_game(self.last_save_data)
+        else:
+            print("BŁĄD: Nie znaleziono metody start_game w oknie nadrzędnym!")
 
     def open_new_game(self):
         win = NewGameWindow(self.parent, self.theme)
