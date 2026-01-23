@@ -7,13 +7,27 @@
     "avatar": "male1.png",
     "mode": "Standard",
     "difficulty": "Easy",
-    "balance": 55100000.0,
+    "balance": 54393300.0,
     "knowledge_level": 1,
-    "prestige": 1,
-    "created": "2030-02-22 11:03",
+    "prestige": 3765,
+    "created": "2030-03-22 11:03",
     "owned_properties": [
         "prop_00",
         "prop_13"
     ],
-    "primary_home": "prop_13"
+    "primary_home": "prop_13",
+    "owned_vehicles": [
+        "veh_10",
+        "veh_12"
+    ],
+    "owned_valuables": [
+        "val_01",
+        "val_02"
+    ],
+    "current_job": "job_01",
+    "job_months": 0,
+    "active_course": null,
+    "completed_courses": [
+        "crs_it_01"
+    ]
 }

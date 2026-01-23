@@ -1,0 +1,22 @@
+[
+    {"id": "job_01", "title": "Dostawca Pizzy", "company": "Szybka Pizza", "base_salary": 2200, "req_course": null, "milestones": [{"months": 6, "bonus": 400}, {"months": 12, "bonus": 800}]},
+    {"id": "job_02", "title": "Pracownik Fast-food", "company": "Burger King", "base_salary": 2400, "req_course": null, "milestones": [{"months": 6, "bonus": 300}]},
+    {"id": "job_03", "title": "Kurier Rowerowy", "company": "Glovo", "base_salary": 2800, "req_course": null, "milestones": []},
+    {"id": "job_04", "title": "Pracownik Magazynu", "company": "Amazon", "base_salary": 3200, "req_course": null, "milestones": [{"months": 12, "bonus": 1000}]},
+    {"id": "job_05", "title": "Młodszy Sprzedawca", "company": "Media Expert", "base_salary": 3500, "req_course": "crs_sales_01", "milestones": [{"months": 6, "bonus": 1200}]},
+    {"id": "job_06", "title": "Technik IT", "company": "Local ISP", "base_salary": 4200, "req_course": "crs_it_01", "milestones": [{"months": 12, "bonus": 1500}]},
+    {"id": "job_07", "title": "Młodszy Księgowy", "company": "TaxCare", "base_salary": 4500, "req_course": "crs_fin_01", "milestones": [{"months": 12, "bonus": 2000}]},
+    {"id": "job_08", "title": "Asystent Marketingu", "company": "AdAgency", "base_salary": 4000, "req_course": "crs_mkt_01", "milestones": [{"months": 6, "bonus": 800}]},
+    {"id": "job_09", "title": "Programista Python (Junior)", "company": "SoftServe", "base_salary": 7000, "req_course": "crs_it_02", "milestones": [{"months": 6, "bonus": 2000}, {"months": 12, "bonus": 4000}]},
+    {"id": "job_10", "title": "Analityk Danych", "company": "Bank Pekao", "base_salary": 8500, "req_course": "crs_it_02", "milestones": [{"months": 12, "bonus": 3000}]},
+    {"id": "job_11", "title": "UX/UI Designer", "company": "CreativeFlow", "base_salary": 7500, "req_course": "crs_mkt_02", "milestones": [{"months": 12, "bonus": 2500}]},
+    {"id": "job_12", "title": "Manager Projektu", "company": "TechCorp", "base_salary": 9000, "req_course": "crs_mng_01", "milestones": [{"months": 6, "bonus": 3000}]},
+    {"id": "job_13", "title": "Inżynier Budowy", "company": "Budimex", "base_salary": 8000, "req_course": "crs_eng_01", "milestones": [{"months": 24, "bonus": 6000}]},
+    {"id": "job_14", "title": "Senior Developer", "company": "Google", "base_salary": 16000, "req_course": "crs_it_03", "milestones": [{"months": 12, "bonus": 8000}]},
+    {"id": "job_15", "title": "Dyrektor Finansowy", "company": "Orlen", "base_salary": 22000, "req_course": "crs_fin_02", "milestones": [{"months": 12, "bonus": 10000}]},
+    {"id": "job_16", "title": "Główny Architekt", "company": "Microsoft", "base_salary": 25000, "req_course": "crs_it_03", "milestones": []},
+    {"id": "job_17", "title": "Partner Zarządzający", "company": "Deloitte", "base_salary": 30000, "req_course": "crs_mng_02", "milestones": [{"months": 24, "bonus": 15000}]},
+    {"id": "job_18", "title": "Dyrektor Operacyjny", "company": "Tesla", "base_salary": 35000, "req_course": "crs_mng_02", "milestones": []},
+    {"id": "job_19", "title": "Wiceprezes", "company": "SpaceX", "base_salary": 45000, "req_course": "crs_mng_02", "milestones": [{"months": 12, "bonus": 20000}]},
+    {"id": "job_20", "title": "CEO", "company": "Global Enterprises", "base_salary": 65000, "req_course": "crs_mng_02", "milestones": [{"months": 36, "bonus": 50000}]}
+]

@@ -1,0 +1,13 @@
+[
+    {"id": "crs_sales_01", "name": "Komunikacja i Sprzedaż", "cost": 1500, "days": 7},
+    {"id": "crs_it_01", "name": "Serwis i Naprawa PC", "cost": 2000, "days": 14},
+    {"id": "crs_fin_01", "name": "Podstawy Księgowości", "cost": 3000, "days": 30},
+    {"id": "crs_mkt_01", "name": "Social Media Marketing", "cost": 1200, "days": 5},
+    {"id": "crs_it_02", "name": "Programowanie Python Pro", "cost": 8000, "days": 60},
+    {"id": "crs_mkt_02", "name": "UX/UI Design Masterclass", "cost": 6500, "days": 45},
+    {"id": "crs_mng_01", "name": "Zarządzanie Zespołem", "cost": 5000, "days": 21},
+    {"id": "crs_eng_01", "name": "Uprawnienia Inżynierskie", "cost": 12000, "days": 90},
+    {"id": "crs_it_03", "name": "Architektura Chmurowa", "cost": 15000, "days": 120},
+    {"id": "crs_fin_02", "name": "Studia MBA", "cost": 45000, "days": 365},
+    {"id": "crs_mng_02", "name": "Strategia Biznesowa", "cost": 25000, "days": 180}
+]
