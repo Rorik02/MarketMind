@@ -7,9 +7,11 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtGui import QFont, QColor, QPalette, QPixmap
 from PyQt6.QtCore import Qt, QDate
+from utils.market_provider import MarketProvider
 
 class NewGameWindow(QDialog):
     """Dialog for creating a new save and player profile with difficulty settings and mode descriptions."""
+
 
     def __init__(self, parent=None, theme=None):
         super().__init__(parent)
@@ -288,6 +290,7 @@ class NewGameWindow(QDialog):
             lbl.setStyleSheet("border: 2px solid transparent; border-radius: 10px; padding: 4px;")
         label.setStyleSheet("border: 3px solid #0078D7; border-radius: 10px; background-color: rgba(0, 120, 215, 0.15); padding: 4px;")
 
+
     def create_save(self):
         """Write new save data to JSON."""
         name = self.first_name_input.text().strip()
@@ -295,10 +298,22 @@ class NewGameWindow(QDialog):
         dob = self.dob_picker.date().toPyDate()
         mode = self.mode_box.currentText()
         difficulty = self.diff_box.currentText()
-        
+        provider = MarketProvider()
+        market_snapshot = provider.fetch_market_snapshot()
+
         if not name or not surname:
             QMessageBox.warning(self, "Missing Data", "Please enter your name and save name.")
             return
+
+
+        try:
+            # Tworzymy instancję i pobieramy dane z API (snapshot)
+            provider = MarketProvider()
+            market_snapshot = provider.fetch_market_snapshot()
+        except Exception as e:
+            # Fallback: jeśli nie ma internetu, tworzymy pustą strukturę, by gra nie padła
+            print(f"Błąd API: {e}")
+            market_snapshot = {"stocks": {}, "crypto": {}}
 
         starting_balances = {"Easy": 100000, "Medium": 10000, "Hard": 1000}
         balance = starting_balances.get(difficulty, 10000)
@@ -322,10 +337,13 @@ class NewGameWindow(QDialog):
             "created": datetime.now().strftime("%Y-%m-%d %H:%M"),
             "primary_home": "prop_00",          
             "owned_properties": ["prop_00"],
+
+            "market_data": market_snapshot,
+            "portfolio": { "stocks": {}, "crypto": {}}
         }
 
-        filename = f"{surname}-{mode}-{datetime.now().strftime('%Y-%m-%d')}.json"
-        with open(os.path.join(self.saves_dir, filename), "w") as f:
+        filename = f"{surname}-{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        with open(os.path.join(self.saves_dir, filename), "w", encoding='utf-8') as f:
             json.dump(save_data, f, indent=4)
 
         # Update the last save in theme manager

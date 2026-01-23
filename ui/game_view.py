@@ -13,6 +13,7 @@ from ui.views.household_view import HouseholdView
 from ui.views.vehicle_view import VehicleView 
 from ui.views.valuables_view import ValuablesView
 from ui.views.employment_view import EmploymentView
+from ui.views.markets_view import MarketsView
 
 class GameView(QWidget):
     def __init__(self, parent=None, theme=None, save_data=None):
@@ -45,7 +46,7 @@ class GameView(QWidget):
         # Inicjalizacja widoków
         self.view_home = HomeView(self, self.theme, self.save_data)
         self.view_dashboard = self.create_placeholder_view("📊 Dashboard", "Financial statistics and charts.")
-        self.view_markets = self.create_placeholder_view("📈 Markets", "Exchange and stock trading.")
+        self.view_markets = MarketsView(self)
         self.view_portfolio = self.create_placeholder_view("💼 Portfolio", "Your assets and investments.")
         self.view_business = self.create_placeholder_view("🏢 Business", "Companies and management.")
         self.view_system = self.create_system_menu_view()
@@ -455,7 +456,21 @@ class GameView(QWidget):
 
     def connect_menu_logic(self):
         for i, btn in enumerate(self.menu_btns):
-            btn.clicked.connect(lambda checked, index=i: self.workspace_stack.setCurrentIndex(index))
+            # i=2 to indeks zakładki Markets w Twoim workspace_stack
+            btn.clicked.connect(lambda checked, index=i: self.switch_view(index))
+
+    def switch_view(self, index):
+        self.workspace_stack.setCurrentIndex(index)
+        # Jeśli wybrano Markets (indeks 2) - odświeżamy tabelę
+        if index == 2:
+            self.view_markets.refresh_view(self.save_data)
+    
+    def switch_workspace(self, index):
+        """Przełącza widok i odświeża dane jeśli to konieczne."""
+        self.workspace_stack.setCurrentIndex(index)
+        
+        if index == 2:
+            self.view_markets.refresh_view(self.save_data)
 
     def apply_theme(self):
         if not self.theme: return
