@@ -1,0 +1,20 @@
+{
+    "player_name": "Andrzej",
+    "player_surname": "testowy",
+    "player_age": 26,
+    "date_of_birth": "2000-01-01",
+    "current_game_date": "2026-01-23",
+    "gender": "Male",
+    "avatar": "male2.png",
+    "mode": "Standard",
+    "difficulty": "Easy",
+    "balance": 100000,
+    "knowledge_level": 1,
+    "prestige": 0,
+    "prestige_bonus": 0,
+    "created": "2026-01-23 21:02",
+    "primary_home": "prop_00",
+    "owned_properties": [
+        "prop_00"
+    ]
+}

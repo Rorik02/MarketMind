@@ -303,19 +303,25 @@ class NewGameWindow(QDialog):
         starting_balances = {"Easy": 100000, "Medium": 10000, "Hard": 1000}
         balance = starting_balances.get(difficulty, 10000)
 
+        simulation_start_year = 2026
         save_data = {
             "player_name": name,
             "player_surname": surname,
-            "player_age": (date.today().year - dob.year),
+            # Odejmujemy od roku symulacji, a nie od dzisiejszego realnego roku
+            "player_age": (simulation_start_year - dob.year), 
             "date_of_birth": str(dob),
+            "current_game_date": "2026-01-23",
             "gender": self.gender_box.currentText(),
             "avatar": self.selected_avatar,
             "mode": mode,
             "difficulty": difficulty,
             "balance": balance,
             "knowledge_level": 1,
-            "prestige": 1,
-            "created": datetime.now().strftime("%Y-%m-%d %H:%M")
+            "prestige": 0,
+            "prestige_bonus": 0,
+            "created": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "primary_home": "prop_00",          
+            "owned_properties": ["prop_00"],
         }
 
         filename = f"{surname}-{mode}-{datetime.now().strftime('%Y-%m-%d')}.json"

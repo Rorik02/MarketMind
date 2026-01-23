@@ -50,9 +50,34 @@ class EmploymentView(QFrame):
         # System zakładek
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("""
-            QTabBar::tab { background: #2a2a2a; color: white; padding: 10px 20px; border-top-left-radius: 8px; border-top-right-radius: 8px; }
-            QTabBar::tab:selected { background: #3a96dd; font-weight: bold; }
-            QTabWidget::pane { border: 1px solid #444; background: #1a1a1a; border-radius: 8px; }
+            QTabWidget::pane { 
+                border: 2px solid #3d3d3d; 
+                background: #1a1a1a; 
+                border-radius: 8px;
+                top: -1px; /* Łączy ramkę z aktywną zakładką */
+            }
+            QTabBar::tab {
+                background: #2a2a2a;
+                color: #aaaaaa;
+                padding: 12px 30px;
+                margin-right: 5px;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                border: 1px solid #3d3d3d;
+                border-bottom: none;
+                font-weight: bold;
+                font-size: 14px;
+            }
+            QTabBar::tab:hover {
+                background: #333333;
+                color: white;
+            }
+            QTabBar::tab:selected {
+                background: #3a96dd; /* Twój charakterystyczny niebieski kolor */
+                color: white;
+                border: 1px solid #3a96dd;
+                padding-bottom: 13px; /* Lekkie powiększenie aktywnej zakładki */
+            }
         """)
         
         self.main_layout.addWidget(self.tabs)

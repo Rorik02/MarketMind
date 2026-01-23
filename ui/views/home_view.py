@@ -126,17 +126,41 @@ class HomeView(QFrame):
         self.update_skill_button()
 
     def update_profile_text(self):
+        # 1. Obliczanie prestiżu (zostaje bez zmian)
         p_house = self.calculate_house_prestige_with_bonus()
         p_veh = self.calculate_category_prestige("vehicles.json", "owned_vehicles")
         p_val = self.calculate_category_prestige("valuables.json", "owned_valuables")
-        
         total_prestige = p_house + p_veh + p_val
         self.save_data['prestige'] = total_prestige
         
+        # 2. DYNAMICZNE OBLICZANIE WIEKU
+        from datetime import datetime
+        
+        # Pobieramy datę urodzenia (stała)
+        dob_str = self.save_data.get('date_of_birth', '2002-03-21')
+        
+        # Pobieramy AKTUALNĄ datę z symulacji (tę, którą widać obok przycisków +1h, +1d)
+        # Musisz upewnić się, że w save_data masz klucz z aktualną datą gry
+        current_date_str = self.save_data.get('current_game_date', '2031-12-12') 
+        
+        try:
+            dob = datetime.strptime(dob_str[:10], "%Y-%m-%d")
+            curr = datetime.strptime(current_date_str[:10], "%Y-%m-%d")
+            
+            # Precyzyjne obliczenie wieku
+            calculated_age = curr.year - dob.year
+            # Sprawdzenie, czy w danym roku kalendarzowym urodziny już się odbyły
+            if (curr.month, curr.day) < (dob.month, dob.day):
+                calculated_age -= 1
+        except Exception as e:
+            print(f"Error calculating age: {e}")
+            calculated_age = self.save_data.get('age', 23)
+
+        # 3. AKTUALIZACJA UI
         self.info_txt.setText(
             f"<font size='6' color='white'><b>{self.save_data.get('player_name')} {self.save_data.get('player_surname')}</b></font><br>"
-            f"<font size='4' color='#aaaaaa'>Age: {self.save_data.get('age', 25)}<br>"
-            f"Joined: {self.save_data.get('created', '').split(' ')[0]}<br>"
+            f"<font size='4' color='#aaaaaa'>Age: {calculated_age}<br>" # Teraz będzie 29
+            f"Born: {dob_str}<br>" 
             f"<font color='#f1c40f'>🏆 Global Prestige: {total_prestige:,}</font></font>"
         )
 

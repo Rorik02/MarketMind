@@ -1,5 +1,6 @@
 import os
 import json
+import math
 from datetime import datetime, timedelta
 from PyQt6.QtWidgets import (QWidget, QLabel, QVBoxLayout, QHBoxLayout, 
                              QFrame, QPushButton, QStackedWidget, QMessageBox, QLineEdit)
@@ -111,10 +112,23 @@ class GameView(QWidget):
 
     # --- LOGIKA CZASU I FINANSÓW ---
     def advance_time(self, hours):
+        old_date = self.current_datetime
+        
+        # DODAJEMY CZAS TYLKO RAZ
         self.current_datetime += timedelta(hours=hours)
-        self.update_date_display()
+        
+        # Aktualizujemy datę w save_data dla widoku profilu
+        self.save_data['current_game_date'] = self.current_datetime.strftime("%Y-%m-%d")
         self.save_data['created'] = self.current_datetime.strftime("%Y-%m-%d %H:%M")
         
+        self.update_date_display()
+
+        # Sprawdzamy szansę na śmierć tylko raz
+        if self.current_datetime.date() > old_date.date():
+            if self.check_death_chance():
+                return 
+
+        # Logika kursów edukacyjnych
         if self.save_data.get('active_course'):
             course = self.save_data['active_course']
             course['remaining_hours'] -= hours
@@ -131,27 +145,72 @@ class GameView(QWidget):
         # ODŚWIEŻANIE UI NA ŻYWO
         current_idx = self.workspace_stack.currentIndex()
         if current_idx == 0:
+            # To odświeża HomeView i poprawnie przelicza wiek
             self.workspace_stack.currentWidget().refresh_view(self.save_data)
         elif current_idx == 9:
             self.workspace_stack.currentWidget().refresh_tabs()
 
+        # Finanse miesięczne (np. pensja i rachunki)
         if hours >= 720: # +1m
             self.process_monthly_finances()
 
     def process_monthly_finances(self):
+        # --- 1. INICJALIZACJA DANYCH ---
         job_id = self.save_data.get('current_job')
+        owned_ids = self.save_data.get('owned_properties', [])
+        primary_id = self.save_data.get('primary_home', 'prop_00')
+        
         salary = 0
+        total_upkeep = 0
+
+        # --- 2. OBLICZANIE PENSJI I AWANSÓW ---
         if job_id:
+            # Zwiększamy staż pracy
             self.save_data['job_months'] = self.save_data.get('job_months', 0) + 1
-            salary = self.calculate_salary_with_milestones(job_id, self.save_data['job_months'])
-        
-        expenses = self.calculate_total_property_upkeep()
-        net = salary - expenses
-        self.save_data['balance'] += net
+            months = self.save_data['job_months']
+
+            path = os.path.join(os.path.dirname(__file__), "..", "data", "jobs.json")
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    jobs = json.load(f)
+                    for j in jobs:
+                        if j['id'] == job_id:
+                            salary = j['base_salary']
+                            # Sprawdzamy bonusy i nowe tytuły
+                            for m in j.get('milestones', []):
+                                if months >= m['months']:
+                                    salary += m['bonus']
+                                    if 'new_title' in m:
+                                        self.save_data['current_title'] = m['new_title']
+            except Exception as e:
+                print(f"Error loading jobs: {e}")
+
+        # --- 3. OBLICZANIE KOSZTÓW UTRZYMANIA DOMÓW ---
+        # Korzystamy z listy wszystkich nieruchomości dostępnej w view_household
+        if hasattr(self, 'view_household') and self.view_household.all_properties:
+            for prop in self.view_household.all_properties:
+                if prop['id'] in owned_ids:
+                    if prop['id'] == primary_id:
+                        total_upkeep += prop['upkeep']
+                    else:
+                        # Domy inne niż główny kosztują 50% utrzymania
+                        total_upkeep += int(prop['upkeep'] * 0.5)
+
+        # --- 4. FINALIZACJA TRANSAKCJI ---
+        # Obliczamy wynik netto (Pensja - Rachunki)
+        net_change = salary - total_upkeep
+        self.save_data['balance'] += net_change
+
+        # --- 5. AKTUALIZACJA INTERFEJSU (Raz, na samym końcu) ---
         self.update_money_display()
-        self.view_home.refresh_view(self.save_data)
         
-        QMessageBox.information(self, "Raport Finansowy", f"Wypłata: ${salary:,}\nKoszty życia: ${expenses:,}\nBilans: ${net:,}")
+        if hasattr(self, 'view_home'):
+            self.view_home.refresh_view(self.save_data)
+            
+        # Informacja w konsoli
+        if hasattr(self, 'console_input'):
+            msg = f"Finance: Salary +${salary:,} | Upkeep -${total_upkeep:,} | Net: ${net_change:,}"
+            self.console_input.setPlaceholderText(msg)
 
     def calculate_salary_with_milestones(self, job_id, months):
         path = os.path.join(os.path.dirname(__file__), "..", "data", "jobs.json")
@@ -201,7 +260,10 @@ class GameView(QWidget):
             pix = QPixmap(avatar_path).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
             self.avatar_lbl.setPixmap(pix)
             
-        self.player_info = QLabel(f"<b>{self.save_data.get('player_name', 'Player')}</b><br><font color='#aaaaaa'>Executive Manager</font>")
+        self.player_info = QLabel(
+            f"<b>{self.save_data.get('player_name')}</b><br>"
+            f"<font color='#aaaaaa'>{self.save_data.get('current_title', 'Unemployed')}</font>"
+        )
         p_layout.addWidget(self.avatar_lbl)
         p_layout.addWidget(self.player_info)
 
@@ -316,6 +378,7 @@ class GameView(QWidget):
         self.console_input.setPlaceholderText(f"Result: {result}")
 
     def execute_console_command(self, parts):
+        from datetime import datetime # Import potrzebny do obliczenia wieku
         command = parts[0]
         args = parts[1:]
 
@@ -335,6 +398,19 @@ class GameView(QWidget):
                 self.view_home.refresh_view(self.save_data)
                 return f"Added {amount} prestige bonus"
             except: return "Error"
+
+        # --- TWOJA NOWA KOMENDA TESTOWA ---
+        elif command == "kill":
+            try:
+                dob_str = self.save_data.get('date_of_birth', '1990-01-01')
+                dob = datetime.strptime(dob_str, "%Y-%m-%d")
+                age = self.current_datetime.year - dob.year
+                
+                # Wywołujemy funkcję raportu, którą wcześniej przygotowaliśmy
+                self.trigger_end_game(age)
+                return f"Szymon died for science at age {age}. Report generated."
+            except Exception as e:
+                return f"Error triggering death: {str(e)}"
 
         return "Unknown command"
 
@@ -391,3 +467,130 @@ class GameView(QWidget):
         for btn in self.menu_btns: btn.setStyleSheet(tile_style)
         self.btn_system.setStyleSheet("background: #3a96dd; color: white; border-radius: 5px; font-weight: bold;")
         for b in self.time_btns: b.setStyleSheet("background: #3a3a3a; color: white; border-radius: 5px; font-weight: bold;")
+
+        # --- POPRAWIONA STYLIZACJA OKIEN KOMUNIKATÓW ---
+        msg_style = f"""
+            QMessageBox {{
+                background-color: #1a1a1a;
+                border: 2px solid #3a96dd;
+                border-radius: 10px;
+            }}
+            QMessageBox QLabel {{
+                color: white;
+                font-weight: bold;
+                padding: 15px;
+                font-size: 14px;
+            }}
+            QMessageBox QPushButton {{
+                background-color: #2a2a2a;      /* Ciemne tło jak w menu */
+                color: #3a96dd;                 /* Niebieski tekst */
+                border: 2px solid #3a96dd;      /* WYRAŹNA NIEBIESKA RAMKA */
+                border-radius: 8px;
+                padding: 8px 25px;
+                min-width: 100px;
+                font-weight: bold;
+                font-size: 14px;
+            }}
+            QMessageBox QPushButton:hover {{
+                background-color: #3a96dd;      /* Po najechaniu wypełnia się */
+                color: white;
+            }}
+        """
+        self.setStyleSheet(self.styleSheet() + msg_style)
+
+    def check_death_chance(self):
+        """Sprawdza szansę na zgon na podstawie aktualnego wieku."""
+        # Pobieramy datę urodzenia z zapisu
+        dob_str = self.save_data.get('date_of_birth', '1990-01-01')
+        dob = datetime.strptime(dob_str, "%Y-%m-%d")
+        
+        # Obliczamy wiek w aktualnym czasie gry
+        age = self.current_datetime.year - dob.year
+        
+        # Twoja formuła: 18 lat -> ~0%, 100 lat -> ~99%
+        base = 1.12
+        annual_chance = (pow(base, age - 18) / pow(base, 100 - 18)) * 100
+        
+        # Ponieważ sprawdzamy to często, dzielimy szansę roczną przez 365 dni
+        import random
+        daily_chance = annual_chance / 365
+        if random.random() * 100 < daily_chance:
+            self.trigger_end_game(age)
+            return True
+        return False
+
+    def trigger_end_game(self, age):
+        """Summarizes estate using the exact logic from update_valuables_status."""
+        try:
+            cash = self.save_data.get('balance', 0)
+            total_prestige = self.save_data.get('prestige', 0)
+            
+            # 1. Property Valuation
+            props_val = 0
+            owned_props = self.save_data.get('owned_properties', [])
+            import os, json
+            props_path = os.path.join(os.path.dirname(__file__), "..", "data", "properties.json")
+            if os.path.exists(props_path):
+                with open(props_path, 'r', encoding='utf-8') as f:
+                    props_data = json.load(f)
+                    for p in props_data:
+                        if p['id'] in owned_props: props_val += p.get('price', 0)
+
+
+            # 2. Vehicle Valuation
+            vehs_val = 0
+            owned_vehs = self.save_data.get('owned_vehicles', [])
+            vehs_path = os.path.join(os.path.dirname(__file__), "..", "data", "vehicles.json")
+            if os.path.exists(vehs_path):
+                with open(vehs_path, 'r', encoding='utf-8') as f:
+                    vehs_data = json.load(f)
+                    for v in vehs_data:
+                        if v['id'] in owned_vehs: vehs_val += v.get('price', 0)
+
+            # 3. FIX: Valuables Valuation (Using your specific logic)
+            items_val = 0
+            # Twoja metoda korzysta z klucza 'owned_valuables'
+            owned_ids = self.save_data.get('owned_valuables', [])
+            valuables_path = os.path.join(os.path.dirname(__file__), "..", "data", "valuables.json")
+            
+            if os.path.exists(valuables_path):
+                with open(valuables_path, 'r', encoding='utf-8') as f:
+                    items_db = json.load(f)
+                    for item in items_db:
+                        if item['id'] in owned_ids:
+                            # Twoja funkcja szuka pola 'price'
+                            items_val += item.get('price', 0)
+
+            total_net_worth = cash + props_val + vehs_val + items_val
+
+            # English Report HTML
+            report = (
+                f"<div style='color: white;'>"
+                f"<h2 style='color: #e74c3c; text-align: center;'>GAME OVER</h2>"
+                f"<p style='font-size: 14px; text-align: center;'>Szymon Rorat passed away at the age of <b>{age}</b>.</p>"
+                f"<hr>"
+                f"<p><b>ESTATE SUMMARY:</b></p>"
+                f"💰 Cash: ${cash:,.2f}<br>"
+                f"🏠 Real Estate: ${props_val:,.2f}<br>"
+                f"🏎️ Vehicles: ${vehs_val:,.2f}<br>"
+                f"💎 Valuables: ${items_val:,.2f}<br><br>"
+                f"⭐ <b>Final Prestige: {total_prestige:,}</b><br><br>"
+                f"<div style='background: #2a2a2a; padding: 12px; border: 2px solid #3a96dd; text-align: center;'>"
+                f"<span style='font-size: 18px; color: #3a96dd; font-weight: bold;'>"
+                f"FINAL NET WORTH: ${total_net_worth:,.2f}</span>"
+                f"</div></div>"
+            )
+
+            from PyQt6.QtWidgets import QMessageBox
+            msg = QMessageBox(self)
+            msg.setWindowTitle("The Final Chapter")
+            msg.setText(report)
+            msg.exec()
+            
+            if hasattr(self, 'parent') and self.parent:
+                self.parent.show_main_menu()
+            else:
+                self.close()
+                
+        except Exception as e:
+            print(f"DEBUG Error: {str(e)}")

@@ -7,13 +7,14 @@
     "avatar": "male1.png",
     "mode": "Standard",
     "difficulty": "Easy",
-    "balance": 54393300.0,
+    "balance": 52193300.0,
     "knowledge_level": 1,
-    "prestige": 3765,
+    "prestige": 3885,
     "created": "2030-03-22 11:03",
     "owned_properties": [
         "prop_00",
-        "prop_13"
+        "prop_13",
+        "prop_07"
     ],
     "primary_home": "prop_13",
     "owned_vehicles": [
@@ -24,7 +25,7 @@
         "val_01",
         "val_02"
     ],
-    "current_job": "job_01",
+    "current_job": "job_02",
     "job_months": 0,
     "active_course": null,
     "completed_courses": [
