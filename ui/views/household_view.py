@@ -187,10 +187,29 @@ class HouseholdView(QFrame):
     def buy_property(self, prop):
         current_balance = self.save_data.get('balance', 0)
         if current_balance >= prop['price']:
-            self.save_data['balance'] -= prop['price']
-            if 'owned_properties' not in self.save_data: self.save_data['owned_properties'] = []
+            # 1. Pobieramy cenę
+            price = prop['price']
+            
+            # 2. Odejmowanie pieniędzy
+            self.save_data['balance'] -= price
+            
+            # 3. Dodawanie do listy posiadanych
+            if 'owned_properties' not in self.save_data: 
+                self.save_data['owned_properties'] = []
             self.save_data['owned_properties'].append(prop['id'])
-            if hasattr(self.parent_ctrl, 'update_money_display'): self.parent_ctrl.update_money_display()
+            
+            # 4. DODANIE WPISU DO HISTORII
+            if hasattr(self.parent_ctrl, 'log_transaction'):
+                self.parent_ctrl.log_transaction(
+                    "Nieruchomość", 
+                    f"Zakup: {prop['name']}", 
+                    -price
+                )
+
+            # 5. Aktualizacja UI
+            if hasattr(self.parent_ctrl, 'update_money_display'): 
+                self.parent_ctrl.update_money_display()
+                
             QMessageBox.information(self, "Success", f"Congratulations! You bought {prop['name']}!")
             self.refresh_list(mode="owned")
         else:

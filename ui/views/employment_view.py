@@ -198,10 +198,34 @@ class EmploymentView(QFrame):
             if self.save_data.get('active_course'):
                 QMessageBox.warning(self, "Education", "You are already in a course!")
                 return
-            self.save_data['balance'] -= crs['cost']
-            self.save_data['active_course'] = {"id": crs['id'], "name": crs['name'], "remaining_hours": crs['days'] * 24}
+            
+            # 1. Pobieramy koszt
+            cost = crs['cost']
+            
+            # 2. Pobieramy pieniądze
+            self.save_data['balance'] -= cost
+            
+            # 3. DODANIE WPISU DO HISTORII
+            # Używamy kategorii "Edukacja", aby wpis był czytelny w tabeli
+            if hasattr(self.parent_ctrl, 'log_transaction'):
+                self.parent_ctrl.log_transaction(
+                    "Edukacja", 
+                    f"Kurs: {crs['name']}", 
+                    -cost
+                )
+            
+            # 4. Aktywacja kursu w danych zapisu
+            self.save_data['active_course'] = {
+                "id": crs['id'], 
+                "name": crs['name'], 
+                "remaining_hours": crs['days'] * 24
+            }
+            
+            # 5. Aktualizacja interfejsu
             self.parent_ctrl.update_money_display()
             self.refresh_tabs()
+            
+            QMessageBox.information(self, "Education", f"Enrolled in {crs['name']}!")
         else:
             QMessageBox.warning(self, "Bank", "Insufficient funds!")
 

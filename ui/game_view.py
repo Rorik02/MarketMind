@@ -14,6 +14,10 @@ from ui.views.vehicle_view import VehicleView
 from ui.views.valuables_view import ValuablesView
 from ui.views.employment_view import EmploymentView
 from ui.views.markets_view import MarketsView
+from ui.views.portfolio_view import PortfolioView
+from ui.views.dashboard_view import DashboardView
+from ui.views.history_view import HistoryView
+from ui.views.bank_view import BankView
 
 class GameView(QWidget):
     def __init__(self, parent=None, theme=None, save_data=None):
@@ -54,6 +58,12 @@ class GameView(QWidget):
         self.view_vehicles = VehicleView(self, self.theme, self.save_data)
         self.view_valuables = ValuablesView(self, self.theme, self.save_data)
         self.view_employment = EmploymentView(self, self.theme, self.save_data)
+        self.view_portfolio = PortfolioView(self)
+        self.view_dashboard = DashboardView(self)
+        self.view_history = HistoryView(self)
+        self.view_bank = BankView(self, self.theme, self.save_data)
+
+        self.btn_bank.setCursor(Qt.CursorShape.PointingHandCursor)
         
         # Dodanie do stosu
         self.workspace_stack.addWidget(self.view_home)      # 0
@@ -66,12 +76,15 @@ class GameView(QWidget):
         self.workspace_stack.addWidget(self.view_vehicles)  # 7
         self.workspace_stack.addWidget(self.view_valuables) # 8
         self.workspace_stack.addWidget(self.view_employment)# 9
+        self.workspace_stack.addWidget(self.view_history)   #10
+        self.workspace_stack.addWidget(self.view_bank)      #11
 
         # --- LOGIKA PRZEŁĄCZANIA WIDOKÓW (POŁĄCZENIA) ---
         self.view_household.back_btn.clicked.connect(self.open_home)
         self.view_vehicles.back_btn.clicked.connect(self.open_home)
         self.view_valuables.back_btn.clicked.connect(self.open_home)
         self.view_employment.back_btn.clicked.connect(self.open_home)
+        
 
         self.view_home.house_tile.findChild(QPushButton).clicked.connect(self.open_household_manager)
         
@@ -89,6 +102,7 @@ class GameView(QWidget):
         if emp_tile:
             emp_btn = emp_tile.findChild(QPushButton)
             if emp_btn: emp_btn.clicked.connect(self.open_employment_manager)
+
 
         self.content_layout.addWidget(self.side_menu, 1)
         self.content_layout.addWidget(self.workspace_stack, 4)
@@ -114,10 +128,27 @@ class GameView(QWidget):
     # --- LOGIKA CZASU I FINANSÓW ---
     def advance_time(self, hours):
         old_date = self.current_datetime
+
+        if self.save_data.get('balance', 0) < 0:
+            msg = QMessageBox(self)
+            msg.setWindowTitle("Financial Alert")
+            msg.setText("<b>YOUR ACCOUNT IS FROZEN!</b><br>You are in debt. Sell assets or take a loan to continue.")
+            msg.addButton("Go to Bank", QMessageBox.ButtonRole.AcceptRole).clicked.connect(lambda: self.switch_view(11))
+            msg.addButton("Sell Assets", QMessageBox.ButtonRole.AcceptRole).clicked.connect(lambda: self.switch_view(3))
+            msg.exec()
+            return
         
         # DODAJEMY CZAS TYLKO RAZ
         self.current_datetime += timedelta(hours=hours)
         
+        # --- NOWA LOGIKA RYNKOWA ---
+        # Sprawdzamy, czy minęła przynajmniej jedna doba
+        if self.current_datetime.date() > old_date.date():
+            days_passed = (self.current_datetime.date() - old_date.date()).days
+            for _ in range(days_passed):
+                self.simulate_market_movement()
+        # ---------------------------
+
         # Aktualizujemy datę w save_data dla widoku profilu
         self.save_data['current_game_date'] = self.current_datetime.strftime("%Y-%m-%d")
         self.save_data['created'] = self.current_datetime.strftime("%Y-%m-%d %H:%M")
@@ -143,75 +174,99 @@ class GameView(QWidget):
                 self.save_data['active_course'] = None
                 QMessageBox.information(self, "Education", f"Course Finished: {course['name']}")
 
-        # ODŚWIEŻANIE UI NA ŻYWO
+        # ODŚWIEŻANIE AKTYWNEGO WIDOKU
         current_idx = self.workspace_stack.currentIndex()
         if current_idx == 0:
-            # To odświeża HomeView i poprawnie przelicza wiek
-            self.workspace_stack.currentWidget().refresh_view(self.save_data)
+            self.view_home.refresh_view(self.save_data)
+        elif current_idx == 2: # Markets
+            self.view_markets.refresh_view(self.save_data)
+        elif current_idx == 3: # Portfolio
+            self.view_portfolio.refresh_view(self.save_data)
         elif current_idx == 9:
-            self.workspace_stack.currentWidget().refresh_tabs()
+            self.view_employment.refresh_tabs()
+        elif current_idx == 10: # Historia
+            self.view_history.refresh_view(self.save_data)
 
-        # Finanse miesięczne (np. pensja i rachunki)
-        if hours >= 720: # +1m
+        # Finanse miesięczne
+        if hours >= 720:
             self.process_monthly_finances()
 
     def process_monthly_finances(self):
-        # --- 1. INICJALIZACJA DANYCH ---
+        """Główna metoda rozliczająca miesiąc: pensje, dywidendy, koszty i POŻYCZKI."""
+        # --- 1. PENSJA I UTRZYMANIE (Co miesiąc) ---
         job_id = self.save_data.get('current_job')
-        owned_ids = self.save_data.get('owned_properties', [])
-        primary_id = self.save_data.get('primary_home', 'prop_00')
-        
         salary = 0
-        total_upkeep = 0
-
-        # --- 2. OBLICZANIE PENSJI I AWANSÓW ---
         if job_id:
-            # Zwiększamy staż pracy
             self.save_data['job_months'] = self.save_data.get('job_months', 0) + 1
-            months = self.save_data['job_months']
+            salary = self.calculate_salary_with_milestones(job_id, self.save_data['job_months'])
 
-            path = os.path.join(os.path.dirname(__file__), "..", "data", "jobs.json")
-            try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    jobs = json.load(f)
-                    for j in jobs:
-                        if j['id'] == job_id:
-                            salary = j['base_salary']
-                            # Sprawdzamy bonusy i nowe tytuły
-                            for m in j.get('milestones', []):
-                                if months >= m['months']:
-                                    salary += m['bonus']
-                                    if 'new_title' in m:
-                                        self.save_data['current_title'] = m['new_title']
-            except Exception as e:
-                print(f"Error loading jobs: {e}")
+        total_upkeep = self.calculate_total_property_upkeep()
 
-        # --- 3. OBLICZANIE KOSZTÓW UTRZYMANIA DOMÓW ---
-        # Korzystamy z listy wszystkich nieruchomości dostępnej w view_household
-        if hasattr(self, 'view_household') and self.view_household.all_properties:
-            for prop in self.view_household.all_properties:
-                if prop['id'] in owned_ids:
-                    if prop['id'] == primary_id:
-                        total_upkeep += prop['upkeep']
-                    else:
-                        # Domy inne niż główny kosztują 50% utrzymania
-                        total_upkeep += int(prop['upkeep'] * 0.5)
-
-        # --- 4. FINALIZACJA TRANSAKCJI ---
-        # Obliczamy wynik netto (Pensja - Rachunki)
-        net_change = salary - total_upkeep
-        self.save_data['balance'] += net_change
-
-        # --- 5. AKTUALIZACJA INTERFEJSU (Raz, na samym końcu) ---
-        self.update_money_display()
+        total_loan_costs = 0
+        loans = self.save_data.get('active_loans', [])
         
+       # --- 2. OBSŁUGA POŻYCZEK Z KARENCJĄ ---
+        total_loan_costs = 0
+        loans = self.save_data.get('active_loans', [])
+        
+        for loan in loans[:]:
+            # Sprawdzenie karencji: jeśli pożyczka jest nowa, pomijamy spłatę w tym cyklu
+            if loan.get('is_new', False):
+                loan['is_new'] = False # Zdejmujemy flagę, spłata zacznie się w przyszłym miesiącu
+                continue
+
+            loan['remaining_months'] -= 1
+            loan['paid_amount'] += loan['monthly_rate']
+            total_loan_costs += loan['monthly_rate']
+            
+            if loan['remaining_months'] <= 0:
+                loans.remove(loan)
+                QMessageBox.information(self, "Bank", f"Twoja pożyczka ({loan['type']}) została spłacona!")
+
+        # --- 3. DYWIDENDY KWARTALNE (Marzec, Czerwiec, Wrzesień, Grudzień) ---
+        total_dividends = 0
+        current_month = self.current_datetime.month
+        
+        if current_month in [3, 6, 9, 12]:
+            portfolio = self.save_data.get('portfolio', {})
+            market_data = self.save_data.get('market_data', {})
+            for symbol, p_data in portfolio.get('stocks', {}).items():
+                amount = p_data.get('amount', 0)
+                if amount > 0:
+                    m_info = market_data.get('stocks', {}).get(symbol, {})
+                    current_price = m_info.get('current_price', 0)
+                    div_rate = m_info.get('dividend_yield', 0) 
+                    total_dividends += (amount * current_price * div_rate)
+
+        # --- 4. LOGOWANIE DO HISTORII (📜) ---
+        if salary > 0:
+            self.log_transaction("Praca", f"Pensja: {self.save_data.get('current_title', 'Pracownik')}", salary)
+        
+        if total_dividends > 0:
+            self.log_transaction("Giełda", f"Dywidenda kwartalna ({current_month})", total_dividends)
+
+        if total_upkeep > 0:
+            self.log_transaction("Opłaty", "Utrzymanie nieruchomości", -total_upkeep)
+            
+        if total_loan_costs > 0:
+            # Logujemy ratę pożyczki jako wydatek bankowy
+            self.log_transaction("Bank", "Automatyczna rata pożyczki", -total_loan_costs)
+
+        # --- 5. FINALNA AKTUALIZACJA BALANSU ---
+        # Uwzględniamy dochody i wszystkie koszty, w tym raty
+        self.save_data['balance'] += (salary + total_dividends - total_upkeep - total_loan_costs)
+
+        # --- 6. ODŚWIEŻENIE INTERFEJSU ---
+        self.update_money_display()
         if hasattr(self, 'view_home'):
             self.view_home.refresh_view(self.save_data)
+        
+        if self.workspace_stack.currentIndex() == 10:
+            self.view_history.refresh_view(self.save_data)
             
-        # Informacja w konsoli
-        if hasattr(self, 'console_input'):
-            msg = f"Finance: Salary +${salary:,} | Upkeep -${total_upkeep:,} | Net: ${net_change:,}"
-            self.console_input.setPlaceholderText(msg)
+        # Odśwież widok banku, jeśli jest otwarty, aby zaktualizować paski postępu
+        if hasattr(self, 'view_bank'):
+            self.view_bank.refresh_view(self.save_data)
 
     def calculate_salary_with_milestones(self, job_id, months):
         path = os.path.join(os.path.dirname(__file__), "..", "data", "jobs.json")
@@ -268,10 +323,40 @@ class GameView(QWidget):
         p_layout.addWidget(self.avatar_lbl)
         p_layout.addWidget(self.player_info)
 
+        self.btn_bank = QPushButton("🏦 BANK")
+        self.btn_bank.setFixedSize(80, 45)
+        self.btn_bank.setStyleSheet("background: #2c3e50; color: #ecf0f1; border-radius: 22px; font-weight: bold;")
+        self.btn_bank.clicked.connect(lambda: self.switch_view(11))
+        
+        # Wstawiamy do layoutu nagłówka przed pieniędzmi
+        layout.addWidget(self.btn_bank)
+
+        # LICZNIK PIENIĘDZY
         self.money_lbl = QLabel(f"${self.save_data.get('balance', 0):,.2f}")
         self.money_lbl.setFont(QFont("Arial", 28, QFont.Weight.Bold))
         self.money_lbl.setStyleSheet("color: #2ecc71; border: none; background: transparent;")
         self.money_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # --- NOWY PRZYCISK HISTORII (📜) OBOK KASY ---
+        self.btn_history = QPushButton("📜")
+        self.btn_history.setFixedSize(45, 45)
+        self.btn_history.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_history.setToolTip("Otwórz historię transakcji")
+        self.btn_history.setStyleSheet("""
+            QPushButton {
+                background-color: #2a2a2a;
+                color: white;
+                border: 2px solid #333;
+                border-radius: 22px;
+                font-size: 20px;
+            }
+            QPushButton:hover {
+                background-color: #3a96dd;
+                border-color: #3a96dd;
+            }
+        """)
+        
+        self.btn_history.clicked.connect(lambda: self.switch_view(10))
 
         self.right_container = QWidget()
         self.right_container.setStyleSheet("background: transparent; border: none;")
@@ -291,13 +376,8 @@ class GameView(QWidget):
             btn.setCursor(Qt.CursorShape.PointingHandCursor)
             btn.setStyleSheet("""
                 QPushButton {
-                    background-color: #3a3a3a;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                    font-weight: bold;
-                    font-size: 13px;
-                    padding: 0px;
+                    background-color: #3a3a3a; color: white; border: none;
+                    border-radius: 5px; font-weight: bold; font-size: 13px;
                 }
                 QPushButton:hover { background-color: #4a4a4a; }
             """)
@@ -311,11 +391,15 @@ class GameView(QWidget):
         self.btn_system.clicked.connect(self.toggle_system_menu)
         r_layout.addWidget(self.btn_system)
 
+        # SKŁADANIE LAYOUTU (Ważna kolejność!)
         layout.addWidget(self.player_area, 0)
         layout.addStretch(1)
-        layout.addWidget(self.money_lbl, 2)
+        layout.insertWidget(2, self.btn_bank)
+        layout.addWidget(self.money_lbl)
+        layout.addWidget(self.btn_history) # Wrzucamy ikonę zaraz za kasą
         layout.addStretch(1)
         layout.addWidget(self.right_container, 0)
+        
         return frame
 
     def create_placeholder_view(self, title_text, desc_text):
@@ -461,9 +545,16 @@ class GameView(QWidget):
 
     def switch_view(self, index):
         self.workspace_stack.setCurrentIndex(index)
-        # Jeśli wybrano Markets (indeks 2) - odświeżamy tabelę
         if index == 2:
             self.view_markets.refresh_view(self.save_data)
+        if index == 3: # Zakładka Portfolio
+            self.view_portfolio.refresh_view(self.save_data)
+        if index == 1:
+            self.view_dashboard.refresh_view(self.save_data)
+        if index == 10: # To musi tu być!
+            self.view_history.refresh_view(self.save_data)
+        if index == 11:
+            self.view_bank.refresh_view(self.save_data)
     
     def switch_workspace(self, index):
         """Przełącza widok i odświeża dane jeśli to konieczne."""
@@ -609,3 +700,67 @@ class GameView(QWidget):
                 
         except Exception as e:
             print(f"DEBUG Error: {str(e)}")
+    
+    def simulate_market_movement(self):
+        """Generuje losowe zmiany cen dla wszystkich aktywów w save_data."""
+        import random
+        market_data = self.save_data.get('market_data', {})
+        
+        # Przechodzimy przez obie kategorie: stocks i crypto
+        for category in ["stocks", "crypto"]:
+            items = market_data.get(category, {})
+            for symbol, data in items.items():
+                last_price = data['current_price']
+                
+                # Ustawiamy zmienność: krypto są bardziej ryzykowne (5%) niż akcje (2%)
+                volatility = 0.05 if category == "crypto" else 0.02
+                change_pct = random.uniform(-volatility, volatility)
+                
+                # Obliczamy nową cenę
+                new_price = round(last_price * (1 + change_pct), 2)
+                
+                # Aktualizujemy dane bieżące i dopisujemy do historii wykresu
+                data['current_price'] = new_price
+                data['history'].append({
+                    "date": self.current_datetime.strftime("%Y-%m-%d"),
+                    "price": new_price
+                })
+                
+                # Ograniczamy historię do 100 dni, żeby plik zapisu nie urósł za bardzo
+                if len(data['history']) > 100:
+                    data['history'].pop(0)
+
+    def log_transaction(self, category, description, amount):
+        # Upewniamy się, że klucz istnieje w słowniku zapisu
+        if 'transaction_history' not in self.save_data:
+            self.save_data['transaction_history'] = []
+            
+        new_entry = {
+            "date": self.current_datetime.strftime("%Y-%m-%d %H:%M"),
+            "category": category,
+            "description": description,
+            "amount": float(amount)
+        }
+        
+        # Wstawiamy do listy
+        self.save_data['transaction_history'].insert(0, new_entry)
+        
+        # WYMUSZENIE: Jeśli używasz wielu widoków, upewnij się, że 
+        # HistoryView dostanie informację o nowej liście
+        if hasattr(self, 'view_history'):
+            self.view_history.history_data = self.save_data['transaction_history']
+
+    def show_bankruptcy_dialog(self):
+        msg = QMessageBox(self)
+        msg.setWindowTitle("BANKRUPTCY!")
+        msg.setText("<b>You have run out of money!</b><br>To continue, you must settle your debts.")
+        
+        btn_bank = msg.addButton("Go to Bank", QMessageBox.ButtonRole.AcceptRole)
+        btn_portfolio = msg.addButton("Sell Assets", QMessageBox.ButtonRole.AcceptRole)
+        
+        msg.exec()
+        
+        if msg.clickedButton() == btn_bank:
+            self.switch_view(11) # Załóżmy, że BankView to indeks 11
+        else:
+            self.switch_view(3) # Portfolio to indeks 3

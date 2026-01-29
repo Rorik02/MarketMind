@@ -12,7 +12,7 @@
     "knowledge_level": 1,
     "prestige": 0,
     "prestige_bonus": 0,
-    "created": "2026-01-23 22:03",
+    "created": "2026-01-28 23:10",
     "primary_home": "prop_00",
     "owned_properties": [
         "prop_00"
@@ -22,20 +22,8 @@
             "AAPL": {
                 "symbol": "AAPL",
                 "name": "Apple Inc.",
-                "current_price": 248.04,
+                "current_price": 256.44,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 278.78
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 278.03
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 278.28
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 274.11
@@ -143,27 +131,28 @@
                     {
                         "date": "2026-01-23",
                         "price": 248.04
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 255.41
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 258.27
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 256.44
                     }
                 ],
+                "dividend_yield": 0.03333,
                 "category": "Stock"
             },
             "MSFT": {
                 "symbol": "MSFT",
                 "name": "Microsoft Corporation",
-                "current_price": 465.95,
+                "current_price": 481.63,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 478.56
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 483.47
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 478.53
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 474.82
@@ -271,27 +260,28 @@
                     {
                         "date": "2026-01-23",
                         "price": 465.95
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 470.28
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 480.58
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 481.63
                     }
                 ],
+                "dividend_yield": 0.06333,
                 "category": "Stock"
             },
             "TSLA": {
                 "symbol": "TSLA",
                 "name": "Tesla, Inc.",
-                "current_price": 449.06,
+                "current_price": 431.46,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 451.45
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 446.89
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 458.96
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 475.31
@@ -399,27 +389,28 @@
                     {
                         "date": "2026-01-23",
                         "price": 449.06
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 435.2
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 430.9
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 431.46
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Stock"
             },
             "AMZN": {
                 "symbol": "AMZN",
                 "name": "Amazon.com, Inc.",
-                "current_price": 239.16,
+                "current_price": 243.01,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 231.78
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 230.28
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 226.19
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 222.54
@@ -527,27 +518,28 @@
                     {
                         "date": "2026-01-23",
                         "price": 239.16
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 238.42
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 244.68
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 243.01
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Stock"
             },
             "NVDA": {
                 "symbol": "NVDA",
                 "name": "NVIDIA Corporation",
-                "current_price": 187.68,
+                "current_price": 191.52,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 183.78
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 180.93
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 175.02
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 176.29
@@ -654,28 +646,29 @@
                     },
                     {
                         "date": "2026-01-23",
-                        "price": 187.68
+                        "price": 187.67
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 186.47
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 188.52
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 191.52
                     }
                 ],
+                "dividend_yield": 0.00167,
                 "category": "Stock"
             },
             "GOOGL": {
                 "symbol": "GOOGL",
                 "name": "Alphabet Inc.",
-                "current_price": 327.93,
+                "current_price": 336.01,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 320.21
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 312.43
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 309.29
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 308.22
@@ -783,27 +776,28 @@
                     {
                         "date": "2026-01-23",
                         "price": 327.93
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 333.26
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 334.55
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 336.01
                     }
                 ],
+                "dividend_yield": 0.02083,
                 "category": "Stock"
             },
             "META": {
                 "symbol": "META",
                 "name": "Meta Platforms, Inc.",
-                "current_price": 658.76,
+                "current_price": 668.73,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 649.6
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 652.18
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 643.71
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 647.51
@@ -911,27 +905,28 @@
                     {
                         "date": "2026-01-23",
                         "price": 658.76
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 672.36
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 672.97
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 668.73
                     }
                 ],
+                "dividend_yield": 0.02583,
                 "category": "Stock"
             },
             "NFLX": {
                 "symbol": "NFLX",
                 "name": "Netflix, Inc.",
-                "current_price": 86.08,
+                "current_price": 84.64,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 92.71
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 94.09
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 95.19
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 93.77
@@ -1038,28 +1033,29 @@
                     },
                     {
                         "date": "2026-01-23",
-                        "price": 86.08
+                        "price": 86.12
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 85.7
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 85.58
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 84.64
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Stock"
             },
             "V": {
                 "symbol": "V",
                 "name": "Visa Inc.",
-                "current_price": 326.07,
+                "current_price": 326.98,
                 "history": [
-                    {
-                        "date": "2025-12-10",
-                        "price": 325.73
-                    },
-                    {
-                        "date": "2025-12-11",
-                        "price": 345.63
-                    },
-                    {
-                        "date": "2025-12-12",
-                        "price": 347.83
-                    },
                     {
                         "date": "2025-12-15",
                         "price": 346.89
@@ -1166,28 +1162,29 @@
                     },
                     {
                         "date": "2026-01-23",
-                        "price": 326.07
+                        "price": 326.18
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 328.49
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 325.26
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 326.98
                     }
                 ],
+                "dividend_yield": 0.06833,
                 "category": "Stock"
             },
             "CDR.WA": {
                 "symbol": "CDR.WA",
                 "name": "CDPROJEKT",
-                "current_price": 269.6,
+                "current_price": 285.6,
                 "history": [
-                    {
-                        "date": "2025-12-05",
-                        "price": 238.8
-                    },
-                    {
-                        "date": "2025-12-08",
-                        "price": 243.0
-                    },
-                    {
-                        "date": "2025-12-09",
-                        "price": 252.8
-                    },
                     {
                         "date": "2025-12-10",
                         "price": 245.4
@@ -1295,8 +1292,21 @@
                     {
                         "date": "2026-01-23",
                         "price": 269.6
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 266.4
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 265.8
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 285.6
                     }
                 ],
+                "dividend_yield": 0.03167,
                 "category": "Stock"
             }
         },
@@ -1304,28 +1314,8 @@
             "BTC-USD": {
                 "symbol": "BTC-USD",
                 "name": "Bitcoin USD",
-                "current_price": 89410.85,
+                "current_price": 89276.91,
                 "history": [
-                    {
-                        "date": "2025-12-25",
-                        "price": 87234.74
-                    },
-                    {
-                        "date": "2025-12-26",
-                        "price": 87301.43
-                    },
-                    {
-                        "date": "2025-12-27",
-                        "price": 87802.16
-                    },
-                    {
-                        "date": "2025-12-28",
-                        "price": 87835.84
-                    },
-                    {
-                        "date": "2025-12-29",
-                        "price": 87138.14
-                    },
                     {
                         "date": "2025-12-30",
                         "price": 88430.13
@@ -1424,36 +1414,37 @@
                     },
                     {
                         "date": "2026-01-23",
-                        "price": 89410.85
+                        "price": 89503.88
+                    },
+                    {
+                        "date": "2026-01-24",
+                        "price": 89110.73
+                    },
+                    {
+                        "date": "2026-01-25",
+                        "price": 86572.22
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 88267.14
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 89102.57
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 89276.91
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Crypto"
             },
             "ETH-USD": {
                 "symbol": "ETH-USD",
                 "name": "Ethereum USD",
-                "current_price": 2937.17,
+                "current_price": 3018.42,
                 "history": [
-                    {
-                        "date": "2025-12-25",
-                        "price": 2903.58
-                    },
-                    {
-                        "date": "2025-12-26",
-                        "price": 2925.75
-                    },
-                    {
-                        "date": "2025-12-27",
-                        "price": 2948.0
-                    },
-                    {
-                        "date": "2025-12-28",
-                        "price": 2948.57
-                    },
-                    {
-                        "date": "2025-12-29",
-                        "price": 2934.54
-                    },
                     {
                         "date": "2025-12-30",
                         "price": 2971.42
@@ -1552,36 +1543,37 @@
                     },
                     {
                         "date": "2026-01-23",
-                        "price": 2937.17
+                        "price": 2953.26
+                    },
+                    {
+                        "date": "2026-01-24",
+                        "price": 2948.74
+                    },
+                    {
+                        "date": "2026-01-25",
+                        "price": 2815.9
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 2926.46
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 3022.21
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 3018.42
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Crypto"
             },
             "BNB-USD": {
                 "symbol": "BNB-USD",
                 "name": "BNB USD",
-                "current_price": 889.69,
+                "current_price": 903.37,
                 "history": [
-                    {
-                        "date": "2025-12-25",
-                        "price": 829.42
-                    },
-                    {
-                        "date": "2025-12-26",
-                        "price": 834.15
-                    },
-                    {
-                        "date": "2025-12-27",
-                        "price": 844.55
-                    },
-                    {
-                        "date": "2025-12-28",
-                        "price": 858.83
-                    },
-                    {
-                        "date": "2025-12-29",
-                        "price": 851.19
-                    },
                     {
                         "date": "2025-12-30",
                         "price": 860.55
@@ -1680,36 +1672,37 @@
                     },
                     {
                         "date": "2026-01-23",
-                        "price": 889.69
+                        "price": 890.77
+                    },
+                    {
+                        "date": "2026-01-24",
+                        "price": 886.18
+                    },
+                    {
+                        "date": "2026-01-25",
+                        "price": 864.73
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 878.74
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 897.67
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 903.37
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Crypto"
             },
             "SOL-USD": {
                 "symbol": "SOL-USD",
                 "name": "Solana USD",
-                "current_price": 126.79,
+                "current_price": 125.39,
                 "history": [
-                    {
-                        "date": "2025-12-25",
-                        "price": 119.95
-                    },
-                    {
-                        "date": "2025-12-26",
-                        "price": 122.2
-                    },
-                    {
-                        "date": "2025-12-27",
-                        "price": 124.65
-                    },
-                    {
-                        "date": "2025-12-28",
-                        "price": 125.2
-                    },
-                    {
-                        "date": "2025-12-29",
-                        "price": 123.13
-                    },
                     {
                         "date": "2025-12-30",
                         "price": 124.93
@@ -1808,36 +1801,37 @@
                     },
                     {
                         "date": "2026-01-23",
-                        "price": 126.79
+                        "price": 127.36
+                    },
+                    {
+                        "date": "2026-01-24",
+                        "price": 127.05
+                    },
+                    {
+                        "date": "2026-01-25",
+                        "price": 118.77
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 124.14
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 127.05
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 125.39
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Crypto"
             },
             "DOGE-USD": {
                 "symbol": "DOGE-USD",
                 "name": "Dogecoin USD",
-                "current_price": 0.12,
+                "current_price": 0.13,
                 "history": [
-                    {
-                        "date": "2025-12-25",
-                        "price": 0.12
-                    },
-                    {
-                        "date": "2025-12-26",
-                        "price": 0.12
-                    },
-                    {
-                        "date": "2025-12-27",
-                        "price": 0.12
-                    },
-                    {
-                        "date": "2025-12-28",
-                        "price": 0.12
-                    },
-                    {
-                        "date": "2025-12-29",
-                        "price": 0.12
-                    },
                     {
                         "date": "2025-12-30",
                         "price": 0.12
@@ -1937,8 +1931,29 @@
                     {
                         "date": "2026-01-23",
                         "price": 0.12
+                    },
+                    {
+                        "date": "2026-01-24",
+                        "price": 0.12
+                    },
+                    {
+                        "date": "2026-01-25",
+                        "price": 0.12
+                    },
+                    {
+                        "date": "2026-01-26",
+                        "price": 0.12
+                    },
+                    {
+                        "date": "2026-01-27",
+                        "price": 0.13
+                    },
+                    {
+                        "date": "2026-01-28",
+                        "price": 0.13
                     }
                 ],
+                "dividend_yield": 0.0,
                 "category": "Crypto"
             }
         }

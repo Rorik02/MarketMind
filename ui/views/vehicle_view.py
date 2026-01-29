@@ -134,22 +134,34 @@ class VehicleView(QFrame):
         self.list_layout.addWidget(card)
 
     def buy_vehicle(self, veh):
-        """Logika zakupu pojazdu z kompaktowym powiadomieniem."""
+        """Logika zakupu pojazdu z zapisem do historii i powiadomieniem."""
         if self.save_data.get('balance', 0) >= veh['price']:
-            self.save_data['balance'] -= veh['price']
-            if 'owned_vehicles' not in self.save_data: self.save_data['owned_vehicles'] = []
+            # 1. Pobieramy cenę
+            price = veh['price']
+            
+            # 2. Aktualizacja danych finansowych i prestiżu
+            self.save_data['balance'] -= price
+            if 'owned_vehicles' not in self.save_data: 
+                self.save_data['owned_vehicles'] = []
             self.save_data['owned_vehicles'].append(veh['id'])
             self.save_data['prestige'] = self.save_data.get('prestige', 0) + veh['prestige']
             
+            # 3. DODANIE WPISU DO HISTORII
+            if hasattr(self.parent_ctrl, 'log_transaction'):
+                self.parent_ctrl.log_transaction(
+                    "Pojazd", 
+                    f"Zakup: {veh['name']}", 
+                    -price
+                )
+            
+            # 4. Aktualizacja interfejsu pieniędzy
             if hasattr(self.parent_ctrl, 'update_money_display'): 
                 self.parent_ctrl.update_money_display()
 
             # --- KOMPAKTOWE OKNO POWIADOMIENIA ---
             msg = QMessageBox(self)
             msg.setWindowTitle("Showroom")
-            # Dodajemy emoji do tekstu, brak ikony usuwa pusty obszar po lewej
             msg.setText(f"🎉 <b>Congratulations!</b><br>You've purchased <b>{veh['name']}</b>!")
-            
             msg.setStyleSheet("""
                 QMessageBox { background-color: #1a1a1a; border: none; }
                 QLabel { color: white; font-size: 14px; padding: 10px 20px; min-width: 220px; }

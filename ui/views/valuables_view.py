@@ -113,16 +113,32 @@ class ValuablesView(QFrame):
         self.list_layout.addWidget(card)
 
     def buy_item(self, item):
+        """Logika zakupu przedmiotu z zapisem do historii i powiadomieniem."""
         if self.save_data.get('balance', 0) >= item['price']:
-            self.save_data['balance'] -= item['price']
-            if 'owned_valuables' not in self.save_data: self.save_data['owned_valuables'] = []
+            # 1. Pobieramy cenę
+            price = item['price']
+            
+            # 2. Aktualizacja danych finansowych i prestiżu
+            self.save_data['balance'] -= price
+            if 'owned_valuables' not in self.save_data: 
+                self.save_data['owned_valuables'] = []
             self.save_data['owned_valuables'].append(item['id'])
             self.save_data['prestige'] = self.save_data.get('prestige', 0) + item['prestige']
             
+            # 3. DODANIE WPISU DO HISTORII
+            # Używamy kategorii "Drogocenności", aby pasowała do Dashboardu
+            if hasattr(self.parent_ctrl, 'log_transaction'):
+                self.parent_ctrl.log_transaction(
+                    "Drogocenności", 
+                    f"Zakup: {item['name']}", 
+                    -price
+                )
+            
+            # 4. Aktualizacja interfejsu pieniędzy
             if hasattr(self.parent_ctrl, 'update_money_display'): 
                 self.parent_ctrl.update_money_display()
 
-            # --- POPRAWIONE OKNO POWIADOMIENIA ---
+            # --- POWIADOMIENIE ---
             msg = QMessageBox(self)
             msg.setWindowTitle("Auction")
             msg.setText(f"✨ <b>Item Acquired!</b><br>You are now the owner of <b>{item['name']}</b>!")
@@ -135,6 +151,7 @@ class ValuablesView(QFrame):
                 }
             """)
             msg.exec()
+            
             self.refresh_list("market")
         else:
             QMessageBox.warning(self, "Bank", "Insufficient funds!")
