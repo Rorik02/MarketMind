@@ -9,6 +9,7 @@ from PyQt6.QtGui import QFont, QColor, QPalette, QPixmap
 from PyQt6.QtCore import Qt, QDate
 from utils.market_provider import MarketProvider
 
+
 class NewGameWindow(QDialog):
     """Dialog for creating a new save and player profile with difficulty settings and mode descriptions."""
 
@@ -17,6 +18,8 @@ class NewGameWindow(QDialog):
         super().__init__(parent)
         self.parent = parent
         self.theme = theme
+        provider = MarketProvider()
+        market_snapshot = provider.fetch_market_snapshot()
         self.setWindowTitle("Start New Game")
         
         # Consistent fixed size to accommodate all descriptions
@@ -298,22 +301,21 @@ class NewGameWindow(QDialog):
         dob = self.dob_picker.date().toPyDate()
         mode = self.mode_box.currentText()
         difficulty = self.diff_box.currentText()
-        provider = MarketProvider()
-        market_snapshot = provider.fetch_market_snapshot()
 
         if not name or not surname:
             QMessageBox.warning(self, "Missing Data", "Please enter your name and save name.")
             return
 
-
-        try:
-            # Tworzymy instancję i pobieramy dane z API (snapshot)
-            provider = MarketProvider()
-            market_snapshot = provider.fetch_market_snapshot()
-        except Exception as e:
-            # Fallback: jeśli nie ma internetu, tworzymy pustą strukturę, by gra nie padła
-            print(f"Błąd API: {e}")
-            market_snapshot = {"stocks": {}, "crypto": {}}
+        # --- KLUCZOWA ZMIANA ---
+        # Nie tworzymy nowego MarketProvider()! Pobieramy dane z MainWindow
+        market_snapshot = {"stocks": {}, "crypto": {}}
+        if self.parent and hasattr(self.parent, 'global_market_snapshot'):
+            market_snapshot = self.parent.global_market_snapshot
+            print("Użyto danych rynkowych załadowanych przy starcie aplikacji.")
+        else:
+            # Rezerwowy fallback tylko jeśli coś poszło nie tak w MainWindow
+            print("Ostrzeżenie: Nie znaleziono załadowanych danych, używam pustej struktury.")
+        # -----------------------
 
         starting_balances = {"Easy": 100000, "Medium": 10000, "Hard": 1000}
         balance = starting_balances.get(difficulty, 10000)
@@ -322,7 +324,6 @@ class NewGameWindow(QDialog):
         save_data = {
             "player_name": name,
             "player_surname": surname,
-            # Odejmujemy od roku symulacji, a nie od dzisiejszego realnego roku
             "player_age": (simulation_start_year - dob.year), 
             "date_of_birth": str(dob),
             "current_game_date": "2026-01-23",
@@ -337,21 +338,16 @@ class NewGameWindow(QDialog):
             "created": datetime.now().strftime("%Y-%m-%d %H:%M"),
             "primary_home": "prop_00",          
             "owned_properties": ["prop_00"],
-
-            "market_data": market_snapshot,
+            "market_data": market_snapshot, # Tu trafiają gotowe dane
             "portfolio": { "stocks": {}, "crypto": {}}
         }
 
+        # Reszta kodu bez zmian (zapisywanie do pliku i zamykanie)
         filename = f"{surname}-{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(os.path.join(self.saves_dir, filename), "w", encoding='utf-8') as f:
             json.dump(save_data, f, indent=4)
 
-        # Update the last save in theme manager
         self.theme.set_last_save(filename)
-        
-        # Trigger the transition to GameView in MainWindow
         if self.parent and hasattr(self.parent, 'start_game'):
             self.parent.start_game(save_data)
-            
-        # Close the dialog
         self.close()

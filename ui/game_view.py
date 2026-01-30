@@ -1,6 +1,7 @@
 import os
 import json
 import math
+import random
 from datetime import datetime, timedelta
 from PyQt6.QtWidgets import (QWidget, QLabel, QVBoxLayout, QHBoxLayout, 
                              QFrame, QPushButton, QStackedWidget, QMessageBox, QLineEdit)
@@ -44,6 +45,17 @@ class GameView(QWidget):
         
         self.side_menu = self.create_side_menu()
         
+        # Kluczowe: Jeśli historia giełdy jest pusta, wypełnij ją 
+        # punktem startowym przed pokazaniem interfejsu
+        market_data = self.save_data.get('market_data', {})
+        for cat in ['stocks', 'crypto']:
+            for symbol, data in market_data.get(cat, {}).items():
+                if 'history' not in data or len(data['history']) == 0:
+                    data['history'] = [{
+                        "date": self.current_datetime.strftime("%Y-%m-%d"),
+                        "price": data['current_price']
+                    }]
+
         # Workspace Stack - Zarządzanie widokami
         self.workspace_stack = QStackedWidget()
         
@@ -110,6 +122,25 @@ class GameView(QWidget):
         
         self.connect_menu_logic()
         self.apply_theme()
+        self.setup_initial_state(self.save_data)
+
+    def setup_initial_state(self, save_data):
+        """Inicjalizuje historię i odświeża widok giełdy."""
+        self.save_data = save_data
+        market_data = self.save_data.get('market_data', {})
+        for cat in ['stocks', 'crypto']:
+            items = market_data.get(cat, {})
+            for symbol, data in items.items():
+                # Tworzymy startowy punkt historii, jeśli go brakuje
+                if 'history' not in data or not data['history']:
+                    data['history'] = [{
+                        "date": self.current_datetime.strftime("%Y-%m-%d"),
+                        "price": data['current_price']
+                    }]
+        
+        # Teraz view_markets na pewno już istnieje
+        if hasattr(self, 'view_markets'):
+            self.view_markets.refresh_view(self.save_data)
 
     # --- METODY NAWIGACJI ---
     def open_home(self):
@@ -549,7 +580,7 @@ class GameView(QWidget):
             self.view_markets.refresh_view(self.save_data)
         if index == 3: # Zakładka Portfolio
             self.view_portfolio.refresh_view(self.save_data)
-        if index == 1:
+        if index == 1:  
             self.view_dashboard.refresh_view(self.save_data)
         if index == 10: # To musi tu być!
             self.view_history.refresh_view(self.save_data)
@@ -702,32 +733,29 @@ class GameView(QWidget):
             print(f"DEBUG Error: {str(e)}")
     
     def simulate_market_movement(self):
-        """Generuje losowe zmiany cen dla wszystkich aktywów w save_data."""
-        import random
+        """Symuluje zmianę cen na giełdzie przy każdym skoku czasu."""
         market_data = self.save_data.get('market_data', {})
         
-        # Przechodzimy przez obie kategorie: stocks i crypto
-        for category in ["stocks", "crypto"]:
+        for category in ['stocks', 'crypto']:
             items = market_data.get(category, {})
             for symbol, data in items.items():
-                last_price = data['current_price']
-                
-                # Ustawiamy zmienność: krypto są bardziej ryzykowne (5%) niż akcje (2%)
-                volatility = 0.05 if category == "crypto" else 0.02
-                change_pct = random.uniform(-volatility, volatility)
-                
-                # Obliczamy nową cenę
-                new_price = round(last_price * (1 + change_pct), 2)
-                
-                # Aktualizujemy dane bieżące i dopisujemy do historii wykresu
-                data['current_price'] = new_price
+                # 1. Oblicz nową cenę (losowa fluktuacja)
+                volatility = 0.02 if category == 'stocks' else 0.05
+                change = 1 + random.uniform(-volatility, volatility)
+                data['current_price'] = round(data['current_price'] * change, 2)
+
+                # 2. ZABEZPIECZENIE: Inicjalizuj listę history, jeśli jej brakuje
+                if 'history' not in data or not isinstance(data['history'], list):
+                    data['history'] = []
+
+                # 3. Dodaj nowy punkt do historii
                 data['history'].append({
                     "date": self.current_datetime.strftime("%Y-%m-%d"),
-                    "price": new_price
+                    "price": data['current_price']
                 })
-                
-                # Ograniczamy historię do 100 dni, żeby plik zapisu nie urósł za bardzo
-                if len(data['history']) > 100:
+
+                # 4. Ogranicz historię do ostatnich 30 wpisów, by nie zapchać RAMu
+                if len(data['history']) > 30:
                     data['history'].pop(0)
 
     def log_transaction(self, category, description, amount):

@@ -1,0 +1,772 @@
+{
+    "player_name": "Andrzej",
+    "player_surname": "Testowy",
+    "player_age": 26,
+    "date_of_birth": "2000-01-01",
+    "current_game_date": "2026-01-23",
+    "gender": "Male",
+    "avatar": "male1.png",
+    "mode": "Standard",
+    "difficulty": "Easy",
+    "balance": 100000,
+    "knowledge_level": 1,
+    "prestige": 0,
+    "prestige_bonus": 0,
+    "created": "2026-01-29 12:18",
+    "primary_home": "prop_00",
+    "owned_properties": [
+        "prop_00"
+    ],
+    "market_data": {
+        "stocks": {
+            "AAPL": {
+                "symbol": "AAPL",
+                "name": "Apple Inc.",
+                "current_price": 256.44,
+                "dividend_yield": 0.1025,
+                "category": "Stock"
+            },
+            "MSFT": {
+                "symbol": "MSFT",
+                "name": "Microsoft Corporation",
+                "current_price": 481.63,
+                "dividend_yield": 0.19,
+                "category": "Stock"
+            },
+            "NVDA": {
+                "symbol": "NVDA",
+                "name": "NVIDIA Corporation",
+                "current_price": 191.52,
+                "dividend_yield": 0.005,
+                "category": "Stock"
+            },
+            "AMD": {
+                "symbol": "AMD",
+                "name": "Advanced Micro Devices, Inc.",
+                "current_price": 252.74,
+                "dividend_yield": 0.0075,
+                "category": "Stock"
+            },
+            "GOOGL": {
+                "symbol": "GOOGL",
+                "name": "Alphabet Inc.",
+                "current_price": 336.01,
+                "dividend_yield": 0.0625,
+                "category": "Stock"
+            },
+            "META": {
+                "symbol": "META",
+                "name": "Meta Platforms, Inc.",
+                "current_price": 668.73,
+                "dividend_yield": 0.0775,
+                "category": "Stock"
+            },
+            "TSLA": {
+                "symbol": "TSLA",
+                "name": "Tesla, Inc.",
+                "current_price": 431.46,
+                "dividend_yield": 0.007275,
+                "category": "Stock"
+            },
+            "INTC": {
+                "symbol": "INTC",
+                "name": "Intel Corporation",
+                "current_price": 48.78,
+                "dividend_yield": 0.006575,
+                "category": "Stock"
+            },
+            "ASML": {
+                "symbol": "ASML",
+                "name": "ASML Holding N.V. - New York Re",
+                "current_price": 1422.92,
+                "dividend_yield": 0.13,
+                "category": "Stock"
+            },
+            "ORCL": {
+                "symbol": "ORCL",
+                "name": "Oracle Corporation",
+                "current_price": 172.8,
+                "dividend_yield": 0.29,
+                "category": "Stock"
+            },
+            "CRM": {
+                "symbol": "CRM",
+                "name": "Salesforce, Inc.",
+                "current_price": 227.96,
+                "dividend_yield": 0.1825,
+                "category": "Stock"
+            },
+            "ADBE": {
+                "symbol": "ADBE",
+                "name": "Adobe Inc.",
+                "current_price": 299.58,
+                "dividend_yield": 0.002675,
+                "category": "Stock"
+            },
+            "CSCO": {
+                "symbol": "CSCO",
+                "name": "Cisco Systems, Inc.",
+                "current_price": 78.96,
+                "dividend_yield": 0.52,
+                "category": "Stock"
+            },
+            "IBM": {
+                "symbol": "IBM",
+                "name": "International Business Machines",
+                "current_price": 294.16,
+                "dividend_yield": 0.57,
+                "category": "Stock"
+            },
+            "TXN": {
+                "symbol": "TXN",
+                "name": "Texas Instruments Incorporated",
+                "current_price": 216.17,
+                "dividend_yield": 0.6575,
+                "category": "Stock"
+            },
+            "QCOM": {
+                "symbol": "QCOM",
+                "name": "QUALCOMM Incorporated",
+                "current_price": 152.7,
+                "dividend_yield": 0.5825,
+                "category": "Stock"
+            },
+            "AMAT": {
+                "symbol": "AMAT",
+                "name": "Applied Materials, Inc.",
+                "current_price": 336.75,
+                "dividend_yield": 0.1375,
+                "category": "Stock"
+            },
+            "MU": {
+                "symbol": "MU",
+                "name": "Micron Technology, Inc.",
+                "current_price": 435.28,
+                "dividend_yield": 0.0275,
+                "category": "Stock"
+            },
+            "SNPS": {
+                "symbol": "SNPS",
+                "name": "Synopsys, Inc.",
+                "current_price": 511.35,
+                "dividend_yield": 0.00465,
+                "category": "Stock"
+            },
+            "PLTR": {
+                "symbol": "PLTR",
+                "name": "Palantir Technologies Inc.",
+                "current_price": 157.35,
+                "dividend_yield": 0.00225,
+                "category": "Stock"
+            },
+            "LMT": {
+                "symbol": "LMT",
+                "name": "Lockheed Martin Corporation",
+                "current_price": 597.27,
+                "dividend_yield": 0.5775,
+                "category": "Stock"
+            },
+            "BA": {
+                "symbol": "BA",
+                "name": "Boeing Company (The)",
+                "current_price": 241.59,
+                "dividend_yield": 0.006925,
+                "category": "Stock"
+            },
+            "RTX": {
+                "symbol": "RTX",
+                "name": "RTX Corporation",
+                "current_price": 199.46,
+                "dividend_yield": 0.34,
+                "category": "Stock"
+            },
+            "NOC": {
+                "symbol": "NOC",
+                "name": "Northrop Grumman Corporation",
+                "current_price": 689.13,
+                "dividend_yield": 0.335,
+                "category": "Stock"
+            },
+            "GD": {
+                "symbol": "GD",
+                "name": "General Dynamics Corporation",
+                "current_price": 356.68,
+                "dividend_yield": 0.42,
+                "category": "Stock"
+            },
+            "LHX": {
+                "symbol": "LHX",
+                "name": "L3Harris Technologies, Inc.",
+                "current_price": 360.3,
+                "dividend_yield": 0.3475,
+                "category": "Stock"
+            },
+            "BWXT": {
+                "symbol": "BWXT",
+                "name": "BWX Technologies, Inc.",
+                "current_price": 216.3,
+                "dividend_yield": 0.115,
+                "category": "Stock"
+            },
+            "AIR.PA": {
+                "symbol": "AIR.PA",
+                "name": "AIRBUS SE",
+                "current_price": 195.42,
+                "dividend_yield": 0.2575,
+                "category": "Stock"
+            },
+            "RHM.DE": {
+                "symbol": "RHM.DE",
+                "name": "RHEINMETALL AG                I",
+                "current_price": 1830.5,
+                "dividend_yield": 0.11,
+                "category": "Stock"
+            },
+            "HWM": {
+                "symbol": "HWM",
+                "name": "Howmet Aerospace Inc.",
+                "current_price": 210.84,
+                "dividend_yield": 0.055,
+                "category": "Stock"
+            },
+            "TDG": {
+                "symbol": "TDG",
+                "name": "Transdigm Group Incorporated",
+                "current_price": 1412.13,
+                "dividend_yield": 0.005575,
+                "category": "Stock"
+            },
+            "TXT": {
+                "symbol": "TXT",
+                "name": "Textron Inc.",
+                "current_price": 86.79,
+                "dividend_yield": 0.0225,
+                "category": "Stock"
+            },
+            "LDOS": {
+                "symbol": "LDOS",
+                "name": "Leidos Holdings, Inc.",
+                "current_price": 187.77,
+                "dividend_yield": 0.23,
+                "category": "Stock"
+            },
+            "HEI": {
+                "symbol": "HEI",
+                "name": "Heico Corporation",
+                "current_price": 331.11,
+                "dividend_yield": 0.0175,
+                "category": "Stock"
+            },
+            "JPM": {
+                "symbol": "JPM",
+                "name": "JP Morgan Chase & Co.",
+                "current_price": 300.77,
+                "dividend_yield": 0.4975,
+                "category": "Stock"
+            },
+            "GS": {
+                "symbol": "GS",
+                "name": "Goldman Sachs Group, Inc. (The)",
+                "current_price": 936.81,
+                "dividend_yield": 0.48,
+                "category": "Stock"
+            },
+            "V": {
+                "symbol": "V",
+                "name": "Visa Inc.",
+                "current_price": 326.98,
+                "dividend_yield": 0.205,
+                "category": "Stock"
+            },
+            "MA": {
+                "symbol": "MA",
+                "name": "Mastercard Incorporated",
+                "current_price": 521.37,
+                "dividend_yield": 0.1675,
+                "category": "Stock"
+            },
+            "HSBC": {
+                "symbol": "HSBC",
+                "name": "HSBC Holdings, plc.",
+                "current_price": 87.0,
+                "dividend_yield": 0.575,
+                "category": "Stock"
+            },
+            "BAC": {
+                "symbol": "BAC",
+                "name": "Bank of America Corporation",
+                "current_price": 51.81,
+                "dividend_yield": 0.54,
+                "category": "Stock"
+            },
+            "MS": {
+                "symbol": "MS",
+                "name": "Morgan Stanley",
+                "current_price": 182.34,
+                "dividend_yield": 0.5475,
+                "category": "Stock"
+            },
+            "AXP": {
+                "symbol": "AXP",
+                "name": "American Express Company",
+                "current_price": 356.99,
+                "dividend_yield": 0.23,
+                "category": "Stock"
+            },
+            "PYPL": {
+                "symbol": "PYPL",
+                "name": "PayPal Holdings, Inc.",
+                "current_price": 54.08,
+                "dividend_yield": 0.26,
+                "category": "Stock"
+            },
+            "PKO.WA": {
+                "symbol": "PKO.WA",
+                "name": "PKOBP",
+                "current_price": 92.14,
+                "dividend_yield": 1.4825,
+                "category": "Stock"
+            },
+            "PEO.WA": {
+                "symbol": "PEO.WA",
+                "name": "PEKAO",
+                "current_price": 217.1,
+                "dividend_yield": 2.12,
+                "category": "Stock"
+            },
+            "ING.WA": {
+                "symbol": "ING.WA",
+                "name": "INGBSK",
+                "current_price": 388.5,
+                "dividend_yield": 1.6275,
+                "category": "Stock"
+            },
+            "DBK.DE": {
+                "symbol": "DBK.DE",
+                "name": "DEUTSCHE BANK AG              N",
+                "current_price": 32.28,
+                "dividend_yield": 0.5175,
+                "category": "Stock"
+            },
+            "BNP.PA": {
+                "symbol": "BNP.PA",
+                "name": "BNP PARIBAS ACT.A",
+                "current_price": 90.26,
+                "dividend_yield": 2.04,
+                "category": "Stock"
+            },
+            "BLK": {
+                "symbol": "BLK",
+                "name": "BlackRock, Inc.",
+                "current_price": 1121.67,
+                "dividend_yield": 0.465,
+                "category": "Stock"
+            },
+            "XOM": {
+                "symbol": "XOM",
+                "name": "Exxon Mobil Corporation",
+                "current_price": 137.58,
+                "dividend_yield": 0.7475,
+                "category": "Stock"
+            },
+            "SHEL": {
+                "symbol": "SHEL",
+                "name": "Shell PLC",
+                "current_price": 75.79,
+                "dividend_yield": 0.945,
+                "category": "Stock"
+            },
+            "RIO": {
+                "symbol": "RIO",
+                "name": "Rio Tinto Plc",
+                "current_price": 93.37,
+                "dividend_yield": 0.9975,
+                "category": "Stock"
+            },
+            "BP": {
+                "symbol": "BP",
+                "name": "BP p.l.c.",
+                "current_price": 37.7,
+                "dividend_yield": 1.325,
+                "category": "Stock"
+            },
+            "CVX": {
+                "symbol": "CVX",
+                "name": "Chevron Corporation",
+                "current_price": 169.93,
+                "dividend_yield": 1.0075,
+                "category": "Stock"
+            },
+            "TTE.PA": {
+                "symbol": "TTE.PA",
+                "name": "TOTALENERGIES",
+                "current_price": 61.08,
+                "dividend_yield": 1.4175,
+                "category": "Stock"
+            },
+            "COP": {
+                "symbol": "COP",
+                "name": "ConocoPhillips",
+                "current_price": 101.39,
+                "dividend_yield": 0.8275,
+                "category": "Stock"
+            },
+            "SLB": {
+                "symbol": "SLB",
+                "name": "SLB Limited",
+                "current_price": 48.87,
+                "dividend_yield": 0.6025,
+                "category": "Stock"
+            },
+            "EOG": {
+                "symbol": "EOG",
+                "name": "EOG Resources, Inc.",
+                "current_price": 111.02,
+                "dividend_yield": 0.92,
+                "category": "Stock"
+            },
+            "KGH.WA": {
+                "symbol": "KGH.WA",
+                "name": "KGHM",
+                "current_price": 383.6,
+                "dividend_yield": 0.002375,
+                "category": "Stock"
+            },
+            "PGE.WA": {
+                "symbol": "PGE.WA",
+                "name": "PGE",
+                "current_price": 9.65,
+                "dividend_yield": 0.00625,
+                "category": "Stock"
+            },
+            "PKN.WA": {
+                "symbol": "PKN.WA",
+                "name": "PKNORLEN",
+                "current_price": 107.68,
+                "dividend_yield": 1.43,
+                "category": "Stock"
+            },
+            "VALE": {
+                "symbol": "VALE",
+                "name": "VALE S.A.",
+                "current_price": 16.76,
+                "dividend_yield": 1.8625,
+                "category": "Stock"
+            },
+            "FCX": {
+                "symbol": "FCX",
+                "name": "Freeport-McMoRan, Inc.",
+                "current_price": 63.63,
+                "dividend_yield": 0.235,
+                "category": "Stock"
+            },
+            "NEM": {
+                "symbol": "NEM",
+                "name": "Newmont Corporation",
+                "current_price": 131.95,
+                "dividend_yield": 0.19,
+                "category": "Stock"
+            },
+            "AMZN": {
+                "symbol": "AMZN",
+                "name": "Amazon.com, Inc.",
+                "current_price": 243.01,
+                "dividend_yield": 0.00615,
+                "category": "Stock"
+            },
+            "WMT": {
+                "symbol": "WMT",
+                "name": "Walmart Inc.",
+                "current_price": 116.57,
+                "dividend_yield": 0.2025,
+                "category": "Stock"
+            },
+            "COST": {
+                "symbol": "COST",
+                "name": "Costco Wholesale Corporation",
+                "current_price": 960.78,
+                "dividend_yield": 0.135,
+                "category": "Stock"
+            },
+            "PG": {
+                "symbol": "PG",
+                "name": "Procter & Gamble Company (The)",
+                "current_price": 147.34,
+                "dividend_yield": 0.7175,
+                "category": "Stock"
+            },
+            "KO": {
+                "symbol": "KO",
+                "name": "Coca-Cola Company (The)",
+                "current_price": 73.06,
+                "dividend_yield": 0.6975,
+                "category": "Stock"
+            },
+            "PEP": {
+                "symbol": "PEP",
+                "name": "Pepsico, Inc.",
+                "current_price": 148.5,
+                "dividend_yield": 0.9575,
+                "category": "Stock"
+            },
+            "NKE": {
+                "symbol": "NKE",
+                "name": "Nike, Inc.",
+                "current_price": 62.24,
+                "dividend_yield": 0.6575,
+                "category": "Stock"
+            },
+            "EL": {
+                "symbol": "EL",
+                "name": "Estee Lauder Companies, Inc. (T",
+                "current_price": 114.62,
+                "dividend_yield": 0.305,
+                "category": "Stock"
+            },
+            "OR.PA": {
+                "symbol": "OR.PA",
+                "name": "L'OREAL",
+                "current_price": 383.2,
+                "dividend_yield": 0.46,
+                "category": "Stock"
+            },
+            "ALE.WA": {
+                "symbol": "ALE.WA",
+                "name": "ALLEGRO",
+                "current_price": 30.35,
+                "dividend_yield": 0.00675,
+                "category": "Stock"
+            },
+            "MCD": {
+                "symbol": "MCD",
+                "name": "McDonald's Corporation",
+                "current_price": 312.8,
+                "dividend_yield": 0.595,
+                "category": "Stock"
+            },
+            "SBUX": {
+                "symbol": "SBUX",
+                "name": "Starbucks Corporation",
+                "current_price": 95.16,
+                "dividend_yield": 0.6525,
+                "category": "Stock"
+            },
+            "TGT": {
+                "symbol": "TGT",
+                "name": "Target Corporation",
+                "current_price": 101.74,
+                "dividend_yield": 1.12,
+                "category": "Stock"
+            },
+            "PFE": {
+                "symbol": "PFE",
+                "name": "Pfizer, Inc.",
+                "current_price": 25.86,
+                "dividend_yield": 1.6625,
+                "category": "Stock"
+            },
+            "JNJ": {
+                "symbol": "JNJ",
+                "name": "Johnson & Johnson",
+                "current_price": 227.72,
+                "dividend_yield": 0.57,
+                "category": "Stock"
+            },
+            "UNH": {
+                "symbol": "UNH",
+                "name": "UnitedHealth Group Incorporated",
+                "current_price": 294.02,
+                "dividend_yield": 0.7525,
+                "category": "Stock"
+            },
+            "LLY": {
+                "symbol": "LLY",
+                "name": "Eli Lilly and Company",
+                "current_price": 1023.8,
+                "dividend_yield": 0.1525,
+                "category": "Stock"
+            },
+            "ABBV": {
+                "symbol": "ABBV",
+                "name": "AbbVie Inc.",
+                "current_price": 218.67,
+                "dividend_yield": 0.76,
+                "category": "Stock"
+            },
+            "MRK": {
+                "symbol": "MRK",
+                "name": "Merck & Company, Inc.",
+                "current_price": 106.9,
+                "dividend_yield": 0.795,
+                "category": "Stock"
+            },
+            "AZN": {
+                "symbol": "AZN",
+                "name": "Astrazeneca PLC",
+                "current_price": 93.22,
+                "dividend_yield": 0.42,
+                "category": "Stock"
+            },
+            "NVS": {
+                "symbol": "NVS",
+                "name": "Novartis AG",
+                "current_price": 147.87,
+                "dividend_yield": 0.675,
+                "category": "Stock"
+            },
+            "MRNA": {
+                "symbol": "MRNA",
+                "name": "Moderna, Inc.",
+                "current_price": 45.3,
+                "dividend_yield": 0.0049,
+                "category": "Stock"
+            },
+            "TMO": {
+                "symbol": "TMO",
+                "name": "Thermo Fisher Scientific Inc",
+                "current_price": 608.02,
+                "dividend_yield": 0.07,
+                "category": "Stock"
+            },
+            "F": {
+                "symbol": "F",
+                "name": "Ford Motor Company",
+                "current_price": 13.82,
+                "dividend_yield": 1.085,
+                "category": "Stock"
+            },
+            "GM": {
+                "symbol": "GM",
+                "name": "General Motors Company",
+                "current_price": 84.9,
+                "dividend_yield": 0.2125,
+                "category": "Stock"
+            },
+            "VOW3.DE": {
+                "symbol": "VOW3.DE",
+                "name": "VOLKSWAGEN AG                 V",
+                "current_price": 104.1,
+                "dividend_yield": 1.545,
+                "category": "Stock"
+            },
+            "BMW.DE": {
+                "symbol": "BMW.DE",
+                "name": "BAYERISCHE MOTOREN WERKE AG   S",
+                "current_price": 87.68,
+                "dividend_yield": 1.235,
+                "category": "Stock"
+            },
+            "PAH3.DE": {
+                "symbol": "PAH3.DE",
+                "name": "Porsche Automobil Holding SE  I",
+                "current_price": 36.31,
+                "dividend_yield": 1.3175,
+                "category": "Stock"
+            },
+            "CAT": {
+                "symbol": "CAT",
+                "name": "Caterpillar, Inc.",
+                "current_price": 643.28,
+                "dividend_yield": 0.235,
+                "category": "Stock"
+            },
+            "DE": {
+                "symbol": "DE",
+                "name": "Deere & Company",
+                "current_price": 525.01,
+                "dividend_yield": 0.3075,
+                "category": "Stock"
+            },
+            "MMM": {
+                "symbol": "MMM",
+                "name": "3M Company",
+                "current_price": 155.94,
+                "dividend_yield": 0.4675,
+                "category": "Stock"
+            },
+            "GE": {
+                "symbol": "GE",
+                "name": "GE Aerospace",
+                "current_price": 292.48,
+                "dividend_yield": 0.1225,
+                "category": "Stock"
+            },
+            "HON": {
+                "symbol": "HON",
+                "name": "Honeywell International Inc.",
+                "current_price": 216.64,
+                "dividend_yield": 0.5275,
+                "category": "Stock"
+            }
+        },
+        "crypto": {
+            "BTC-USD": {
+                "symbol": "BTC-USD",
+                "name": "Bitcoin USD",
+                "current_price": 87815.72,
+                "dividend_yield": 0.001475,
+                "category": "Crypto"
+            },
+            "ETH-USD": {
+                "symbol": "ETH-USD",
+                "name": "Ethereum USD",
+                "current_price": 2934.14,
+                "dividend_yield": 0.005475,
+                "category": "Crypto"
+            },
+            "BNB-USD": {
+                "symbol": "BNB-USD",
+                "name": "BNB USD",
+                "current_price": 894.24,
+                "dividend_yield": 0.003475,
+                "category": "Crypto"
+            },
+            "SOL-USD": {
+                "symbol": "SOL-USD",
+                "name": "Solana USD",
+                "current_price": 122.91,
+                "dividend_yield": 0.0032,
+                "category": "Crypto"
+            },
+            "DOGE-USD": {
+                "symbol": "DOGE-USD",
+                "name": "Dogecoin USD",
+                "current_price": 0.12,
+                "dividend_yield": 0.0074,
+                "category": "Crypto"
+            },
+            "XRP-USD": {
+                "symbol": "XRP-USD",
+                "name": "XRP USD",
+                "current_price": 1.87,
+                "dividend_yield": 0.007025,
+                "category": "Crypto"
+            },
+            "ADA-USD": {
+                "symbol": "ADA-USD",
+                "name": "Cardano USD",
+                "current_price": 0.35,
+                "dividend_yield": 0.003675,
+                "category": "Crypto"
+            },
+            "DOT-USD": {
+                "symbol": "DOT-USD",
+                "name": "Polkadot USD",
+                "current_price": 1.79,
+                "dividend_yield": 0.001725,
+                "category": "Crypto"
+            },
+            "LINK-USD": {
+                "symbol": "LINK-USD",
+                "name": "Chainlink USD",
+                "current_price": 11.54,
+                "dividend_yield": 0.00555,
+                "category": "Crypto"
+            }
+        }
+    },
+    "portfolio": {
+        "stocks": {},
+        "crypto": {}
+    }
+}
