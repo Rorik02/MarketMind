@@ -1,5 +1,6 @@
 import pyqtgraph as pg
 import math
+import os
 from PyQt6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel, 
                              QLineEdit, QPushButton, QWidget, QMessageBox)
 from PyQt6.QtCore import Qt
@@ -10,7 +11,12 @@ class StockChartWindow(QDialog):
         super().__init__(parent)
         self.symbol = symbol
         self.history_data = history_data
-        self.current_price = history_data[-1]['price']
+        
+        # Zabezpieczenie na wypadek braku historii
+        if not history_data:
+            self.current_price = 0
+        else:
+            self.current_price = history_data[-1]['price']
         
         self.setWindowTitle(f"Market Chart - {symbol}")
         self.setMinimumSize(1000, 600)
@@ -38,7 +44,9 @@ class StockChartWindow(QDialog):
         self.right_panel.setSpacing(15)
         self.right_panel.setContentsMargins(10, 0, 0, 0)
         
-        title = QLabel(f"TRADE {symbol}")
+        # Dynamiczny tytuł z sektorem
+        title_text = f"TRADE {symbol}"
+        title = QLabel(title_text)
         title.setStyleSheet("font-size: 20px; font-weight: bold; color: #2ecc71;")
         self.right_panel.addWidget(title)
 
@@ -46,7 +54,7 @@ class StockChartWindow(QDialog):
         self.price_display.setStyleSheet("font-size: 15px; color: #aaaaaa;")
         self.right_panel.addWidget(self.price_display)
 
-        # --- NOWY LAYOUT DLA WEJŚCIA ILOŚCI Z PRZYCISKIEM MAX ---
+        # Layout wejścia ilości z przyciskiem MAX
         input_container = QHBoxLayout()
         input_container.setSpacing(0)
         
@@ -92,10 +100,10 @@ class StockChartWindow(QDialog):
         self.right_panel.addStretch() 
         self.main_layout.addLayout(self.right_panel, 1)
 
-        self.setup_chart_data()
+        if history_data:
+            self.setup_chart_data()
 
     def calculate_max_amount(self):
-        """Oblicza maksymalną liczbę akcji na podstawie balansu gracza."""
         main_game = self.find_main_game()
         if main_game and self.current_price > 0:
             balance = main_game.save_data.get('balance', 0)
@@ -103,7 +111,6 @@ class StockChartWindow(QDialog):
             self.amount_input.setText(str(max_qty))
 
     def find_main_game(self):
-        """Pomocnicza funkcja do znajdowania głównego obiektu GameView."""
         curr = self.parent()
         while curr is not None:
             if hasattr(curr, 'save_data') and hasattr(curr, 'log_transaction'):
@@ -117,14 +124,20 @@ class StockChartWindow(QDialog):
         self.raw_dates = [point['date'] for point in self.history_data]
 
         ticks = []
-        for i, date_str in enumerate(self.raw_dates):
-            if i % 5 == 0:
-                ticks.append((i, date_str[5:]))
+        num_ticks = 6
+        if len(self.raw_dates) > 0:
+            step = max(1, len(self.raw_dates) // num_ticks)
+            for i in range(0, len(self.raw_dates), step):
+                full_date = self.raw_dates[i] 
+                short_date = "-".join(full_date.split("-")[1:]) 
+                ticks.append((i, short_date))
+                
         ax = self.plot_widget.getAxis('bottom')
         ax.setTicks([ticks])
 
         pen = pg.mkPen(color='#3a96dd', width=3)
         self.plot_widget.plot(self.dates, self.prices, pen=pen)
+        self.plot_widget.plot(self.dates, self.prices, pen=None, symbol='o', symbolSize=5, symbolBrush='#3a96dd')
 
         self.vLine = pg.InfiniteLine(angle=90, movable=False, pen='#ffffff55')
         self.hLine = pg.InfiniteLine(angle=0, movable=False, pen='#ffffff55')
@@ -134,7 +147,8 @@ class StockChartWindow(QDialog):
 
     def update_total_cost(self):
         try:
-            amount = float(self.amount_input.text().replace(',', '.'))
+            text = self.amount_input.text().replace(',', '.')
+            amount = float(text) if text else 0
             total = amount * self.current_price
             self.total_cost_lbl.setText(f"Total Cost: ${total:,.2f}")
         except ValueError:
@@ -151,14 +165,13 @@ class StockChartWindow(QDialog):
                 self.info_label.setText(f"📅 Date: {self.raw_dates[index]} | 💰 Price: ${self.prices[index]:,.2f}")
 
     def execute_trade(self):
-        """Finalizuje transakcję z logowaniem do historii."""
         try:
             main_game = self.find_main_game()
             if not main_game: return
 
-            amount_text = self.amount_input.text().strip()
+            amount_text = self.amount_input.text().strip().replace(',', '.')
             if not amount_text: return
-            amount = float(amount_text.replace(',', '.'))
+            amount = float(amount_text)
             if amount <= 0: return
 
             total_cost = amount * self.current_price
@@ -167,25 +180,37 @@ class StockChartWindow(QDialog):
                 QMessageBox.warning(self, "Brak środków", "Nie stać Cię na ten zakup!")
                 return
 
-            # Aktualizacja portfela
+            # Logika portfela
             market_data = main_game.save_data.get('market_data', {})
+            # Sprawdzamy w której sekcji jest symbol, aby pobrać kategorię
             p_key = "stocks" if self.symbol in market_data.get('stocks', {}) else "crypto"
+            asset_info = market_data[p_key][self.symbol]
+            
+            # Pobieramy/Tworzymy sekcję portfela
+            if 'portfolio' not in main_game.save_data:
+                main_game.save_data['portfolio'] = {"stocks": {}, "crypto": {}}
             
             portfolio = main_game.save_data['portfolio'].setdefault(p_key, {})
-            p_item = portfolio.setdefault(self.symbol, {"amount": 0, "avg_price": 0})
+            p_item = portfolio.setdefault(self.symbol, {"amount": 0, "avg_price": 0, "name": asset_info['name']})
             
+            # Obliczanie nowej średniej ceny (Weighted Average)
+            current_total_value = p_item["amount"] * p_item["avg_price"]
             new_amount = p_item["amount"] + amount
-            new_avg = ((p_item["amount"] * p_item["avg_price"]) + total_cost) / new_amount
+            new_avg = (current_total_value + total_cost) / new_amount
             
-            portfolio[self.symbol] = {"amount": new_amount, "avg_price": round(new_avg, 2)}
+            p_item["amount"] = new_amount
+            p_item["avg_price"] = round(new_avg, 2)
+            
             main_game.save_data['balance'] -= total_cost
             
-            # --- LOGOWANIE I ODŚWIEŻANIE ---
+            # Logowanie i odświeżanie
             main_game.log_transaction("Giełda", f"Zakup {amount} {self.symbol}", -total_cost)
             main_game.update_money_display() 
             
             if hasattr(main_game, 'view_home'):
                 main_game.view_home.refresh_view(main_game.save_data)
+            if hasattr(main_game, 'view_markets'):
+                main_game.view_markets.refresh_view(main_game.save_data)
 
             QMessageBox.information(self, "Sukces", f"Kupiono {amount} jednostek {self.symbol}!")
             self.accept()

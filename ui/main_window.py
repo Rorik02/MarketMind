@@ -4,7 +4,7 @@ from PyQt6.QtCore import Qt
 from ui.main_menu import MainMenu
 from ui.game_view import GameView 
 from core.theme_manager import ThemeManager
-from utils.market_provider import MarketProvider  # Importujemy providera
+from utils.market_provider import MarketProvider
 
 class MainWindow(QMainWindow):
     """Główne okno obsługujące logikę startową i widoki."""
@@ -58,9 +58,3 @@ class MainWindow(QMainWindow):
         from ui.main_menu import MainMenu
         self.menu = MainMenu(self)
         self.setCentralWidget(self.menu)
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())

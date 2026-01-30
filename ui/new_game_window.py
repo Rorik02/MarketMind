@@ -18,8 +18,8 @@ class NewGameWindow(QDialog):
         super().__init__(parent)
         self.parent = parent
         self.theme = theme
-        provider = MarketProvider()
-        market_snapshot = provider.fetch_market_snapshot()
+        #provider = MarketProvider()
+        #market_snapshot = provider.fetch_market_snapshot()
         self.setWindowTitle("Start New Game")
         
         # Consistent fixed size to accommodate all descriptions
@@ -309,12 +309,10 @@ class NewGameWindow(QDialog):
         # --- KLUCZOWA ZMIANA ---
         # Nie tworzymy nowego MarketProvider()! Pobieramy dane z MainWindow
         market_snapshot = {"stocks": {}, "crypto": {}}
-        if self.parent and hasattr(self.parent, 'global_market_snapshot'):
+        if hasattr(self.parent, 'global_market_snapshot'):
             market_snapshot = self.parent.global_market_snapshot
-            print("Użyto danych rynkowych załadowanych przy starcie aplikacji.")
-        else:
-            # Rezerwowy fallback tylko jeśli coś poszło nie tak w MainWindow
-            print("Ostrzeżenie: Nie znaleziono załadowanych danych, używam pustej struktury.")
+        elif hasattr(self.parent, 'parent') and hasattr(self.parent.parent, 'global_market_snapshot'):
+            market_snapshot = self.parent.parent.global_market_snapshot
         # -----------------------
 
         starting_balances = {"Easy": 100000, "Medium": 10000, "Hard": 1000}
@@ -338,7 +336,7 @@ class NewGameWindow(QDialog):
             "created": datetime.now().strftime("%Y-%m-%d %H:%M"),
             "primary_home": "prop_00",          
             "owned_properties": ["prop_00"],
-            "market_data": market_snapshot, # Tu trafiają gotowe dane
+            "market_data": market_snapshot,
             "portfolio": { "stocks": {}, "crypto": {}}
         }
 

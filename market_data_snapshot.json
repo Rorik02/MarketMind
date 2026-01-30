@@ -3,16 +3,8 @@
         "AAPL": {
             "symbol": "AAPL",
             "name": "Apple Inc.",
-            "current_price": 256.44,
+            "current_price": 255.45,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 246.7
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 247.65
-                },
                 {
                     "date": "2026-01-22",
                     "price": 248.35
@@ -32,24 +24,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 256.44
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 258.28
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 255.45
                 }
             ],
-            "dividend_yield": 0.1025,
+            "dividend_yield": 0.00485,
             "category": "Stock"
         },
         "MSFT": {
             "symbol": "MSFT",
             "name": "Microsoft Corporation",
-            "current_price": 481.63,
+            "current_price": 431.94,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 454.52
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 444.11
-                },
                 {
                     "date": "2026-01-22",
                     "price": 451.14
@@ -69,24 +61,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 481.63
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 433.5
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 431.94
                 }
             ],
-            "dividend_yield": 0.19,
+            "dividend_yield": 0.0031,
             "category": "Stock"
         },
         "NVDA": {
             "symbol": "NVDA",
             "name": "NVIDIA Corporation",
-            "current_price": 191.52,
+            "current_price": 191.44,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 178.07
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 183.32
-                },
                 {
                     "date": "2026-01-22",
                     "price": 184.84
@@ -106,6 +98,14 @@
                 {
                     "date": "2026-01-28",
                     "price": 191.52
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 192.51
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 191.44
                 }
             ],
             "dividend_yield": 0.005,
@@ -114,16 +114,8 @@
         "AMD": {
             "symbol": "AMD",
             "name": "Advanced Micro Devices, Inc.",
-            "current_price": 252.74,
+            "current_price": 239.28,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 231.92
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 249.8
-                },
                 {
                     "date": "2026-01-22",
                     "price": 253.73
@@ -143,24 +135,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 252.74
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 252.18
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 239.28
                 }
             ],
-            "dividend_yield": 0.007125,
+            "dividend_yield": 0.0078,
             "category": "Stock"
         },
         "GOOGL": {
             "symbol": "GOOGL",
             "name": "Alphabet Inc.",
-            "current_price": 336.01,
+            "current_price": 337.74,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 322.0
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 328.38
-                },
                 {
                     "date": "2026-01-22",
                     "price": 330.54
@@ -180,24 +172,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 336.01
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 338.25
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 337.74
                 }
             ],
-            "dividend_yield": 0.0625,
+            "dividend_yield": 0.003575,
             "category": "Stock"
         },
         "META": {
             "symbol": "META",
             "name": "Meta Platforms, Inc.",
-            "current_price": 668.73,
+            "current_price": 717.24,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 604.12
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 612.96
-                },
                 {
                     "date": "2026-01-22",
                     "price": 647.63
@@ -217,24 +209,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 668.73
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 738.31
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 717.24
                 }
             ],
-            "dividend_yield": 0.0775,
+            "dividend_yield": 0.005575,
             "category": "Stock"
         },
         "TSLA": {
             "symbol": "TSLA",
             "name": "Tesla, Inc.",
-            "current_price": 431.46,
+            "current_price": 434.72,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 419.25
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 431.44
-                },
                 {
                     "date": "2026-01-22",
                     "price": 449.36
@@ -254,24 +246,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 431.46
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 416.56
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 434.72
                 }
             ],
-            "dividend_yield": 0.0069,
+            "dividend_yield": 0.008075,
             "category": "Stock"
         },
         "INTC": {
             "symbol": "INTC",
             "name": "Intel Corporation",
-            "current_price": 48.78,
+            "current_price": 47.46,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 48.56
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 54.25
-                },
                 {
                     "date": "2026-01-22",
                     "price": 54.32
@@ -291,24 +283,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 48.78
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 48.66
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 47.46
                 }
             ],
-            "dividend_yield": 0.0035,
+            "dividend_yield": 0.00545,
             "category": "Stock"
         },
         "ASML": {
             "symbol": "ASML",
             "name": "ASML Holding N.V. - New York Re",
-            "current_price": 1422.92,
+            "current_price": 1431.17,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 1326.07
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 1360.09
-                },
                 {
                     "date": "2026-01-22",
                     "price": 1395.0
@@ -328,24 +320,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 1422.92
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 1455.16
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 1431.17
                 }
             ],
-            "dividend_yield": 0.13,
+            "dividend_yield": 0.005475,
             "category": "Stock"
         },
         "ORCL": {
             "symbol": "ORCL",
             "name": "Oracle Corporation",
-            "current_price": 172.8,
+            "current_price": 165.45,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 179.92
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 173.88
-                },
                 {
                     "date": "2026-01-22",
                     "price": 178.18
@@ -365,24 +357,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 172.8
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 169.01
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 165.45
                 }
             ],
-            "dividend_yield": 0.29,
+            "dividend_yield": 0.002825,
             "category": "Stock"
         },
         "CRM": {
             "symbol": "CRM",
             "name": "Salesforce, Inc.",
-            "current_price": 227.96,
+            "current_price": 212.1,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 220.07
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 221.58
-                },
                 {
                     "date": "2026-01-22",
                     "price": 228.09
@@ -402,24 +394,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 227.96
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 214.08
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 212.1
                 }
             ],
-            "dividend_yield": 0.1825,
+            "dividend_yield": 0.00145,
             "category": "Stock"
         },
         "ADBE": {
             "symbol": "ADBE",
             "name": "Adobe Inc.",
-            "current_price": 299.58,
+            "current_price": 293.15,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 290.37
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 294.23
-                },
                 {
                     "date": "2026-01-22",
                     "price": 299.73
@@ -439,24 +431,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 299.58
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 291.65
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 293.15
                 }
             ],
-            "dividend_yield": 0.004975,
+            "dividend_yield": 0.00755,
             "category": "Stock"
         },
         "CSCO": {
             "symbol": "CSCO",
             "name": "Cisco Systems, Inc.",
-            "current_price": 78.96,
+            "current_price": 78.29,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 73.35
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 73.69
-                },
                 {
                     "date": "2026-01-22",
                     "price": 74.33
@@ -476,24 +468,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 78.96
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 78.43
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 78.29
                 }
             ],
-            "dividend_yield": 0.52,
+            "dividend_yield": 0.0075,
             "category": "Stock"
         },
         "IBM": {
             "symbol": "IBM",
             "name": "International Business Machines",
-            "current_price": 294.16,
+            "current_price": 304.94,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 291.35
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 297.54
-                },
                 {
                     "date": "2026-01-22",
                     "price": 294.67
@@ -513,24 +505,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 294.16
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 309.24
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 304.94
                 }
             ],
-            "dividend_yield": 0.57,
+            "dividend_yield": 0.007925,
             "category": "Stock"
         },
         "TXN": {
             "symbol": "TXN",
             "name": "Texas Instruments Incorporated",
-            "current_price": 216.17,
+            "current_price": 214.09,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 189.59
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 194.41
-                },
                 {
                     "date": "2026-01-22",
                     "price": 194.99
@@ -550,24 +542,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 216.17
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 218.97
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 214.09
                 }
             ],
-            "dividend_yield": 0.6575,
+            "dividend_yield": 0.0086,
             "category": "Stock"
         },
         "QCOM": {
             "symbol": "QCOM",
             "name": "QUALCOMM Incorporated",
-            "current_price": 152.7,
+            "current_price": 151.63,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 154.07
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 156.37
-                },
                 {
                     "date": "2026-01-22",
                     "price": 157.8
@@ -587,24 +579,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 152.7
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 152.22
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 151.63
                 }
             ],
-            "dividend_yield": 0.5825,
+            "dividend_yield": 0.009125,
             "category": "Stock"
         },
         "AMAT": {
             "symbol": "AMAT",
             "name": "Applied Materials, Inc.",
-            "current_price": 336.75,
+            "current_price": 327.41,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 318.23
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 325.24
-                },
                 {
                     "date": "2026-01-22",
                     "price": 318.79
@@ -624,24 +616,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 336.75
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 341.34
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 327.41
                 }
             ],
-            "dividend_yield": 0.1375,
+            "dividend_yield": 0.002425,
             "category": "Stock"
         },
         "MU": {
             "symbol": "MU",
             "name": "Micron Technology, Inc.",
-            "current_price": 435.28,
+            "current_price": 427.4,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 365.0
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 389.11
-                },
                 {
                     "date": "2026-01-22",
                     "price": 397.58
@@ -661,6 +653,14 @@
                 {
                     "date": "2026-01-28",
                     "price": 435.28
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 435.79
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 427.4
                 }
             ],
             "dividend_yield": 0.0275,
@@ -669,16 +669,8 @@
         "SNPS": {
             "symbol": "SNPS",
             "name": "Synopsys, Inc.",
-            "current_price": 511.35,
+            "current_price": 466.68,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 510.97
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 521.95
-                },
                 {
                     "date": "2026-01-22",
                     "price": 509.47
@@ -698,24 +690,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 511.35
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 480.0
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 466.68
                 }
             ],
-            "dividend_yield": 0.003275,
+            "dividend_yield": 0.0045,
             "category": "Stock"
         },
         "PLTR": {
             "symbol": "PLTR",
             "name": "Palantir Technologies Inc.",
-            "current_price": 157.35,
+            "current_price": 147.46,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 168.53
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 165.33
-                },
                 {
                     "date": "2026-01-22",
                     "price": 165.9
@@ -735,24 +727,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 157.35
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 151.86
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 147.46
                 }
             ],
-            "dividend_yield": 0.001875,
+            "dividend_yield": 0.00405,
             "category": "Stock"
         },
         "LMT": {
             "symbol": "LMT",
             "name": "Lockheed Martin Corporation",
-            "current_price": 597.27,
+            "current_price": 626.78,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 576.06
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 586.23
-                },
                 {
                     "date": "2026-01-22",
                     "price": 593.91
@@ -772,24 +764,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 597.27
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 622.51
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 626.78
                 }
             ],
-            "dividend_yield": 0.5775,
+            "dividend_yield": 0.006725,
             "category": "Stock"
         },
         "BA": {
             "symbol": "BA",
             "name": "Boeing Company (The)",
-            "current_price": 241.59,
+            "current_price": 230.61,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 249.0
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 250.07
-                },
                 {
                     "date": "2026-01-22",
                     "price": 251.41
@@ -809,24 +801,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 241.59
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 234.04
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 230.61
                 }
             ],
-            "dividend_yield": 0.00705,
+            "dividend_yield": 0.00155,
             "category": "Stock"
         },
         "RTX": {
             "symbol": "RTX",
             "name": "RTX Corporation",
-            "current_price": 199.46,
+            "current_price": 198.05,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 196.36
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 197.5
-                },
                 {
                     "date": "2026-01-22",
                     "price": 196.34
@@ -846,24 +838,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 199.46
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 199.88
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 198.05
                 }
             ],
-            "dividend_yield": 0.34,
+            "dividend_yield": 0.004225,
             "category": "Stock"
         },
         "NOC": {
             "symbol": "NOC",
             "name": "Northrop Grumman Corporation",
-            "current_price": 689.13,
+            "current_price": 682.83,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 657.3
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 664.16
-                },
                 {
                     "date": "2026-01-22",
                     "price": 670.44
@@ -883,24 +875,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 689.13
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 695.35
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 682.83
                 }
             ],
-            "dividend_yield": 0.335,
+            "dividend_yield": 0.005875,
             "category": "Stock"
         },
         "GD": {
             "symbol": "GD",
             "name": "General Dynamics Corporation",
-            "current_price": 356.68,
+            "current_price": 348.85,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 359.17
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 364.78
-                },
                 {
                     "date": "2026-01-22",
                     "price": 365.83
@@ -920,24 +912,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 356.68
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 349.95
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 348.85
                 }
             ],
-            "dividend_yield": 0.42,
+            "dividend_yield": 0.001625,
             "category": "Stock"
         },
         "LHX": {
             "symbol": "LHX",
             "name": "L3Harris Technologies, Inc.",
-            "current_price": 360.3,
+            "current_price": 340.98,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 342.33
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 347.81
-                },
                 {
                     "date": "2026-01-22",
                     "price": 355.75
@@ -957,24 +949,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 360.3
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 356.02
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 340.98
                 }
             ],
-            "dividend_yield": 0.3475,
+            "dividend_yield": 0.006425,
             "category": "Stock"
         },
         "BWXT": {
             "symbol": "BWXT",
             "name": "BWX Technologies, Inc.",
-            "current_price": 216.3,
+            "current_price": 204.29,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 206.07
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 209.52
-                },
                 {
                     "date": "2026-01-22",
                     "price": 206.33
@@ -994,20 +986,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 216.3
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 210.18
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 204.29
                 }
             ],
-            "dividend_yield": 0.115,
+            "dividend_yield": 0.00145,
             "category": "Stock"
         },
         "AIR.PA": {
             "symbol": "AIR.PA",
             "name": "AIRBUS SE",
-            "current_price": 195.1,
+            "current_price": 193.4,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 207.4
-                },
                 {
                     "date": "2026-01-22",
                     "price": 206.75
@@ -1030,21 +1026,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 195.1
+                    "price": 194.0
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 193.4
                 }
             ],
-            "dividend_yield": 0.2575,
+            "dividend_yield": 0.00715,
             "category": "Stock"
         },
         "RHM.DE": {
             "symbol": "RHM.DE",
             "name": "RHEINMETALL AG                I",
-            "current_price": 1831.5,
+            "current_price": 1781.5,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 1853.5
-                },
                 {
                     "date": "2026-01-22",
                     "price": 1790.5
@@ -1067,25 +1063,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 1831.5
+                    "price": 1795.5
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 1781.5
                 }
             ],
-            "dividend_yield": 0.11,
+            "dividend_yield": 0.007275,
             "category": "Stock"
         },
         "HWM": {
             "symbol": "HWM",
             "name": "Howmet Aerospace Inc.",
-            "current_price": 210.84,
+            "current_price": 208.84,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 220.36
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 225.0
-                },
                 {
                     "date": "2026-01-22",
                     "price": 217.7
@@ -1105,24 +1097,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 210.84
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 208.93
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 208.84
                 }
             ],
-            "dividend_yield": 0.055,
+            "dividend_yield": 0.00225,
             "category": "Stock"
         },
         "TDG": {
             "symbol": "TDG",
             "name": "Transdigm Group Incorporated",
-            "current_price": 1412.13,
+            "current_price": 1413.03,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 1448.55
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 1449.98
-                },
                 {
                     "date": "2026-01-22",
                     "price": 1420.52
@@ -1142,24 +1134,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 1412.13
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 1422.0
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 1413.03
                 }
             ],
-            "dividend_yield": 0.001575,
+            "dividend_yield": 0.009275,
             "category": "Stock"
         },
         "TXT": {
             "symbol": "TXT",
             "name": "Textron Inc.",
-            "current_price": 86.79,
+            "current_price": 87.99,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 93.16
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 96.32
-                },
                 {
                     "date": "2026-01-22",
                     "price": 96.03
@@ -1179,6 +1171,14 @@
                 {
                     "date": "2026-01-28",
                     "price": 86.79
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 87.82
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 87.99
                 }
             ],
             "dividend_yield": 0.0225,
@@ -1187,16 +1187,8 @@
         "LDOS": {
             "symbol": "LDOS",
             "name": "Leidos Holdings, Inc.",
-            "current_price": 187.77,
+            "current_price": 185.73,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 190.92
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 192.12
-                },
                 {
                     "date": "2026-01-22",
                     "price": 193.45
@@ -1216,24 +1208,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 187.77
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 187.19
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 185.73
                 }
             ],
-            "dividend_yield": 0.23,
+            "dividend_yield": 0.004925,
             "category": "Stock"
         },
         "HEI": {
             "symbol": "HEI",
             "name": "Heico Corporation",
-            "current_price": 331.11,
+            "current_price": 329.0,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 344.52
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 347.75
-                },
                 {
                     "date": "2026-01-22",
                     "price": 339.44
@@ -1253,6 +1245,14 @@
                 {
                     "date": "2026-01-28",
                     "price": 331.11
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 331.96
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 329.0
                 }
             ],
             "dividend_yield": 0.0175,
@@ -1261,16 +1261,8 @@
         "JPM": {
             "symbol": "JPM",
             "name": "JP Morgan Chase & Co.",
-            "current_price": 300.77,
+            "current_price": 303.71,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 302.74
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 302.04
-                },
                 {
                     "date": "2026-01-22",
                     "price": 303.63
@@ -1290,24 +1282,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 300.77
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 306.42
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 303.71
                 }
             ],
-            "dividend_yield": 0.4975,
+            "dividend_yield": 0.006,
             "category": "Stock"
         },
         "GS": {
             "symbol": "GS",
             "name": "Goldman Sachs Group, Inc. (The)",
-            "current_price": 936.81,
+            "current_price": 927.86,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 943.37
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 953.01
-                },
                 {
                     "date": "2026-01-22",
                     "price": 954.65
@@ -1327,24 +1319,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 936.81
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 940.12
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 927.86
                 }
             ],
-            "dividend_yield": 0.48,
+            "dividend_yield": 0.006325,
             "category": "Stock"
         },
         "V": {
             "symbol": "V",
             "name": "Visa Inc.",
-            "current_price": 326.98,
+            "current_price": 323.84,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 325.82
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 325.28
-                },
                 {
                     "date": "2026-01-22",
                     "price": 326.36
@@ -1364,24 +1356,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 326.98
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 331.8
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 323.84
                 }
             ],
-            "dividend_yield": 0.205,
+            "dividend_yield": 0.003375,
             "category": "Stock"
         },
         "MA": {
             "symbol": "MA",
             "name": "Mastercard Incorporated",
-            "current_price": 521.37,
+            "current_price": 539.65,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 531.74
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 527.57
-                },
                 {
                     "date": "2026-01-22",
                     "price": 532.86
@@ -1401,24 +1393,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 521.37
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 543.73
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 539.65
                 }
             ],
-            "dividend_yield": 0.1675,
+            "dividend_yield": 0.00975,
             "category": "Stock"
         },
         "HSBC": {
             "symbol": "HSBC",
             "name": "HSBC Holdings, plc.",
-            "current_price": 87.0,
+            "current_price": 87.69,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 82.5
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 83.17
-                },
                 {
                     "date": "2026-01-22",
                     "price": 83.75
@@ -1438,24 +1430,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 87.0
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 88.54
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 87.69
                 }
             ],
-            "dividend_yield": 0.575,
+            "dividend_yield": 0.009925,
             "category": "Stock"
         },
         "BAC": {
             "symbol": "BAC",
             "name": "Bank of America Corporation",
-            "current_price": 51.81,
+            "current_price": 52.91,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 52.1
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 52.07
-                },
                 {
                     "date": "2026-01-22",
                     "price": 52.45
@@ -1475,24 +1467,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 51.81
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 53.08
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 52.91
                 }
             ],
-            "dividend_yield": 0.54,
+            "dividend_yield": 0.0077,
             "category": "Stock"
         },
         "MS": {
             "symbol": "MS",
             "name": "Morgan Stanley",
-            "current_price": 182.34,
+            "current_price": 180.93,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 182.1
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 183.32
-                },
                 {
                     "date": "2026-01-22",
                     "price": 183.05
@@ -1512,24 +1504,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 182.34
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 182.4
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 180.93
                 }
             ],
-            "dividend_yield": 0.5475,
+            "dividend_yield": 0.0025,
             "category": "Stock"
         },
         "AXP": {
             "symbol": "AXP",
             "name": "American Express Company",
-            "current_price": 356.99,
+            "current_price": 345.79,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 352.19
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 359.61
-                },
                 {
                     "date": "2026-01-22",
                     "price": 368.02
@@ -1549,24 +1541,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 356.99
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 358.5
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 345.79
                 }
             ],
-            "dividend_yield": 0.23,
+            "dividend_yield": 0.00415,
             "category": "Stock"
         },
         "PYPL": {
             "symbol": "PYPL",
             "name": "PayPal Holdings, Inc.",
-            "current_price": 54.08,
+            "current_price": 52.25,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 55.08
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 55.89
-                },
                 {
                     "date": "2026-01-22",
                     "price": 57.15
@@ -1586,20 +1578,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 54.08
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 53.11
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 52.25
                 }
             ],
-            "dividend_yield": 0.26,
+            "dividend_yield": 0.00685,
             "category": "Stock"
         },
         "PKO.WA": {
             "symbol": "PKO.WA",
             "name": "PKOBP",
-            "current_price": 92.26,
+            "current_price": 92.58,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 87.34
-                },
                 {
                     "date": "2026-01-22",
                     "price": 90.16
@@ -1622,21 +1618,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 92.26
+                    "price": 90.82
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 92.58
                 }
             ],
-            "dividend_yield": 1.4825,
+            "dividend_yield": 0.006875,
             "category": "Stock"
         },
         "PEO.WA": {
             "symbol": "PEO.WA",
             "name": "PEKAO",
-            "current_price": 217.0,
+            "current_price": 216.8,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 207.2
-                },
                 {
                     "date": "2026-01-22",
                     "price": 215.5
@@ -1659,10 +1655,14 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 217.0
+                    "price": 212.8
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 216.8
                 }
             ],
-            "dividend_yield": 2.12,
+            "dividend_yield": 0.00715,
             "category": "Stock"
         },
         "ING.WA": {
@@ -1670,10 +1670,6 @@
             "name": "INGBSK",
             "current_price": 388.0,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 359.0
-                },
                 {
                     "date": "2026-01-22",
                     "price": 366.0
@@ -1696,21 +1692,21 @@
                 },
                 {
                     "date": "2026-01-29",
+                    "price": 385.0
+                },
+                {
+                    "date": "2026-01-30",
                     "price": 388.0
                 }
             ],
-            "dividend_yield": 1.6275,
+            "dividend_yield": 0.0061,
             "category": "Stock"
         },
         "DBK.DE": {
             "symbol": "DBK.DE",
             "name": "DEUTSCHE BANK AG              N",
-            "current_price": 32.83,
+            "current_price": 33.3,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 32.11
-                },
                 {
                     "date": "2026-01-22",
                     "price": 33.4
@@ -1733,21 +1729,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 32.83
+                    "price": 32.46
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 33.3
                 }
             ],
-            "dividend_yield": 0.5175,
+            "dividend_yield": 0.005,
             "category": "Stock"
         },
         "BNP.PA": {
             "symbol": "BNP.PA",
             "name": "BNP PARIBAS ACT.A",
-            "current_price": 90.64,
+            "current_price": 91.2,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 85.76
-                },
                 {
                     "date": "2026-01-22",
                     "price": 88.35
@@ -1770,25 +1766,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 90.64
+                    "price": 90.04
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 91.2
                 }
             ],
-            "dividend_yield": 2.04,
+            "dividend_yield": 0.0098,
             "category": "Stock"
         },
         "BLK": {
             "symbol": "BLK",
             "name": "BlackRock, Inc.",
-            "current_price": 1121.67,
+            "current_price": 1107.61,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 1110.05
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 1127.85
-                },
                 {
                     "date": "2026-01-22",
                     "price": 1139.72
@@ -1808,24 +1800,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 1121.67
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 1127.78
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 1107.61
                 }
             ],
-            "dividend_yield": 0.465,
+            "dividend_yield": 0.0038,
             "category": "Stock"
         },
         "XOM": {
             "symbol": "XOM",
             "name": "Exxon Mobil Corporation",
-            "current_price": 137.58,
+            "current_price": 138.4,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 130.46
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 133.61
-                },
                 {
                     "date": "2026-01-22",
                     "price": 133.64
@@ -1845,24 +1837,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 137.58
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 140.51
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 138.4
                 }
             ],
-            "dividend_yield": 0.7475,
+            "dividend_yield": 0.003375,
             "category": "Stock"
         },
         "SHEL": {
             "symbol": "SHEL",
             "name": "Shell PLC",
-            "current_price": 75.79,
+            "current_price": 76.35,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 73.11
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 73.81
-                },
                 {
                     "date": "2026-01-22",
                     "price": 72.42
@@ -1882,24 +1874,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 75.79
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 77.47
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 76.35
                 }
             ],
-            "dividend_yield": 0.945,
+            "dividend_yield": 0.0014,
             "category": "Stock"
         },
         "RIO": {
             "symbol": "RIO",
             "name": "Rio Tinto Plc",
-            "current_price": 93.37,
+            "current_price": 90.45,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 85.68
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 88.84
-                },
                 {
                     "date": "2026-01-22",
                     "price": 87.3
@@ -1919,24 +1911,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 93.37
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 95.13
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 90.45
                 }
             ],
-            "dividend_yield": 0.9975,
+            "dividend_yield": 0.009425,
             "category": "Stock"
         },
         "BP": {
             "symbol": "BP",
             "name": "BP p.l.c.",
-            "current_price": 37.7,
+            "current_price": 37.62,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 35.15
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 35.92
-                },
                 {
                     "date": "2026-01-22",
                     "price": 35.43
@@ -1956,24 +1948,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 37.7
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 38.04
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 37.62
                 }
             ],
-            "dividend_yield": 1.325,
+            "dividend_yield": 0.00805,
             "category": "Stock"
         },
         "CVX": {
             "symbol": "CVX",
             "name": "Chevron Corporation",
-            "current_price": 169.93,
+            "current_price": 172.96,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 165.3
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 166.73
-                },
                 {
                     "date": "2026-01-22",
                     "price": 166.66
@@ -1993,20 +1985,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 169.93
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 171.19
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 172.96
                 }
             ],
-            "dividend_yield": 1.0075,
+            "dividend_yield": 0.006675,
             "category": "Stock"
         },
         "TTE.PA": {
             "symbol": "TTE.PA",
             "name": "TOTALENERGIES",
-            "current_price": 60.97,
+            "current_price": 61.15,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 57.75
-                },
                 {
                     "date": "2026-01-22",
                     "price": 57.24
@@ -2029,25 +2025,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 60.97
+                    "price": 60.82
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 61.15
                 }
             ],
-            "dividend_yield": 1.4175,
+            "dividend_yield": 0.005325,
             "category": "Stock"
         },
         "COP": {
             "symbol": "COP",
             "name": "ConocoPhillips",
-            "current_price": 101.39,
+            "current_price": 102.57,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 95.52
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 97.15
-                },
                 {
                     "date": "2026-01-22",
                     "price": 96.88
@@ -2067,24 +2059,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 101.39
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 102.8
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 102.57
                 }
             ],
-            "dividend_yield": 0.8275,
+            "dividend_yield": 0.0072,
             "category": "Stock"
         },
         "SLB": {
             "symbol": "SLB",
             "name": "SLB Limited",
-            "current_price": 48.87,
+            "current_price": 47.62,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 46.45
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 48.52
-                },
                 {
                     "date": "2026-01-22",
                     "price": 49.32
@@ -2104,24 +2096,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 48.87
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 48.45
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 47.62
                 }
             ],
-            "dividend_yield": 0.6025,
+            "dividend_yield": 0.0069,
             "category": "Stock"
         },
         "EOG": {
             "symbol": "EOG",
             "name": "EOG Resources, Inc.",
-            "current_price": 111.02,
+            "current_price": 110.52,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 106.21
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 108.05
-                },
                 {
                     "date": "2026-01-22",
                     "price": 106.32
@@ -2141,20 +2133,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 111.02
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 112.08
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 110.52
                 }
             ],
-            "dividend_yield": 0.92,
+            "dividend_yield": 0.00455,
             "category": "Stock"
         },
         "KGH.WA": {
             "symbol": "KGH.WA",
             "name": "KGHM",
-            "current_price": 384.0,
+            "current_price": 332.1,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 319.9
-                },
                 {
                     "date": "2026-01-22",
                     "price": 313.5
@@ -2177,21 +2173,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 384.0
+                    "price": 371.9
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 332.1
                 }
             ],
-            "dividend_yield": 0.00735,
+            "dividend_yield": 0.001275,
             "category": "Stock"
         },
         "PGE.WA": {
             "symbol": "PGE.WA",
             "name": "PGE",
-            "current_price": 9.71,
+            "current_price": 10.04,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 8.99
-                },
                 {
                     "date": "2026-01-22",
                     "price": 9.32
@@ -2214,21 +2210,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 9.71
+                    "price": 9.54
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 10.04
                 }
             ],
-            "dividend_yield": 0.00735,
+            "dividend_yield": 0.0027,
             "category": "Stock"
         },
         "PKN.WA": {
             "symbol": "PKN.WA",
             "name": "PKNORLEN",
-            "current_price": 107.78,
+            "current_price": 107.96,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 98.93
-                },
                 {
                     "date": "2026-01-22",
                     "price": 104.98
@@ -2251,25 +2247,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 107.78
+                    "price": 106.48
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 107.96
                 }
             ],
-            "dividend_yield": 1.43,
+            "dividend_yield": 0.00655,
             "category": "Stock"
         },
         "VALE": {
             "symbol": "VALE",
             "name": "VALE S.A.",
-            "current_price": 16.76,
+            "current_price": 16.1,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 14.93
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 15.57
-                },
                 {
                     "date": "2026-01-22",
                     "price": 15.74
@@ -2289,24 +2281,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 16.76
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 16.94
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 16.1
                 }
             ],
-            "dividend_yield": 1.8625,
+            "dividend_yield": 0.004575,
             "category": "Stock"
         },
         "FCX": {
             "symbol": "FCX",
             "name": "Freeport-McMoRan, Inc.",
-            "current_price": 63.63,
+            "current_price": 59.34,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 60.07
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 60.58
-                },
                 {
                     "date": "2026-01-22",
                     "price": 58.85
@@ -2326,24 +2318,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 63.63
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 65.13
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 59.34
                 }
             ],
-            "dividend_yield": 0.235,
+            "dividend_yield": 0.00855,
             "category": "Stock"
         },
         "NEM": {
             "symbol": "NEM",
             "name": "Newmont Corporation",
-            "current_price": 131.95,
+            "current_price": 112.58,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 118.94
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 118.91
-                },
                 {
                     "date": "2026-01-22",
                     "price": 121.69
@@ -2363,24 +2355,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 131.95
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 126.93
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 112.58
                 }
             ],
-            "dividend_yield": 0.19,
+            "dividend_yield": 0.009175,
             "category": "Stock"
         },
         "AMZN": {
             "symbol": "AMZN",
             "name": "Amazon.com, Inc.",
-            "current_price": 243.01,
+            "current_price": 238.82,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 231.0
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 231.31
-                },
                 {
                     "date": "2026-01-22",
                     "price": 234.34
@@ -2400,24 +2392,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 243.01
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 241.73
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 238.82
                 }
             ],
-            "dividend_yield": 0.007525,
+            "dividend_yield": 0.003775,
             "category": "Stock"
         },
         "WMT": {
             "symbol": "WMT",
             "name": "Walmart Inc.",
-            "current_price": 116.57,
+            "current_price": 117.76,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 118.71
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 119.36
-                },
                 {
                     "date": "2026-01-22",
                     "price": 117.83
@@ -2437,24 +2429,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 116.57
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 117.41
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 117.76
                 }
             ],
-            "dividend_yield": 0.2025,
+            "dividend_yield": 0.00845,
             "category": "Stock"
         },
         "COST": {
             "symbol": "COST",
             "name": "Costco Wholesale Corporation",
-            "current_price": 960.78,
+            "current_price": 933.76,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 964.26
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 982.86
-                },
                 {
                     "date": "2026-01-22",
                     "price": 976.17
@@ -2474,24 +2466,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 960.78
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 952.89
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 933.76
                 }
             ],
-            "dividend_yield": 0.135,
+            "dividend_yield": 0.004375,
             "category": "Stock"
         },
         "PG": {
             "symbol": "PG",
             "name": "Procter & Gamble Company (The)",
-            "current_price": 147.34,
+            "current_price": 150.24,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 145.96
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 145.03
-                },
                 {
                     "date": "2026-01-22",
                     "price": 148.87
@@ -2511,24 +2503,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 147.34
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 149.9
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 150.24
                 }
             ],
-            "dividend_yield": 0.7175,
+            "dividend_yield": 0.00425,
             "category": "Stock"
         },
         "KO": {
             "symbol": "KO",
             "name": "Coca-Cola Company (The)",
-            "current_price": 73.06,
+            "current_price": 73.9,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 71.75
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 72.01
-                },
                 {
                     "date": "2026-01-22",
                     "price": 71.87
@@ -2548,24 +2540,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 73.06
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 73.43
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 73.9
                 }
             ],
-            "dividend_yield": 0.6975,
+            "dividend_yield": 0.00985,
             "category": "Stock"
         },
         "PEP": {
             "symbol": "PEP",
             "name": "Pepsico, Inc.",
-            "current_price": 148.5,
+            "current_price": 150.16,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 147.66
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 146.74
-                },
                 {
                     "date": "2026-01-22",
                     "price": 144.4
@@ -2585,24 +2577,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 148.5
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 148.69
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 150.16
                 }
             ],
-            "dividend_yield": 0.9575,
+            "dividend_yield": 0.0015,
             "category": "Stock"
         },
         "NKE": {
             "symbol": "NKE",
             "name": "Nike, Inc.",
-            "current_price": 62.24,
+            "current_price": 61.28,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 63.63
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 65.41
-                },
                 {
                     "date": "2026-01-22",
                     "price": 65.46
@@ -2622,24 +2614,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 62.24
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 62.6
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 61.28
                 }
             ],
-            "dividend_yield": 0.6575,
+            "dividend_yield": 0.0056,
             "category": "Stock"
         },
         "EL": {
             "symbol": "EL",
             "name": "Estee Lauder Companies, Inc. (T",
-            "current_price": 114.62,
+            "current_price": 114.41,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 114.46
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 117.87
-                },
                 {
                     "date": "2026-01-22",
                     "price": 119.49
@@ -2659,20 +2651,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 114.62
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 115.21
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 114.41
                 }
             ],
-            "dividend_yield": 0.305,
+            "dividend_yield": 0.009225,
             "category": "Stock"
         },
         "OR.PA": {
             "symbol": "OR.PA",
             "name": "L'OREAL",
-            "current_price": 384.85,
+            "current_price": 387.0,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 385.4
-                },
                 {
                     "date": "2026-01-22",
                     "price": 387.25
@@ -2695,21 +2691,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 384.85
+                    "price": 388.1
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 387.0
                 }
             ],
-            "dividend_yield": 0.46,
+            "dividend_yield": 0.005175,
             "category": "Stock"
         },
         "ALE.WA": {
             "symbol": "ALE.WA",
             "name": "ALLEGRO",
-            "current_price": 30.39,
+            "current_price": 29.22,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 29.95
-                },
                 {
                     "date": "2026-01-22",
                     "price": 30.55
@@ -2732,25 +2728,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 30.39
+                    "price": 30.1
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 29.22
                 }
             ],
-            "dividend_yield": 0.00725,
+            "dividend_yield": 0.0072,
             "category": "Stock"
         },
         "MCD": {
             "symbol": "MCD",
             "name": "McDonald's Corporation",
-            "current_price": 312.8,
+            "current_price": 313.52,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 302.84
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 305.69
-                },
                 {
                     "date": "2026-01-22",
                     "price": 306.03
@@ -2770,24 +2762,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 312.8
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 315.51
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 313.52
                 }
             ],
-            "dividend_yield": 0.595,
+            "dividend_yield": 0.006,
             "category": "Stock"
         },
         "SBUX": {
             "symbol": "SBUX",
             "name": "Starbucks Corporation",
-            "current_price": 95.16,
+            "current_price": 91.69,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 93.66
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 96.43
-                },
                 {
                     "date": "2026-01-22",
                     "price": 95.83
@@ -2807,24 +2799,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 95.16
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 93.88
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 91.69
                 }
             ],
-            "dividend_yield": 0.6525,
+            "dividend_yield": 0.002125,
             "category": "Stock"
         },
         "TGT": {
             "symbol": "TGT",
             "name": "Target Corporation",
-            "current_price": 101.74,
+            "current_price": 104.07,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 109.34
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 106.04
-                },
                 {
                     "date": "2026-01-22",
                     "price": 106.5
@@ -2844,24 +2836,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 101.74
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 102.84
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 104.07
                 }
             ],
-            "dividend_yield": 1.12,
+            "dividend_yield": 0.008875,
             "category": "Stock"
         },
         "PFE": {
             "symbol": "PFE",
             "name": "Pfizer, Inc.",
-            "current_price": 25.86,
+            "current_price": 26.26,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 25.1
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 25.46
-                },
                 {
                     "date": "2026-01-22",
                     "price": 25.67
@@ -2881,24 +2873,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 25.86
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 26.1
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 26.26
                 }
             ],
-            "dividend_yield": 1.6625,
+            "dividend_yield": 0.0016,
             "category": "Stock"
         },
         "JNJ": {
             "symbol": "JNJ",
             "name": "Johnson & Johnson",
-            "current_price": 227.72,
+            "current_price": 227.02,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 218.21
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 218.01
-                },
                 {
                     "date": "2026-01-22",
                     "price": 218.49
@@ -2918,24 +2910,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 227.72
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 227.29
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 227.02
                 }
             ],
-            "dividend_yield": 0.57,
+            "dividend_yield": 0.008425,
             "category": "Stock"
         },
         "UNH": {
             "symbol": "UNH",
             "name": "UnitedHealth Group Incorporated",
-            "current_price": 294.02,
+            "current_price": 286.82,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 338.43
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 347.75
-                },
                 {
                     "date": "2026-01-22",
                     "price": 354.47
@@ -2955,24 +2947,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 294.02
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 292.29
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 286.82
                 }
             ],
-            "dividend_yield": 0.7525,
+            "dividend_yield": 0.009625,
             "category": "Stock"
         },
         "LLY": {
             "symbol": "LLY",
             "name": "Eli Lilly and Company",
-            "current_price": 1023.8,
+            "current_price": 1040.92,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 1041.29
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 1078.52
-                },
                 {
                     "date": "2026-01-22",
                     "price": 1087.38
@@ -2992,24 +2984,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 1023.8
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 1024.14
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 1040.92
                 }
             ],
-            "dividend_yield": 0.1525,
+            "dividend_yield": 0.00875,
             "category": "Stock"
         },
         "ABBV": {
             "symbol": "ABBV",
             "name": "AbbVie Inc.",
-            "current_price": 218.67,
+            "current_price": 220.93,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 214.04
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 216.15
-                },
                 {
                     "date": "2026-01-22",
                     "price": 218.11
@@ -3029,24 +3021,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 218.67
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 220.43
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 220.93
                 }
             ],
-            "dividend_yield": 0.76,
+            "dividend_yield": 0.0043,
             "category": "Stock"
         },
         "MRK": {
             "symbol": "MRK",
             "name": "Merck & Company, Inc.",
-            "current_price": 106.9,
+            "current_price": 109.86,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 109.45
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 111.11
-                },
                 {
                     "date": "2026-01-22",
                     "price": 109.18
@@ -3066,24 +3058,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 106.9
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 108.34
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 109.86
                 }
             ],
-            "dividend_yield": 0.795,
+            "dividend_yield": 0.0047,
             "category": "Stock"
         },
         "AZN": {
             "symbol": "AZN",
             "name": "Astrazeneca PLC",
-            "current_price": 93.22,
+            "current_price": 93.18,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 89.94
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 90.54
-                },
                 {
                     "date": "2026-01-22",
                     "price": 91.69
@@ -3103,24 +3095,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 93.22
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 92.59
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 93.18
                 }
             ],
-            "dividend_yield": 0.42,
+            "dividend_yield": 0.00835,
             "category": "Stock"
         },
         "NVS": {
             "symbol": "NVS",
             "name": "Novartis AG",
-            "current_price": 147.87,
+            "current_price": 148.38,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 143.58
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 145.11
-                },
                 {
                     "date": "2026-01-22",
                     "price": 145.0
@@ -3140,24 +3132,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 147.87
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 148.91
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 148.38
                 }
             ],
-            "dividend_yield": 0.675,
+            "dividend_yield": 0.004675,
             "category": "Stock"
         },
         "MRNA": {
             "symbol": "MRNA",
             "name": "Moderna, Inc.",
-            "current_price": 45.3,
+            "current_price": 43.96,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 43.0
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 49.81
-                },
                 {
                     "date": "2026-01-22",
                     "price": 51.87
@@ -3177,24 +3169,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 45.3
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 46.86
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 43.96
                 }
             ],
-            "dividend_yield": 0.001625,
+            "dividend_yield": 0.0015,
             "category": "Stock"
         },
         "TMO": {
             "symbol": "TMO",
             "name": "Thermo Fisher Scientific Inc",
-            "current_price": 608.02,
+            "current_price": 577.76,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 619.01
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 636.3
-                },
                 {
                     "date": "2026-01-22",
                     "price": 639.45
@@ -3214,24 +3206,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 608.02
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 592.16
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 577.76
                 }
             ],
-            "dividend_yield": 0.07,
+            "dividend_yield": 0.009725,
             "category": "Stock"
         },
         "F": {
             "symbol": "F",
             "name": "Ford Motor Company",
-            "current_price": 13.82,
+            "current_price": 13.88,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 13.28
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 13.77
-                },
                 {
                     "date": "2026-01-22",
                     "price": 13.71
@@ -3251,24 +3243,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 13.82
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 14.0
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 13.88
                 }
             ],
-            "dividend_yield": 1.085,
+            "dividend_yield": 0.0068,
             "category": "Stock"
         },
         "GM": {
             "symbol": "GM",
             "name": "General Motors Company",
-            "current_price": 84.9,
+            "current_price": 83.76,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 77.81
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 80.93
-                },
                 {
                     "date": "2026-01-22",
                     "price": 81.14
@@ -3288,20 +3280,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 84.9
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 86.26
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 83.76
                 }
             ],
-            "dividend_yield": 0.2125,
+            "dividend_yield": 0.0024,
             "category": "Stock"
         },
         "VOW3.DE": {
             "symbol": "VOW3.DE",
             "name": "VOLKSWAGEN AG                 V",
-            "current_price": 104.15,
+            "current_price": 102.65,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 98.86
-                },
                 {
                     "date": "2026-01-22",
                     "price": 105.3
@@ -3324,21 +3320,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 104.15
+                    "price": 103.55
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 102.65
                 }
             ],
-            "dividend_yield": 1.545,
+            "dividend_yield": 0.008325,
             "category": "Stock"
         },
         "BMW.DE": {
             "symbol": "BMW.DE",
             "name": "BAYERISCHE MOTOREN WERKE AG   S",
-            "current_price": 87.56,
+            "current_price": 87.42,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 86.74
-                },
                 {
                     "date": "2026-01-22",
                     "price": 87.92
@@ -3361,21 +3357,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 87.56
+                    "price": 87.12
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 87.42
                 }
             ],
-            "dividend_yield": 1.235,
+            "dividend_yield": 0.00385,
             "category": "Stock"
         },
         "PAH3.DE": {
             "symbol": "PAH3.DE",
             "name": "Porsche Automobil Holding SE  I",
-            "current_price": 36.36,
+            "current_price": 36.24,
             "history": [
-                {
-                    "date": "2026-01-21",
-                    "price": 36.1
-                },
                 {
                     "date": "2026-01-22",
                     "price": 37.66
@@ -3398,25 +3394,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 36.36
+                    "price": 36.27
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 36.24
                 }
             ],
-            "dividend_yield": 1.3175,
+            "dividend_yield": 0.0038,
             "category": "Stock"
         },
         "CAT": {
             "symbol": "CAT",
             "name": "Caterpillar, Inc.",
-            "current_price": 643.28,
+            "current_price": 653.78,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 629.0
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 645.38
-                },
                 {
                     "date": "2026-01-22",
                     "price": 648.41
@@ -3436,24 +3428,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 643.28
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 665.24
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 653.78
                 }
             ],
-            "dividend_yield": 0.235,
+            "dividend_yield": 0.004625,
             "category": "Stock"
         },
         "DE": {
             "symbol": "DE",
             "name": "Deere & Company",
-            "current_price": 525.01,
+            "current_price": 521.69,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 508.68
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 529.51
-                },
                 {
                     "date": "2026-01-22",
                     "price": 522.38
@@ -3473,24 +3465,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 525.01
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 530.07
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 521.69
                 }
             ],
-            "dividend_yield": 0.3075,
+            "dividend_yield": 0.006975,
             "category": "Stock"
         },
         "MMM": {
             "symbol": "MMM",
             "name": "3M Company",
-            "current_price": 155.94,
+            "current_price": 152.8,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 156.12
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 155.88
-                },
                 {
                     "date": "2026-01-22",
                     "price": 160.63
@@ -3510,24 +3502,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 155.94
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 156.38
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 152.8
                 }
             ],
-            "dividend_yield": 0.4675,
+            "dividend_yield": 0.0078,
             "category": "Stock"
         },
         "GE": {
             "symbol": "GE",
             "name": "GE Aerospace",
-            "current_price": 292.48,
+            "current_price": 305.49,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 312.34
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 318.5
-                },
                 {
                     "date": "2026-01-22",
                     "price": 295.0
@@ -3547,24 +3539,24 @@
                 {
                     "date": "2026-01-28",
                     "price": 292.48
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 298.86
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 305.49
                 }
             ],
-            "dividend_yield": 0.1225,
+            "dividend_yield": 0.002775,
             "category": "Stock"
         },
         "HON": {
             "symbol": "HON",
             "name": "Honeywell International Inc.",
-            "current_price": 216.64,
+            "current_price": 226.33,
             "history": [
-                {
-                    "date": "2026-01-20",
-                    "price": 215.07
-                },
-                {
-                    "date": "2026-01-21",
-                    "price": 219.17
-                },
                 {
                     "date": "2026-01-22",
                     "price": 222.54
@@ -3584,9 +3576,17 @@
                 {
                     "date": "2026-01-28",
                     "price": 216.64
+                },
+                {
+                    "date": "2026-01-29",
+                    "price": 227.24
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 226.33
                 }
             ],
-            "dividend_yield": 0.5275,
+            "dividend_yield": 0.002725,
             "category": "Stock"
         }
     },
@@ -3594,12 +3594,8 @@
         "BTC-USD": {
             "symbol": "BTC-USD",
             "name": "Bitcoin USD",
-            "current_price": 87649.06,
+            "current_price": 82765.09,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 89503.88
-                },
                 {
                     "date": "2026-01-24",
                     "price": 89110.73
@@ -3622,21 +3618,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 87649.06
+                    "price": 84561.59
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 82765.09
                 }
             ],
-            "dividend_yield": 0.003475,
+            "dividend_yield": 0.00445,
             "category": "Crypto"
         },
         "ETH-USD": {
             "symbol": "ETH-USD",
             "name": "Ethereum USD",
-            "current_price": 2925.8,
+            "current_price": 2702.6,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 2953.26
-                },
                 {
                     "date": "2026-01-24",
                     "price": 2948.74
@@ -3659,21 +3655,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 2925.8
+                    "price": 2818.23
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 2702.6
                 }
             ],
-            "dividend_yield": 0.005675,
+            "dividend_yield": 0.00625,
             "category": "Crypto"
         },
         "BNB-USD": {
             "symbol": "BNB-USD",
             "name": "BNB USD",
-            "current_price": 893.37,
+            "current_price": 846.69,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 890.77
-                },
                 {
                     "date": "2026-01-24",
                     "price": 886.18
@@ -3696,21 +3692,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 893.37
+                    "price": 867.1
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 846.69
                 }
             ],
-            "dividend_yield": 0.00315,
+            "dividend_yield": 0.0019,
             "category": "Crypto"
         },
         "SOL-USD": {
             "symbol": "SOL-USD",
             "name": "Solana USD",
-            "current_price": 122.68,
+            "current_price": 116.22,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 127.36
-                },
                 {
                     "date": "2026-01-24",
                     "price": 127.05
@@ -3733,10 +3729,14 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 122.68
+                    "price": 117.61
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 116.22
                 }
             ],
-            "dividend_yield": 0.008575,
+            "dividend_yield": 0.0096,
             "category": "Crypto"
         },
         "DOGE-USD": {
@@ -3744,10 +3744,6 @@
             "name": "Dogecoin USD",
             "current_price": 0.12,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 0.12
-                },
                 {
                     "date": "2026-01-24",
                     "price": 0.12
@@ -3771,20 +3767,20 @@
                 {
                     "date": "2026-01-29",
                     "price": 0.12
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 0.12
                 }
             ],
-            "dividend_yield": 0.00415,
+            "dividend_yield": 0.007975,
             "category": "Crypto"
         },
         "XRP-USD": {
             "symbol": "XRP-USD",
             "name": "XRP USD",
-            "current_price": 1.87,
+            "current_price": 1.75,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 1.92
-                },
                 {
                     "date": "2026-01-24",
                     "price": 1.91
@@ -3807,21 +3803,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 1.87
+                    "price": 1.81
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 1.75
                 }
             ],
-            "dividend_yield": 0.0023,
+            "dividend_yield": 0.001975,
             "category": "Crypto"
         },
         "ADA-USD": {
             "symbol": "ADA-USD",
             "name": "Cardano USD",
-            "current_price": 0.35,
+            "current_price": 0.32,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 0.36
-                },
                 {
                     "date": "2026-01-24",
                     "price": 0.36
@@ -3844,21 +3840,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 0.35
+                    "price": 0.33
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 0.32
                 }
             ],
-            "dividend_yield": 0.005275,
+            "dividend_yield": 0.00485,
             "category": "Crypto"
         },
         "DOT-USD": {
             "symbol": "DOT-USD",
             "name": "Polkadot USD",
-            "current_price": 1.79,
+            "current_price": 1.69,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 1.92
-                },
                 {
                     "date": "2026-01-24",
                     "price": 1.93
@@ -3881,21 +3877,21 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 1.79
+                    "price": 1.73
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 1.69
                 }
             ],
-            "dividend_yield": 0.005525,
+            "dividend_yield": 0.00755,
             "category": "Crypto"
         },
         "LINK-USD": {
             "symbol": "LINK-USD",
             "name": "Chainlink USD",
-            "current_price": 11.54,
+            "current_price": 10.76,
             "history": [
-                {
-                    "date": "2026-01-23",
-                    "price": 12.21
-                },
                 {
                     "date": "2026-01-24",
                     "price": 12.19
@@ -3918,10 +3914,14 @@
                 },
                 {
                     "date": "2026-01-29",
-                    "price": 11.54
+                    "price": 11.1
+                },
+                {
+                    "date": "2026-01-30",
+                    "price": 10.76
                 }
             ],
-            "dividend_yield": 0.008225,
+            "dividend_yield": 0.00195,
             "category": "Crypto"
         }
     }

@@ -19,15 +19,22 @@ from ui.views.portfolio_view import PortfolioView
 from ui.views.dashboard_view import DashboardView
 from ui.views.history_view import HistoryView
 from ui.views.bank_view import BankView
+from utils.event_manager import EventManager
 
 class GameView(QWidget):
     def __init__(self, parent=None, theme=None, save_data=None):
         super().__init__(parent)
         self.parent = parent
-        self.theme = theme
-        self.save_data = save_data or {}
         
-        # Inicjalizacja czasu
+        # 1. NAJPIERW PRZYPISUJEMY DANE (To musi być na samym początku!)
+        self.theme = theme # <--- TO ROZWIĄZUJE TWÓJ OBECNY BŁĄD
+        self.save_data = save_data or {}
+        self.time_btns = [] # <--- BEZPIECZNIK (pusta lista)
+        
+        # 2. INICJALIZACJA MANAGERA EVENTÓW
+        self.event_manager = EventManager()
+        
+        # 3. KONFIGURACJA CZASU
         date_str = self.save_data.get('created', '2026-01-14 00:00')
         self.current_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
 
@@ -35,94 +42,59 @@ class GameView(QWidget):
         self.main_layout.setContentsMargins(15, 15, 15, 15)
         self.main_layout.setSpacing(15)
 
-        # 1. HEADER
+        # 4. TWORZENIE ELEMENTÓW INTERFEJSU (Wypełni self.time_btns)
+        # Przenosimy to wyżej, aby obiekty istniały przed widokami
         self.header = self.create_header()
-        self.main_layout.addWidget(self.header)
-
-        # 2. CONTENT AREA
+        
+        # 5. CONTENT AREA I WIDOKI MODULARNE
         self.content_layout = QHBoxLayout()
         self.content_layout.setSpacing(20)
-        
         self.side_menu = self.create_side_menu()
-        
-        # Kluczowe: Jeśli historia giełdy jest pusta, wypełnij ją 
-        # punktem startowym przed pokazaniem interfejsu
-        market_data = self.save_data.get('market_data', {})
-        for cat in ['stocks', 'crypto']:
-            for symbol, data in market_data.get(cat, {}).items():
-                if 'history' not in data or len(data['history']) == 0:
-                    data['history'] = [{
-                        "date": self.current_datetime.strftime("%Y-%m-%d"),
-                        "price": data['current_price']
-                    }]
 
-        # Workspace Stack - Zarządzanie widokami
+        # Workspace Stack
         self.workspace_stack = QStackedWidget()
+
+        self.event_cooldown_days = 0
         
-        # Inicjalizacja widoków
+        # Teraz przekazanie self.theme zadziała, bo self.theme już istnieje
         self.view_home = HomeView(self, self.theme, self.save_data)
-        self.view_dashboard = self.create_placeholder_view("📊 Dashboard", "Financial statistics and charts.")
         self.view_markets = MarketsView(self)
-        self.view_portfolio = self.create_placeholder_view("💼 Portfolio", "Your assets and investments.")
-        self.view_business = self.create_placeholder_view("🏢 Business", "Companies and management.")
+        self.view_portfolio = PortfolioView(self)
+        self.view_dashboard = DashboardView(self)
+        self.view_history = HistoryView(self)
+        self.view_bank = BankView(self, self.theme, self.save_data)
         self.view_system = self.create_system_menu_view()
         self.view_household = HouseholdView(self, self.theme, self.save_data)
         self.view_vehicles = VehicleView(self, self.theme, self.save_data)
         self.view_valuables = ValuablesView(self, self.theme, self.save_data)
         self.view_employment = EmploymentView(self, self.theme, self.save_data)
-        self.view_portfolio = PortfolioView(self)
-        self.view_dashboard = DashboardView(self)
-        self.view_history = HistoryView(self)
-        self.view_bank = BankView(self, self.theme, self.save_data)
 
-        self.btn_bank.setCursor(Qt.CursorShape.PointingHandCursor)
-        
-        # Dodanie do stosu
+        # Dodanie do stosu (indeksy muszą się zgadzać z switch_view)
         self.workspace_stack.addWidget(self.view_home)      # 0
         self.workspace_stack.addWidget(self.view_dashboard) # 1
         self.workspace_stack.addWidget(self.view_markets)   # 2
         self.workspace_stack.addWidget(self.view_portfolio) # 3
-        self.workspace_stack.addWidget(self.view_business)  # 4
+        self.workspace_stack.addWidget(self.create_placeholder_view("🏢 Business", "Coming soon")) # 4
         self.workspace_stack.addWidget(self.view_system)    # 5
         self.workspace_stack.addWidget(self.view_household) # 6
         self.workspace_stack.addWidget(self.view_vehicles)  # 7
         self.workspace_stack.addWidget(self.view_valuables) # 8
         self.workspace_stack.addWidget(self.view_employment)# 9
-        self.workspace_stack.addWidget(self.view_history)   #10
-        self.workspace_stack.addWidget(self.view_bank)      #11
+        self.workspace_stack.addWidget(self.view_history)   # 10
+        self.workspace_stack.addWidget(self.view_bank)      # 11
 
-        # --- LOGIKA PRZEŁĄCZANIA WIDOKÓW (POŁĄCZENIA) ---
-        self.view_household.back_btn.clicked.connect(self.open_home)
-        self.view_vehicles.back_btn.clicked.connect(self.open_home)
-        self.view_valuables.back_btn.clicked.connect(self.open_home)
-        self.view_employment.back_btn.clicked.connect(self.open_home)
-        
-
-        self.view_home.house_tile.findChild(QPushButton).clicked.connect(self.open_household_manager)
-        
-        veh_tile = self.view_home.findChild(QFrame, "VehiclesTile")
-        if veh_tile:
-            veh_btn = veh_tile.findChild(QPushButton)
-            if veh_btn: veh_btn.clicked.connect(self.open_vehicle_manager)
-        
-        val_tile = self.view_home.findChild(QFrame, "ValuablesTile")
-        if val_tile:
-            val_btn = val_tile.findChild(QPushButton)
-            if val_btn: val_btn.clicked.connect(self.open_valuables_manager)
-
-        emp_tile = self.view_home.findChild(QFrame, "EmploymentTile")
-        if emp_tile:
-            emp_btn = emp_tile.findChild(QPushButton)
-            if emp_btn: emp_btn.clicked.connect(self.open_employment_manager)
-
-
+        # 6. SKŁADANIE LAYOUTU
+        self.main_layout.addWidget(self.header)
         self.content_layout.addWidget(self.side_menu, 1)
         self.content_layout.addWidget(self.workspace_stack, 4)
         self.main_layout.addLayout(self.content_layout)
-        
+
+        # 7. LOGIKA KOŃCOWA
         self.connect_menu_logic()
-        self.apply_theme()
         self.setup_initial_state(self.save_data)
+        
+        # Na samym końcu nakładamy style
+        self.apply_theme()
 
     def setup_initial_state(self, save_data):
         """Inicjalizuje historię i odświeża widok giełdy."""
@@ -160,6 +132,7 @@ class GameView(QWidget):
     def advance_time(self, hours):
         old_date = self.current_datetime
 
+        # 1. Zabezpieczenie przed długiem
         if self.save_data.get('balance', 0) < 0:
             msg = QMessageBox(self)
             msg.setWindowTitle("Financial Alert")
@@ -168,59 +141,81 @@ class GameView(QWidget):
             msg.addButton("Sell Assets", QMessageBox.ButtonRole.AcceptRole).clicked.connect(lambda: self.switch_view(3))
             msg.exec()
             return
-        
-        # DODAJEMY CZAS TYLKO RAZ
-        self.current_datetime += timedelta(hours=hours)
-        
-        # --- NOWA LOGIKA RYNKOWA ---
-        # Sprawdzamy, czy minęła przynajmniej jedna doba
-        if self.current_datetime.date() > old_date.date():
-            days_passed = (self.current_datetime.date() - old_date.date()).days
-            for _ in range(days_passed):
-                self.simulate_market_movement()
-        # ---------------------------
 
-        # Aktualizujemy datę w save_data dla widoku profilu
+        # 2. Logika COOLDOWNU (zmniejszanie licznika)
+        days_to_subtract = hours / 24
+        if not hasattr(self, 'event_cooldown_days'):
+            self.event_cooldown_days = 0
+            
+        if self.event_cooldown_days > 0:
+            self.event_cooldown_days -= days_to_subtract
+            if self.event_cooldown_days < 0: self.event_cooldown_days = 0
+
+        # 3. GŁÓWNA PĘTLA CZASU (Zunifikowana)
+        if hours >= 24:
+            days_to_jump = hours // 24
+            for _ in range(days_to_jump):
+                self.current_datetime += timedelta(days=1)
+                
+                # Przetwarzamy logikę rynkową i eventy raz na dobę
+                self.event_manager.process_day()
+                self.simulate_market_movement()
+                self.check_death_chance()
+        else:
+            self.current_datetime += timedelta(hours=hours)
+
+        # 4. Aktualizacja danych zapisu
         self.save_data['current_game_date'] = self.current_datetime.strftime("%Y-%m-%d")
         self.save_data['created'] = self.current_datetime.strftime("%Y-%m-%d %H:%M")
-        
         self.update_date_display()
 
-        # Sprawdzamy szansę na śmierć tylko raz
-        if self.current_datetime.date() > old_date.date():
-            if self.check_death_chance():
-                return 
-
-        # Logika kursów edukacyjnych
+        # 5. Logika kursów edukacyjnych
         if self.save_data.get('active_course'):
             course = self.save_data['active_course']
             course['remaining_hours'] -= hours
-            
             if course['remaining_hours'] <= 0:
-                if 'completed_courses' not in self.save_data: 
-                    self.save_data['completed_courses'] = []
+                if 'completed_courses' not in self.save_data: self.save_data['completed_courses'] = []
                 if course['id'] not in self.save_data['completed_courses']:
                     self.save_data['completed_courses'].append(course['id'])
-                
                 self.save_data['active_course'] = None
                 QMessageBox.information(self, "Education", f"Course Finished: {course['name']}")
 
-        # ODŚWIEŻANIE AKTYWNEGO WIDOKU
-        current_idx = self.workspace_stack.currentIndex()
-        if current_idx == 0:
-            self.view_home.refresh_view(self.save_data)
-        elif current_idx == 2: # Markets
-            self.view_markets.refresh_view(self.save_data)
-        elif current_idx == 3: # Portfolio
-            self.view_portfolio.refresh_view(self.save_data)
-        elif current_idx == 9:
-            self.view_employment.refresh_tabs()
-        elif current_idx == 10: # Historia
-            self.view_history.refresh_view(self.save_data)
-
-        # Finanse miesięczne
-        if hours >= 720:
+        # 6. LOSOWANIE NOWEGO EVENTU (Z cooldownem 6 miesięcy)
+        if hours >= 720: # Tylko przy skoku o miesiąc
             self.process_monthly_finances()
+            
+            # Warunek: brak aktywnego eventu ORAZ licznik cooldownu na zero
+            if not self.event_manager.active_events and self.event_cooldown_days <= 0:
+            # Szansa tylko 15% (zamiast 40%) - eventy mają być rzadkim świętem/tragedią
+                if random.random() < 0.15:
+                    events = self.event_manager.events_db
+                    
+                    if events:
+                        # Pobieramy wagi z bazy (jeśli brakuje wagi, przyjmujemy 1)
+                        weights = [e.get('weight', 1) for e in events]
+                        
+                        # Losowanie ważone: im większa waga, tym częściej występuje
+                        random_event = random.choices(events, weights=weights, k=1)[0]
+                        
+                        # Aktywujemy wylosowany event
+                        self.event_manager.trigger_event_by_id(random_event['id'])
+                        
+                        # Ustawiamy blokadę na 180 dni (6 miesięcy)
+                        self.event_cooldown_days = 365
+                        print(f"DEBUG: Wylosowano event: {random_event['name']} (Waga: {random_event.get('weight', 1)})")
+
+        # 7. Odświeżanie UI
+        self.update_news_feed()
+        self.refresh_active_view()
+
+    def refresh_active_view(self):
+        """Pomocnicza metoda do odświeżania aktualnego okna."""
+        current_idx = self.workspace_stack.currentIndex()
+        views = {0: self.view_home, 2: self.view_markets, 3: self.view_portfolio, 
+                 9: self.view_employment, 10: self.view_history}
+        if current_idx in views:
+            if current_idx == 9: views[current_idx].refresh_tabs()
+            else: views[current_idx].refresh_view(self.save_data)
 
     def process_monthly_finances(self):
         """Główna metoda rozliczająca miesiąc: pensje, dywidendy, koszty i POŻYCZKI."""
@@ -335,6 +330,7 @@ class GameView(QWidget):
         layout.setContentsMargins(15, 0, 15, 0)
         layout.setSpacing(10)
 
+        # --- LEWA: GRACZ ---
         self.player_area = QWidget()
         self.player_area.setStyleSheet("background: transparent; border: none;")
         p_layout = QHBoxLayout(self.player_area)
@@ -347,87 +343,100 @@ class GameView(QWidget):
             pix = QPixmap(avatar_path).scaled(60, 60, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
             self.avatar_lbl.setPixmap(pix)
             
-        self.player_info = QLabel(
-            f"<b>{self.save_data.get('player_name')}</b><br>"
-            f"<font color='#aaaaaa'>{self.save_data.get('current_title', 'Unemployed')}</font>"
-        )
+        self.player_info = QLabel(f"<b>{self.save_data.get('player_name')}</b><br><font color='#aaaaaa'>{self.save_data.get('current_title', 'Unemployed')}</font>")
         p_layout.addWidget(self.avatar_lbl)
         p_layout.addWidget(self.player_info)
 
+        # --- ŚRODEK: GRUPA FINANSOWA (Z POPRAWIONYMI KURSORAMI) ---
+        center_group = QWidget()
+        finance_layout = QHBoxLayout(center_group)
+        finance_layout.setContentsMargins(0, 0, 0, 0)
+        finance_layout.setSpacing(15)
+        finance_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        # 1. Przycisk News (Rączka przy najechaniu)
+        self.btn_news = QPushButton("Market is stable")
+        self.btn_news.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+        self.btn_news.setStyleSheet("color: #aaaaaa; font-style: italic; border: none; background: transparent; font-size: 13px;")
+        self.btn_news.clicked.connect(self.show_event_details)
+        
+        # 2. Przycisk Bank (Rączka przy najechaniu)
         self.btn_bank = QPushButton("🏦 BANK")
         self.btn_bank.setFixedSize(80, 45)
+        self.btn_bank.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
         self.btn_bank.setStyleSheet("background: #2c3e50; color: #ecf0f1; border-radius: 22px; font-weight: bold;")
         self.btn_bank.clicked.connect(lambda: self.switch_view(11))
         
-        # Wstawiamy do layoutu nagłówka przed pieniędzmi
-        layout.addWidget(self.btn_bank)
-
-        # LICZNIK PIENIĘDZY
         self.money_lbl = QLabel(f"${self.save_data.get('balance', 0):,.2f}")
         self.money_lbl.setFont(QFont("Arial", 28, QFont.Weight.Bold))
         self.money_lbl.setStyleSheet("color: #2ecc71; border: none; background: transparent;")
-        self.money_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        # --- NOWY PRZYCISK HISTORII (📜) OBOK KASY ---
+        
+        # 3. Przycisk Historia (Rączka przy najechaniu)
         self.btn_history = QPushButton("📜")
         self.btn_history.setFixedSize(45, 45)
-        self.btn_history.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.btn_history.setToolTip("Otwórz historię transakcji")
-        self.btn_history.setStyleSheet("""
-            QPushButton {
-                background-color: #2a2a2a;
-                color: white;
-                border: 2px solid #333;
-                border-radius: 22px;
-                font-size: 20px;
-            }
-            QPushButton:hover {
-                background-color: #3a96dd;
-                border-color: #3a96dd;
-            }
-        """)
-        
+        self.btn_history.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+        self.btn_history.setStyleSheet("background-color: #2a2a2a; color: white; border-radius: 22px; font-size: 20px;")
         self.btn_history.clicked.connect(lambda: self.switch_view(10))
 
+        finance_layout.addWidget(self.btn_news)
+        finance_layout.addWidget(self.btn_bank)
+        finance_layout.addWidget(self.money_lbl)
+        finance_layout.addWidget(self.btn_history)
+
+        # --- PRAWA: CZAS I SYSTEM (POPRAWIONY KALENDARZ I KURSORY) ---
         self.right_container = QWidget()
-        self.right_container.setStyleSheet("background: transparent; border: none;")
         r_layout = QHBoxLayout(self.right_container)
         r_layout.setContentsMargins(0, 0, 0, 0)
         r_layout.setSpacing(10)
 
-        self.date_lbl = QLabel()
-        self.date_lbl.setStyleSheet("border: none; background: transparent;")
-        self.update_date_display()
-        r_layout.addWidget(self.date_lbl)
+        # Poprawiony Kontener Kalendarza
+        self.date_container = QFrame()
+        self.date_container.setStyleSheet("""
+            QFrame {
+                background-color: #252525;
+                border: 1px solid #333;
+                border-radius: 10px;
+                padding: 5px;
+            }
+        """)
+        d_inner_layout = QVBoxLayout(self.date_container)
+        d_inner_layout.setContentsMargins(8, 2, 8, 2)
+        d_inner_layout.setSpacing(0)
         
+        self.date_lbl = QLabel()
+        self.date_lbl.setStyleSheet("border: none; background: transparent; color: white; font-weight: bold;")
+        self.update_date_display()
+        d_inner_layout.addWidget(self.date_lbl)
+        r_layout.addWidget(self.date_container)
+        
+        # Przycisk Czasu (Rączka przy najechaniu)
         self.time_btns = []
         for label, hours in [("+1h", 1), ("+1d", 24), ("+1w", 168), ("+1m", 720)]:
             btn = QPushButton(label)
-            btn.setFixedSize(60, 38) 
-            btn.setCursor(Qt.CursorShape.PointingHandCursor)
+            btn.setFixedSize(60, 38)
+            btn.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
             btn.setStyleSheet("""
-                QPushButton {
-                    background-color: #3a3a3a; color: white; border: none;
-                    border-radius: 5px; font-weight: bold; font-size: 13px;
-                }
-                QPushButton:hover { background-color: #4a4a4a; }
+                QPushButton { background-color: #2a2a2a; color: white; border-radius: 5px; }
+                QPushButton:hover { background-color: #3a3a3a; }
             """)
             btn.clicked.connect(lambda ch, h=hours: self.advance_time(h))
             r_layout.addWidget(btn)
             self.time_btns.append(btn)
 
+        # Przycisk System (Rączka przy najechaniu)
         self.btn_system = QPushButton("⚙️ SYSTEM")
         self.btn_system.setFixedSize(110, 40)
-        self.btn_system.setStyleSheet("border: none; background-color: #3a96dd; color: white; border-radius: 5px; font-weight: bold;")
+        self.btn_system.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+        self.btn_system.setStyleSheet("""
+            QPushButton { background-color: #3a96dd; color: white; border-radius: 5px; font-weight: bold; }
+            QPushButton:hover { background-color: #4aa6ed; }
+        """)
         self.btn_system.clicked.connect(self.toggle_system_menu)
         r_layout.addWidget(self.btn_system)
 
-        # SKŁADANIE LAYOUTU (Ważna kolejność!)
         layout.addWidget(self.player_area, 0)
         layout.addStretch(1)
-        layout.insertWidget(2, self.btn_bank)
-        layout.addWidget(self.money_lbl)
-        layout.addWidget(self.btn_history) # Wrzucamy ikonę zaraz za kasą
+        layout.addWidget(center_group, 0)
         layout.addStretch(1)
         layout.addWidget(self.right_container, 0)
         
@@ -494,8 +503,7 @@ class GameView(QWidget):
         self.console_input.setPlaceholderText(f"Result: {result}")
 
     def execute_console_command(self, parts):
-        from datetime import datetime # Import potrzebny do obliczenia wieku
-        command = parts[0]
+        command = parts[0].lower()
         args = parts[1:]
 
         if command == "money" and len(args) > 0:
@@ -503,9 +511,17 @@ class GameView(QWidget):
                 amount = float(args[0])
                 self.save_data['balance'] += amount
                 self.update_money_display()
-                self.view_home.refresh_view(self.save_data)
                 return f"Added ${amount:,.2f}"
             except: return "Error"
+
+        elif command == "event" and len(args) > 0: # NOWA KOMENDA
+            try:
+                event_id = args[0].upper()
+                result = self.event_manager.trigger_event_by_id(event_id)
+                self.update_news_feed()
+                return result
+            except Exception as e:
+                return f"Event Error: {str(e)}"
 
         elif command == "prestige" and len(args) > 0:
             try:
@@ -527,6 +543,15 @@ class GameView(QWidget):
                 return f"Szymon died for science at age {age}. Report generated."
             except Exception as e:
                 return f"Error triggering death: {str(e)}"
+
+        elif command == "test_luck":
+            events = self.event_manager.events_db
+            weights = [e.get('weight', 1) for e in events]
+            total = sum(weights)
+            # Pokazuje szansę dla top 3 najbardziej prawdopodobnych eventów
+            top_events = sorted(events, key=lambda x: x.get('weight', 1), reverse=True)[:3]
+            res = "Top Odds: " + ", ".join([f"{e['name']} ({e['weight']/total*100:.1f}%)" for e in top_events])
+            return res
 
         return "Unknown command"
 
@@ -733,28 +758,39 @@ class GameView(QWidget):
             print(f"DEBUG Error: {str(e)}")
     
     def simulate_market_movement(self):
-        """Symuluje zmianę cen na giełdzie przy każdym skoku czasu."""
+        """Symuluje zmianę cen na giełdzie przy każdym skoku czasu z uwzględnieniem wydarzeń."""
         market_data = self.save_data.get('market_data', {})
         
         for category in ['stocks', 'crypto']:
             items = market_data.get(category, {})
             for symbol, data in items.items():
-                # 1. Oblicz nową cenę (losowa fluktuacja)
-                volatility = 0.02 if category == 'stocks' else 0.05
-                change = 1 + random.uniform(-volatility, volatility)
-                data['current_price'] = round(data['current_price'] * change, 2)
+                # 1. Pobierz modyfikator z EventManagera
+                # Zakładamy, że w data masz klucz 'category_id' lub mapujemy ręcznie
+                sector = data.get('category', category).lower() 
+                event_modifier = self.event_manager.get_modifier_for_symbol(symbol, sector)
 
-                # 2. ZABEZPIECZENIE: Inicjalizuj listę history, jeśli jej brakuje
+                # 2. Oblicz nową cenę
+                # bazowa fluktuacja (szum rynkowy)
+                volatility = 0.02 if category == 'stocks' else 0.05
+                base_change = 1 + random.uniform(-volatility, volatility)
+                
+                # Finalna zmiana: szum * modyfikator wydarzenia
+                # Jeśli event_modifier to 1.25 (przełom tech), cena wzrośnie mocniej
+                total_change = base_change * event_modifier
+                
+                data['current_price'] = round(data['current_price'] * total_change, 2)
+
+                # 3. ZABEZPIECZENIE: Historia
                 if 'history' not in data or not isinstance(data['history'], list):
                     data['history'] = []
 
-                # 3. Dodaj nowy punkt do historii
+                # 4. Dodaj punkt do historii
                 data['history'].append({
                     "date": self.current_datetime.strftime("%Y-%m-%d"),
                     "price": data['current_price']
                 })
 
-                # 4. Ogranicz historię do ostatnich 30 wpisów, by nie zapchać RAMu
+                # 5. Ograniczenie historii
                 if len(data['history']) > 30:
                     data['history'].pop(0)
 
@@ -792,3 +828,89 @@ class GameView(QWidget):
             self.switch_view(11) # Załóżmy, że BankView to indeks 11
         else:
             self.switch_view(3) # Portfolio to indeks 3
+
+    def fix_existing_dividends(self):
+        """Naprawia zepsute dywidendy wczytane z zapisu (np. 143.0 -> 0.0143)."""
+        market_data = self.save_data.get('market_data', {})
+        count = 0
+        for cat in ['stocks', 'crypto']:
+            for symbol, data in market_data.get(cat, {}).items():
+                div = data.get('dividend_yield', 0)
+                # Jeśli dywidenda kwartalna przekracza 5% (0.05), to jest błąd
+                if div > 0.05:
+                    # Zamieniamy np. 143.0 na 0.0143 (czyli 1.43% na kwartał)
+                    data['dividend_yield'] = round(div / 100, 6)
+                    count += 1
+        if count > 0:
+            print(f"--- SYSTEM: Naprawiono {count} nierealnych dywidend! ---")
+        
+    def show_event_details(self):
+        """Wyświetla szczegółowy raport o wpływie wydarzenia na konkretne aktywa."""
+        active = self.event_manager.active_events
+        if not active:
+            return
+
+        ev = active[-1]['event']
+        impact_val = ev.get('impact', 1.0)
+        impact_text = "Positively" if impact_val > 1.0 else "Negatively"
+        color = "#2ecc71" if impact_val > 1.0 else "#e74c3c"
+        
+        # --- INTELIGENTNE OKREŚLANIE CELU ---
+        target_type = ev.get('target_type')
+        target_id = ev.get('target_id', '').upper()
+        
+        affected_info = ""
+        if target_type == "global":
+            affected_info = "This is a <b>Global Event</b> affecting every single asset on the market."
+        elif target_type == "sector":
+            affected_info = f"This event specifically targets the <b>{target_id}</b> sector."
+        elif target_type == "single":
+            affected_info = f"This is a company-specific event targeting <b>{target_id}</b>."
+
+        msg = QMessageBox(self)
+        msg.setWindowTitle("🚨 MARKET ANALYSIS")
+        
+        # Budujemy treść HTML
+        html_content = f"""
+            <div style='min-width: 350px; font-family: Arial;'>
+                <h2 style='color: {color}; margin-bottom: 0;'>{ev['name']}</h2>
+                <p style='color: #aaaaaa; font-style: italic; margin-top: 5px;'>News Report</p>
+                <p style='font-size: 14px; line-height: 1.4;'>{ev.get('description', '')}</p>
+                <hr style='border: 0; border-top: 1px solid #444;'>
+                <p style='font-size: 13px;'>📍 <b>Affected Assets:</b> {affected_info}</p>
+                <p style='font-size: 13px;'>📉 <b>Trend:</b> <span style='color: {color}; font-weight: bold;'>{impact_text}</span></p>
+                <p style='font-size: 11px; color: #777; margin-top: 10px;'>
+                    Analyst note: This event will remain active for {active[-1]['remaining']} more days.
+                </p>
+            </div>
+        """
+        
+        msg.setText(html_content)
+        msg.exec()
+
+    def update_news_feed(self):
+        active = self.event_manager.active_events
+        
+        if not active:
+            self.btn_news.setText("Market is stable")
+            self.btn_news.setStyleSheet("color: #aaaaaa; font-style: italic; border: none; background: transparent; font-size: 13px;")
+            return
+
+        # Jeśli jest aktywny event
+        ev_data = active[-1] # Pobieramy ostatni
+        ev = ev_data['event']
+        
+        print(f"DEBUG: Aktualizacja newsów. Aktywny event: {ev['name']}") # Sprawdź to w konsoli!
+
+        self.btn_news.setText(f"(NEWS) {ev['name']}")
+        self.btn_news.setStyleSheet("""
+            QPushButton {
+                color: #2ecc71; 
+                font-weight: bold; 
+                border: 1px solid #2ecc71; 
+                border-radius: 5px; 
+                padding: 4px 10px; 
+                background: rgba(46, 204, 113, 0.1);
+                font-size: 13px;
+            }
+        """)

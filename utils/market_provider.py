@@ -7,13 +7,13 @@ class MarketProvider:
     def __init__(self):
         # 100+ Symboli podzielonych na sektory
         tech = ["AAPL", "MSFT", "NVDA", "AMD", "GOOGL", "META", "TSLA", "INTC", "ASML", "ORCL", "CRM", "ADBE", "CSCO", "IBM", "TXN", "QCOM", "AMAT", "MU", "SNPS", "PLTR"]
-        defense = ["LMT", "BA", "RTX", "NOC", "GD", "LHX", "BWXT", "AIR.PA", "RHM.DE", "PLD.WA", "HWM", "TDG", "TXT", "LDOS", "HEI"]
+        defense = ["LMT", "BA", "RTX", "NOC", "GD", "LHX", "BWXT", "AIR.PA", "RHM.DE", "HWM", "TDG", "TXT", "LDOS", "HEI"]
         finance = ["JPM", "GS", "V", "MA", "HSBC", "BAC", "MS", "AXP", "PYPL", "PKO.WA", "PEO.WA", "ING.WA", "DBK.DE", "BNP.PA", "BLK"]
         energy = ["XOM", "SHEL", "RIO", "BP", "CVX", "TTE.PA", "COP", "SLB", "EOG", "KGH.WA", "PGE.WA", "PKN.WA", "VALE", "FCX", "NEM"]
-        retail = ["AMZN", "WMT", "COST", "PG", "KO", "PEP", "NKE", "EL", "LVMH.PA", "OR.PA", "ALE.WA", "DIN.WA", "MCD", "SBUX", "TGT"]
+        retail = ["AMZN", "WMT", "COST", "PG", "KO", "PEP", "NKE", "EL", "OR.PA", "ALE.WA", "MCD", "SBUX", "TGT"]
         health = ["PFE", "JNJ", "UNH", "LLY", "ABBV", "MRK", "AZN", "NVS", "MRNA", "TMO"]
         industry = ["F", "GM", "VOW3.DE", "BMW.DE", "PAH3.DE", "CAT", "DE", "MMM", "GE", "HON"]
-        crypto = ["BTC-USD", "ETH-USD", "BNB-USD", "SOL-USD", "DOGE-USD", "XRP-USD", "ADA-USD", "DOT-USD", "LINK-USD", "MATIC-USD"]
+        crypto = ["BTC-USD", "ETH-USD", "BNB-USD", "SOL-USD", "DOGE-USD", "XRP-USD", "ADA-USD", "DOT-USD", "LINK-USD"]
 
         self.stocks = tech + defense + finance + energy + retail + health + industry
         self.crypto = crypto
@@ -36,38 +36,52 @@ class MarketProvider:
             try:
                 ticker = yf.Ticker(symbol)
                 history = ticker.history(period="7d")
-                if history.empty: continue
+                if history.empty: 
+                    continue
 
-                # Historia dla wykresów w UI
+                # 1. Przygotowanie punktów historycznych
                 history_points = [{"date": d.strftime("%Y-%m-%d"), "price": round(float(r['Close']), 2)} 
                                  for d, r in history.iterrows()]
 
+                # 2. Aktualna cena
                 current_price = round(float(history['Close'].iloc[-1]), 2)
                 
-                # Poprawiona logika dywidendy
+                # 3. Logika dywidendy (Cyrk stop)
                 raw_yield = ticker.info.get('dividendYield')
-                if isinstance(raw_yield, (int, float)) and raw_yield > 0:
+                
+                # Jeśli API zwraca np. 0.03, to jest to 3% rocznie.
+                if isinstance(raw_yield, (int, float)) and 0 < raw_yield < 0.20:
                     annual_yield = raw_yield
                 else:
-                    # Realistyczny fallback: 0.5% - 3.5% rocznie
-                    annual_yield = round(random.uniform(0.005, 0.035), 4)
+                    # Realistyczny fallback: od 0.5% do 4% rocznie
+                    annual_yield = round(random.uniform(0.005, 0.04), 4)
 
+                # Obliczamy stopę kwartalną (dzielone przez 4)
+                div_quarterly = round(annual_yield / 4, 6)
+
+                # 4. Tworzymy obiekt danych (KLUCZOWE: Robimy to ZANIM go użyjemy)
                 data = {
                     "symbol": symbol,
                     "name": ticker.info.get('shortName', symbol),
                     "current_price": current_price,
                     "history": history_points,
-                    "dividend_yield": round(annual_yield / 4, 6), # Stopa kwartalna
+                    "dividend_yield": div_quarterly,
                     "category": "Stock" if symbol in self.stocks else "Crypto"
                 }
 
+                # 5. Przypisanie do odpowiedniej kategorii
                 target = "stocks" if symbol in self.stocks else "crypto"
                 market_data[target][symbol] = data
                 
-                if (i + 1) % 10 == 0: print(f"Postęp: {i+1}/{len(self.all_symbols)}")
+                if (i + 1) % 10 == 0: 
+                    print(f"Postęp: {i+1}/{len(self.all_symbols)}")
+
             except Exception as e:
                 print(f"Błąd {symbol}: {e}")
 
+        # Zapisujemy gotowy snapshot do JSON
         with open(self.cache_file, "w") as f:
             json.dump(market_data, f, indent=4)
+            
+        print("--- POBIERANIE ZAKOŃCZONE I ZAPISANE DO PLIKU ---")
         return market_data

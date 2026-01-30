@@ -1,7 +1,7 @@
 import os
 import json
 from PyQt6.QtWidgets import (
-    QApplication,  # ✅ DODANY IMPORT
+    QApplication,
     QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QSpacerItem,
     QSizePolicy, QMessageBox, QFrame
 )
