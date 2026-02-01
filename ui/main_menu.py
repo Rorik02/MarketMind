@@ -28,12 +28,10 @@ class MainMenu(QWidget):
 
     def init_ui(self):
         """Build full layout."""
-        # === MAIN HORIZONTAL LAYOUT ===
         main_layout = QHBoxLayout()
         main_layout.setContentsMargins(60, 60, 60, 60)
         main_layout.setSpacing(60)
 
-        # === LEFT PANEL: LAST SAVE INFO ===
         self.last_save_info = QFrame()
         self.last_save_info.setFixedWidth(350)
         self.last_save_info.setLayout(QVBoxLayout())
@@ -53,7 +51,6 @@ class MainMenu(QWidget):
         self.last_save_info.layout().addStretch()
         main_layout.addWidget(self.last_save_info, alignment=Qt.AlignmentFlag.AlignVCenter)
 
-        # === CENTER PANEL: LOGO + TITLE ===
         center_layout = QVBoxLayout()
         center_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         center_layout.setSpacing(30)
@@ -79,7 +76,6 @@ class MainMenu(QWidget):
 
         main_layout.addLayout(center_layout, stretch=1)
 
-        # === RIGHT PANEL: MENU BUTTONS ===
         right_layout = QVBoxLayout()
         right_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         right_layout.setSpacing(20)
@@ -99,7 +95,6 @@ class MainMenu(QWidget):
 
         self.setLayout(main_layout)
 
-        # === SIGNALS ===
         self.btn_continue.clicked.connect(self.continue_last_save)
         self.btn_start.clicked.connect(self.open_new_game)
         self.btn_load.clicked.connect(self.open_load_game)
@@ -109,7 +104,6 @@ class MainMenu(QWidget):
         self.apply_theme()
         self.update_last_save_info()
 
-    # === THEME ===
     def apply_theme(self):
         c = self.theme.get_colors()
         palette = self.palette()
@@ -118,7 +112,6 @@ class MainMenu(QWidget):
         self.setAutoFillBackground(True)
         self.title_label.setStyleSheet(f"color: {c['text']}; margin-bottom: 30px;")
 
-        # Buttons
         for btn in [self.btn_continue, self.btn_start, self.btn_load, self.btn_settings]:
             btn.setStyleSheet(f"""
                 QPushButton {{
@@ -136,7 +129,6 @@ class MainMenu(QWidget):
                 }}
             """)
 
-        # Exit button (red)
         self.btn_exit.setStyleSheet("""
             QPushButton {
                 background-color: #d9534f;
@@ -153,7 +145,6 @@ class MainMenu(QWidget):
             }
         """)
 
-        # Last save panel
         self.last_save_info.setStyleSheet(f"""
             QFrame {{
                 background-color: {c['tile_bg']};
@@ -164,7 +155,6 @@ class MainMenu(QWidget):
         for lbl in [self.last_save_title, self.last_save_player, self.last_save_details, self.last_save_time]:
             lbl.setStyleSheet(f"color: {c['text']};")
 
-    # === UPDATE LAST SAVE PANEL ===
     def update_last_save_info(self):
         last_save = getattr(self.theme, "last_save", None)
         saves_dir = os.path.join(os.path.dirname(__file__), "..", "saves")
@@ -202,19 +192,16 @@ class MainMenu(QWidget):
         self.last_save_details.setText(f"💰 Balance: ${balance:,}  |  Age: {age}  |  Mode: {mode}")
         self.last_save_time.setText(f"🕒 Last Played: {created}")
 
-    # === BUTTON ACTIONS ===
     def continue_last_save(self):
         """Ładuje ostatni zapis i uruchamia widok gry."""
         if not self.last_save_data:
             QMessageBox.warning(self, "No Save", "No previous save found.")
             return
 
-        # Sprawdzamy czy w danych zapisu jest startowa posiadłość, jeśli nie - dodajemy ją
         if 'owned_properties' not in self.last_save_data:
-            self.last_save_data['owned_properties'] = ["prop_00"] # Nasza kamienica
+            self.last_save_data['owned_properties'] = ["prop_00"]
             self.last_save_data['primary_home'] = "prop_00"
 
-        # Informacja dla gracza
         QMessageBox.information(
             self,
             "Continue Game",
@@ -223,7 +210,6 @@ class MainMenu(QWidget):
             f"(${self.last_save_data.get('balance', 0):,})"
         )
 
-        # TO JEST KLUCZOWE: Wywołanie startu gry w oknie głównym
         if self.parent and hasattr(self.parent, 'start_game'):
             self.parent.start_game(self.last_save_data)
         else:

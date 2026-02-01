@@ -5,7 +5,6 @@ import os
 
 class MarketProvider:
     def __init__(self):
-        # 100+ Symboli podzielonych na sektory
         tech = ["AAPL", "MSFT", "NVDA", "AMD", "GOOGL", "META", "TSLA", "INTC", "ASML", "ORCL", "CRM", "ADBE", "CSCO", "IBM", "TXN", "QCOM", "AMAT", "MU", "SNPS", "PLTR"]
         defense = ["LMT", "BA", "RTX", "NOC", "GD", "LHX", "BWXT", "AIR.PA", "RHM.DE", "HWM", "TDG", "TXT", "LDOS", "HEI"]
         finance = ["JPM", "GS", "V", "MA", "HSBC", "BAC", "MS", "AXP", "PYPL", "PKO.WA", "PEO.WA", "ING.WA", "DBK.DE", "BNP.PA", "BLK"]
@@ -39,27 +38,20 @@ class MarketProvider:
                 if history.empty: 
                     continue
 
-                # 1. Przygotowanie punktów historycznych
                 history_points = [{"date": d.strftime("%Y-%m-%d"), "price": round(float(r['Close']), 2)} 
                                  for d, r in history.iterrows()]
 
-                # 2. Aktualna cena
                 current_price = round(float(history['Close'].iloc[-1]), 2)
                 
-                # 3. Logika dywidendy (Cyrk stop)
                 raw_yield = ticker.info.get('dividendYield')
                 
-                # Jeśli API zwraca np. 0.03, to jest to 3% rocznie.
                 if isinstance(raw_yield, (int, float)) and 0 < raw_yield < 0.20:
                     annual_yield = raw_yield
                 else:
-                    # Realistyczny fallback: od 0.5% do 4% rocznie
                     annual_yield = round(random.uniform(0.005, 0.04), 4)
 
-                # Obliczamy stopę kwartalną (dzielone przez 4)
                 div_quarterly = round(annual_yield / 4, 6)
 
-                # 4. Tworzymy obiekt danych (KLUCZOWE: Robimy to ZANIM go użyjemy)
                 data = {
                     "symbol": symbol,
                     "name": ticker.info.get('shortName', symbol),
@@ -69,7 +61,6 @@ class MarketProvider:
                     "category": "Stock" if symbol in self.stocks else "Crypto"
                 }
 
-                # 5. Przypisanie do odpowiedniej kategorii
                 target = "stocks" if symbol in self.stocks else "crypto"
                 market_data[target][symbol] = data
                 
@@ -79,7 +70,6 @@ class MarketProvider:
             except Exception as e:
                 print(f"Błąd {symbol}: {e}")
 
-        # Zapisujemy gotowy snapshot do JSON
         with open(self.cache_file, "w") as f:
             json.dump(market_data, f, indent=4)
             

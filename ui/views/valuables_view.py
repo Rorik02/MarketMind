@@ -115,18 +115,14 @@ class ValuablesView(QFrame):
     def buy_item(self, item):
         """Logika zakupu przedmiotu z zapisem do historii i powiadomieniem."""
         if self.save_data.get('balance', 0) >= item['price']:
-            # 1. Pobieramy cenę
             price = item['price']
             
-            # 2. Aktualizacja danych finansowych i prestiżu
             self.save_data['balance'] -= price
             if 'owned_valuables' not in self.save_data: 
                 self.save_data['owned_valuables'] = []
             self.save_data['owned_valuables'].append(item['id'])
             self.save_data['prestige'] = self.save_data.get('prestige', 0) + item['prestige']
             
-            # 3. DODANIE WPISU DO HISTORII
-            # Używamy kategorii "Drogocenności", aby pasowała do Dashboardu
             if hasattr(self.parent_ctrl, 'log_transaction'):
                 self.parent_ctrl.log_transaction(
                     "Drogocenności", 
@@ -134,22 +130,41 @@ class ValuablesView(QFrame):
                     -price
                 )
             
-            # 4. Aktualizacja interfejsu pieniędzy
             if hasattr(self.parent_ctrl, 'update_money_display'): 
                 self.parent_ctrl.update_money_display()
 
-            # --- POWIADOMIENIE ---
             msg = QMessageBox(self)
-            msg.setWindowTitle("Auction")
-            msg.setText(f"✨ <b>Item Acquired!</b><br>You are now the owner of <b>{item['name']}</b>!")
+            msg.setWindowTitle("Auction House")
+            msg.setText(f"✨ <b>Item Acquired!</b><br>You are now the owner of:<br><b>{item['name']}</b>")
+            
             msg.setStyleSheet("""
-                QMessageBox { background-color: #1a1a1a; border: none; }
-                QLabel { color: white; font-size: 14px; padding: 10px 20px; min-width: 200px; }
-                QPushButton { 
-                    background-color: #27ae60; color: white; font-weight: bold; 
-                    border-radius: 4px; min-width: 70px; height: 28px; border: none;
+                QMessageBox { 
+                    background-color: #1a1a1a; 
+                    border: 2px solid #2ecc71; 
+                    border-radius: 10px;
                 }
+                QLabel { 
+                    color: white; 
+                    font-size: 14px; 
+                    padding: 10px; 
+                    min-width: 300px;  /* Zwiększona minimalna szerokość */
+                }
+                QPushButton { 
+                    background-color: #27ae60; 
+                    color: white; 
+                    font-weight: bold; 
+                    border-radius: 6px; 
+                    min-width: 100px; 
+                    height: 35px; 
+                    border: none;
+                    margin-bottom: 10px;
+                }
+                QPushButton:hover { background-color: #2ecc71; }
             """)
+            
+            for label in msg.findChildren(QLabel):
+                label.setWordWrap(True)
+            
             msg.exec()
             
             self.refresh_list("market")

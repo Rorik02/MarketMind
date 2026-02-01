@@ -12,10 +12,8 @@ class HouseholdView(QFrame):
         self.theme = theme
         self.save_data = save_data or {}
         
-        # --- OPTYMALIZACJA: Cache dla obrazów ---
         self.image_cache = {} 
         
-        # WCZYTYWANIE DANYCH
         self.all_properties = self.load_properties_data()
         
         self.setup_ui()
@@ -86,7 +84,6 @@ class HouseholdView(QFrame):
         self.refresh_list(mode="owned")
 
     def refresh_list(self, mode="owned"):
-        # OPTYMALIZACJA: Wyłączamy odświeżanie UI na czas budowania listy
         self.container.setUpdatesEnabled(False)
         
         if mode == "owned":
@@ -111,12 +108,11 @@ class HouseholdView(QFrame):
 
     def add_property_card(self, prop, is_owned):
         card = QFrame()
-        card.setFixedHeight(125) # Lekko zwiększone, by zmieścić info o podatku
+        card.setFixedHeight(125)
         card.setObjectName("PropertyCard")
         c_lay = QHBoxLayout(card)
         c_lay.setContentsMargins(15, 10, 15, 10)
 
-        # 1. Zdjęcie z Cache
         img_lbl = QLabel()
         img_lbl.setFixedSize(140, 90)
         pix = self.get_cached_pixmap(prop['image'])
@@ -129,17 +125,15 @@ class HouseholdView(QFrame):
             img_lbl.setText("NO IMAGE")
             img_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # 2. Informacje
         info_vbox = QVBoxLayout()
         name_lbl = QLabel(f"<b>{prop['name']}</b>")
         name_lbl.setFont(QFont("Arial", 14))
         loc_lbl = QLabel(f"<font color='#aaaaaa'>{prop['location']}</font>")
         price_lbl = QLabel(f"<font color='#2ecc71'>Value: ${prop['price']:,}</font>")
         
-        # Logika opisu kosztów utrzymania
         is_primary = self.save_data.get('primary_home') == prop['id']
         if is_owned and not is_primary:
-            tax = int(prop['upkeep'] * 0.5) # Podatek za nieużywaną nieruchomość (50%)
+            tax = int(prop['upkeep'] * 0.5)
             upkeep_text = f"<font color='#f39c12'>Idle Tax: ${tax:,} (50%)</font>"
         else:
             upkeep_text = f"<font color='#e74c3c'>Full Upkeep: ${prop['upkeep']:,}</font>"
@@ -152,7 +146,6 @@ class HouseholdView(QFrame):
         info_vbox.addWidget(price_lbl)
         info_vbox.addWidget(upkeep_lbl)
 
-        # 3. Akcja
         right_vbox = QVBoxLayout()
         right_vbox.setAlignment(Qt.AlignmentFlag.AlignCenter)
         prestige_lbl = QLabel(f"⭐ {prop['prestige']} Prestige")
@@ -187,18 +180,14 @@ class HouseholdView(QFrame):
     def buy_property(self, prop):
         current_balance = self.save_data.get('balance', 0)
         if current_balance >= prop['price']:
-            # 1. Pobieramy cenę
             price = prop['price']
             
-            # 2. Odejmowanie pieniędzy
             self.save_data['balance'] -= price
             
-            # 3. Dodawanie do listy posiadanych
             if 'owned_properties' not in self.save_data: 
                 self.save_data['owned_properties'] = []
             self.save_data['owned_properties'].append(prop['id'])
             
-            # 4. DODANIE WPISU DO HISTORII
             if hasattr(self.parent_ctrl, 'log_transaction'):
                 self.parent_ctrl.log_transaction(
                     "Nieruchomość", 
@@ -206,7 +195,6 @@ class HouseholdView(QFrame):
                     -price
                 )
 
-            # 5. Aktualizacja UI
             if hasattr(self.parent_ctrl, 'update_money_display'): 
                 self.parent_ctrl.update_money_display()
                 

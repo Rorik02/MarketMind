@@ -8,24 +8,21 @@ class HistoryView(QWidget):
         super().__init__(parent)
         self.history_data = []
         self.current_page = 0
-        self.page_size = 50 # Ile transakcji na jednej stronie
-        
+        self.page_size = 50 
+
         self.layout = QVBoxLayout(self)
         self.setStyleSheet("background-color: #121212; color: white;")
 
-        # Header
         header = QLabel("📜 PEŁNA HISTORIA FINANSOWA")
         header.setStyleSheet("font-size: 22px; font-weight: bold; color: #f1c40f;")
         self.layout.addWidget(header)
 
-        # Tabela
         self.table = QTableWidget(0, 4)
         self.table.setHorizontalHeaderLabels(["Data", "Kategoria", "Opis", "Kwota"])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.table.setStyleSheet("QTableWidget { background-color: #1a1a1a; color: #eee; }")
         self.layout.addWidget(self.table)
 
-        # Nawigacja stronami
         nav_layout = QHBoxLayout()
         self.prev_btn = QPushButton("⬅ Poprzednia strona")
         self.next_btn = QPushButton("Następna strona ➡")
@@ -39,7 +36,6 @@ class HistoryView(QWidget):
         nav_layout.insertWidget(1, self.page_lbl)
         self.layout.addLayout(nav_layout)
 
-        # Logika przycisków
         self.prev_btn.clicked.connect(lambda: self.change_page(-1))
         self.next_btn.clicked.connect(lambda: self.change_page(1))
 
@@ -50,7 +46,6 @@ class HistoryView(QWidget):
     def update_table(self):
         total_pages = max(1, (len(self.history_data) + self.page_size - 1) // self.page_size)
         
-        # Zabezpieczenie zakresu stron
         if self.current_page >= total_pages: self.current_page = total_pages - 1
         if self.current_page < 0: self.current_page = 0
 

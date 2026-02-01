@@ -18,23 +18,19 @@ class NewGameWindow(QDialog):
         super().__init__(parent)
         self.parent = parent
         self.theme = theme
-        #provider = MarketProvider()
-        #market_snapshot = provider.fetch_market_snapshot()
+        
         self.setWindowTitle("Start New Game")
         
-        # Consistent fixed size to accommodate all descriptions
         self.setFixedSize(850, 820)
         self.setModal(True)
 
         self.saves_dir = os.path.join(os.path.dirname(__file__), "..", "saves")
         os.makedirs(self.saves_dir, exist_ok=True)
 
-        # === MAIN LAYOUT ===
         main_layout = QHBoxLayout()
         main_layout.setContentsMargins(20, 20, 20, 20)
         main_layout.setSpacing(20) 
 
-        # === LEFT PANEL (Form) ===
         form_layout = QVBoxLayout()
         form_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         form_layout.setSpacing(10) 
@@ -44,7 +40,6 @@ class NewGameWindow(QDialog):
         self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         form_layout.addWidget(self.title)
 
-        # Game Mode Selection
         self.mode_lbl = QLabel("Game Mode:")
         form_layout.addWidget(self.mode_lbl)
         self.mode_box = QComboBox()
@@ -52,7 +47,6 @@ class NewGameWindow(QDialog):
         self.mode_box.currentTextChanged.connect(self.update_mode_description)
         form_layout.addWidget(self.mode_box)
 
-        # Difficulty Selection
         self.diff_lbl = QLabel("Difficulty Level:")
         form_layout.addWidget(self.diff_lbl)
         self.diff_box = QComboBox()
@@ -65,7 +59,6 @@ class NewGameWindow(QDialog):
         self.diff_note.setStyleSheet("color: #ffcc00; margin-bottom: 5px;")
         form_layout.addWidget(self.diff_note)
 
-        # Player Info Fields
         self.fn_lbl = QLabel("First Name:")
         form_layout.addWidget(self.fn_lbl)
         self.first_name_input = QLineEdit()
@@ -100,7 +93,6 @@ class NewGameWindow(QDialog):
         self.avatar_lbl = QLabel("Choose Your Avatar:")
         form_layout.addWidget(self.avatar_lbl)
 
-        # Avatar Gallery
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setFixedHeight(150) 
@@ -125,8 +117,6 @@ class NewGameWindow(QDialog):
         self.start_button.clicked.connect(self.create_save)
         form_layout.addWidget(self.start_button, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        # === RIGHT PANEL (Descriptions) ===
-        # Fixed alignment and stretch to prevent clipping in Realistic Mode
         desc_layout = QVBoxLayout()
         desc_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         desc_layout.setSpacing(10)
@@ -137,7 +127,7 @@ class NewGameWindow(QDialog):
 
         self.desc_text = QLabel()
         self.desc_text.setWordWrap(True)
-        self.desc_text.setAlignment(Qt.AlignmentFlag.AlignTop) # Ensure text starts at top
+        self.desc_text.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.desc_text.setFont(QFont("Arial", 10))
         desc_layout.addWidget(self.desc_text)
 
@@ -147,11 +137,10 @@ class NewGameWindow(QDialog):
 
         self.diff_desc_text = QLabel()
         self.diff_desc_text.setWordWrap(True)
-        self.diff_desc_text.setAlignment(Qt.AlignmentFlag.AlignTop) # Ensure text starts at top
+        self.diff_desc_text.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.diff_desc_text.setFont(QFont("Arial", 10))
         desc_layout.addWidget(self.diff_desc_text)
         
-        # Important: Stretch pushes labels to the top, preventing vertical clipping
         desc_layout.addStretch()
 
         main_layout.addLayout(form_layout, 2)
@@ -306,14 +295,11 @@ class NewGameWindow(QDialog):
             QMessageBox.warning(self, "Missing Data", "Please enter your name and save name.")
             return
 
-        # --- KLUCZOWA ZMIANA ---
-        # Nie tworzymy nowego MarketProvider()! Pobieramy dane z MainWindow
         market_snapshot = {"stocks": {}, "crypto": {}}
         if hasattr(self.parent, 'global_market_snapshot'):
             market_snapshot = self.parent.global_market_snapshot
         elif hasattr(self.parent, 'parent') and hasattr(self.parent.parent, 'global_market_snapshot'):
             market_snapshot = self.parent.parent.global_market_snapshot
-        # -----------------------
 
         starting_balances = {"Easy": 100000, "Medium": 10000, "Hard": 1000}
         balance = starting_balances.get(difficulty, 10000)
@@ -340,7 +326,6 @@ class NewGameWindow(QDialog):
             "portfolio": { "stocks": {}, "crypto": {}}
         }
 
-        # Reszta kodu bez zmian (zapisywanie do pliku i zamykanie)
         filename = f"{surname}-{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(os.path.join(self.saves_dir, filename), "w", encoding='utf-8') as f:
             json.dump(save_data, f, indent=4)

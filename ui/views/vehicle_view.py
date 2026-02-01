@@ -136,17 +136,14 @@ class VehicleView(QFrame):
     def buy_vehicle(self, veh):
         """Logika zakupu pojazdu z zapisem do historii i powiadomieniem."""
         if self.save_data.get('balance', 0) >= veh['price']:
-            # 1. Pobieramy cenę
             price = veh['price']
             
-            # 2. Aktualizacja danych finansowych i prestiżu
             self.save_data['balance'] -= price
             if 'owned_vehicles' not in self.save_data: 
                 self.save_data['owned_vehicles'] = []
             self.save_data['owned_vehicles'].append(veh['id'])
             self.save_data['prestige'] = self.save_data.get('prestige', 0) + veh['prestige']
             
-            # 3. DODANIE WPISU DO HISTORII
             if hasattr(self.parent_ctrl, 'log_transaction'):
                 self.parent_ctrl.log_transaction(
                     "Pojazd", 
@@ -154,24 +151,41 @@ class VehicleView(QFrame):
                     -price
                 )
             
-            # 4. Aktualizacja interfejsu pieniędzy
             if hasattr(self.parent_ctrl, 'update_money_display'): 
                 self.parent_ctrl.update_money_display()
 
-            # --- KOMPAKTOWE OKNO POWIADOMIENIA ---
             msg = QMessageBox(self)
             msg.setWindowTitle("Showroom")
-            msg.setText(f"🎉 <b>Congratulations!</b><br>You've purchased <b>{veh['name']}</b>!")
+            msg.setText(f"🎉 <b>Congratulations!</b><br>You've purchased:<br><b>{veh['name']}</b>")
+            
             msg.setStyleSheet("""
-                QMessageBox { background-color: #1a1a1a; border: none; }
-                QLabel { color: white; font-size: 14px; padding: 10px 20px; min-width: 220px; }
+                QMessageBox { 
+                    background-color: #1a1a1a; 
+                    border: 2px solid #3a96dd; 
+                    border-radius: 10px; 
+                }
+                QLabel { 
+                    color: white; 
+                    font-size: 14px; 
+                    padding: 10px; 
+                    min-width: 320px; /* Zapewnia miejsce na długie nazwy */
+                }
                 QPushButton { 
-                    background-color: #27ae60; color: white; font-weight: bold; 
-                    border-radius: 4px; min-width: 70px; height: 28px;
-                    margin-right: 10px; margin-bottom: 5px; border: none;
+                    background-color: #27ae60; 
+                    color: white; 
+                    font-weight: bold; 
+                    border-radius: 6px; 
+                    min-width: 100px; 
+                    height: 35px; 
+                    border: none;
+                    margin-bottom: 10px;
                 }
                 QPushButton:hover { background-color: #2ecc71; }
             """)
+            
+            for label in msg.findChildren(QLabel):
+                label.setWordWrap(True)
+            
             msg.exec()
 
             self.refresh_list("market")

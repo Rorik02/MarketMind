@@ -15,7 +15,6 @@ class EmploymentView(QFrame):
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(25, 25, 25, 25)
 
-        # --- NAGŁÓWEK (Spójny z Luxury Valuables) ---
         header_container = QWidget()
         header_container.setFixedHeight(60)
         header = QHBoxLayout(header_container)
@@ -26,7 +25,6 @@ class EmploymentView(QFrame):
         
         self.back_btn = QPushButton("⬅️ Back to Home")
         self.back_btn.setFixedSize(140, 36)
-        # Stylizacja przycisku na niebieski
         self.back_btn.setStyleSheet("""
             QPushButton {
                 background-color: #34495e;
@@ -47,7 +45,6 @@ class EmploymentView(QFrame):
         
         self.main_layout.addWidget(header_container)
 
-        # System zakładek
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("""
             QTabWidget::pane { 
@@ -164,7 +161,6 @@ class EmploymentView(QFrame):
             btn = QPushButton("START")
             btn.setFixedSize(100, 40)
             
-            # POPRAWKA LOGIKI: Sprawdzenie ujemnych godzin przed odświeżeniem
             if crs['id'] in completed or (active and active['id'] == crs['id'] and active['remaining_hours'] <= 0):
                 btn.setText("DONE")
                 btn.setEnabled(False)
@@ -199,14 +195,10 @@ class EmploymentView(QFrame):
                 QMessageBox.warning(self, "Education", "You are already in a course!")
                 return
             
-            # 1. Pobieramy koszt
             cost = crs['cost']
             
-            # 2. Pobieramy pieniądze
             self.save_data['balance'] -= cost
             
-            # 3. DODANIE WPISU DO HISTORII
-            # Używamy kategorii "Edukacja", aby wpis był czytelny w tabeli
             if hasattr(self.parent_ctrl, 'log_transaction'):
                 self.parent_ctrl.log_transaction(
                     "Edukacja", 
@@ -214,14 +206,12 @@ class EmploymentView(QFrame):
                     -cost
                 )
             
-            # 4. Aktywacja kursu w danych zapisu
             self.save_data['active_course'] = {
                 "id": crs['id'], 
                 "name": crs['name'], 
                 "remaining_hours": crs['days'] * 24
             }
             
-            # 5. Aktualizacja interfejsu
             self.parent_ctrl.update_money_display()
             self.refresh_tabs()
             

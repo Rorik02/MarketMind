@@ -1,23 +1,20 @@
 import sys
 import os
 
-# 1. NAPRAWA PROBLEMU Z MODUŁEM 'ui' (PYTHONPATH)
-# Ten blok sprawia, że import 'from ui.windows...' zadziała zawsze
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, "..", ".."))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-# 2. POPRAWIONE IMPORTY PYQT6 (DODANO QFrame)
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QTableWidget, 
     QTableWidgetItem, QHeaderView, QTabWidget, QPushButton, 
-    QLabel, QLineEdit, QComboBox, QFrame  # <--- TUTAJ DODANO QFrame
+    QLabel, QLineEdit, QComboBox, QFrame  
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor
 
-# 3. IMPORT OKNA WYKRESU
+
 try:
     from ui.windows.chart_window import StockChartWindow
 except ImportError:
@@ -31,12 +28,10 @@ class MarketsView(QWidget):
         self.save_data = {}
         self.layout = QVBoxLayout(self)
         
-        # --- NOWY PANEL WYSZUKIWANIA I FILTROWANIA ---
         self.filter_panel = QFrame()
         self.filter_panel.setStyleSheet("background-color: #252525; border-radius: 10px;")
         filter_layout = QHBoxLayout(self.filter_panel)
         
-        # Wyszukiwarka
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("🔍 Search company or symbol...")
         self.search_input.setStyleSheet("""
@@ -47,7 +42,6 @@ class MarketsView(QWidget):
         """)
         self.search_input.textChanged.connect(self.apply_filters)
         
-        # Filtr Sektorów
         self.sector_filter = QComboBox()
         self.sector_filter.addItems(["All Sectors", "Tech", "Defense", "Energy", "Finance", "Health", "Retail", "Crypto"])
         self.sector_filter.setStyleSheet("""
@@ -64,7 +58,6 @@ class MarketsView(QWidget):
         filter_layout.addWidget(self.sector_filter, 1)
         
         self.layout.addWidget(self.filter_panel)
-        # --------------------------------------------
 
         self.tabs = QTabWidget()
         self.tabs.setStyleSheet("""
@@ -86,11 +79,9 @@ class MarketsView(QWidget):
 
     def setup_tab_layout(self, tab, market_type):
         layout = QVBoxLayout(tab)
-        # Zwiększamy liczbę kolumn do 7, aby dodać ukrytą kolumnę Sektora do filtrowania
         table = QTableWidget(0, 7)
         table.setHorizontalHeaderLabels(["Name", "Price", "24h Change", "Dividend", "Category", "Trend", "Trade"])
         
-        # Ukrywamy kolumnę kategorii (indeks 4), używamy jej tylko do filtrowania logicznego
         table.setColumnHidden(4, True)
         
         table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
@@ -113,9 +104,7 @@ class MarketsView(QWidget):
         for m_type in ["stocks", "crypto"]:
             table = getattr(self, f"{m_type}_table")
             for row in range(table.rowCount()):
-                # Pobieramy nazwę/symbol
                 name_item = table.item(row, 0)
-                # Pobieramy kategorię z ukrytej kolumny (indeks 4)
                 category_item = table.item(row, 4)
                 
                 if not name_item or not category_item:
@@ -124,19 +113,15 @@ class MarketsView(QWidget):
                 name_symbol = name_item.text().lower()
                 category = category_item.text()
                 
-                # Sprawdzanie warunków
                 match_search = search_txt in name_symbol
-                # Porównanie bez względu na spacje po bokach
                 match_sector = (sector_txt == "All Sectors" or category.strip() == sector_txt.strip())
                 
-                # Pokaż wiersz tylko jeśli oba warunki są spełnione
                 table.setRowHidden(row, not (match_search and match_sector))
 
     def refresh_view(self, save_data):
         self.save_data = save_data
         market_info = self.save_data.get('market_data', {})
         
-        # 1. TWOJA MAPA SEKTORÓW (Musisz jej użyć w pętli poniżej)
         sector_map = {
             "AAPL": "Tech", "MSFT": "Tech", "NVDA": "Tech", "AMD": "Tech", "GOOGL": "Tech",
             "META": "Tech", "TSLA": "Tech", "INTC": "Tech", "ASML": "Tech", "ORCL": "Tech",
@@ -156,7 +141,6 @@ class MarketsView(QWidget):
             
             table.setRowCount(len(items))
             for row, (symbol, data) in enumerate(items.items()):
-                # Kolumny 0-3 (Bez zmian)
                 table.setItem(row, 0, QTableWidgetItem(f"{data['name']} ({symbol})"))
                 table.setItem(row, 1, QTableWidgetItem(f"${data['current_price']:,}"))
                 
@@ -171,16 +155,13 @@ class MarketsView(QWidget):
                 div_item.setForeground(QColor("#2ecc71" if div_rate > 0 else "#aaaaaa"))
                 table.setItem(row, 3, div_item)
 
-                # --- KLUCZOWA POPRAWKA ---
-                # 4. KATEGORIA (Pobieramy z mapy powyżej, a nie z 'data.get')
                 if m_type == "crypto":
                     cat_name = "Crypto"
                 else:
-                    cat_name = sector_map.get(symbol, "Other") # Tutaj używamy Twojej mapy!
+                    cat_name = sector_map.get(symbol, "Other")
                 
                 table.setItem(row, 4, QTableWidgetItem(cat_name))
                 
-                # Kolumny 5-6 (Bez zmian)
                 chart_btn = QPushButton("View Chart")
                 chart_btn.clicked.connect(lambda ch, s=symbol, t=m_type: self.open_chart(s, t))
                 table.setCellWidget(row, 5, chart_btn)
@@ -190,7 +171,6 @@ class MarketsView(QWidget):
                 buy_btn.clicked.connect(lambda ch, s=symbol, t=m_type: self.buy_asset(s, t))
                 table.setCellWidget(row, 6, buy_btn)
 
-        # Na koniec wymuszamy filtrację
         self.apply_filters()
 
     def set_change_item(self, table, row, history):

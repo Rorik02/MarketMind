@@ -13,23 +13,19 @@ class BankView(QWidget):
         self.main_layout = QVBoxLayout(self)
         self.main_layout.setContentsMargins(25, 25, 25, 25)
 
-        # Nagłówek
         header = QLabel("🏦 CENTRAL BANK & LOANS")
         header.setFont(QFont("Arial", 22, QFont.Weight.Bold))
         header.setStyleSheet("color: white; margin-bottom: 10px;")
         self.main_layout.addWidget(header)
 
-        # Sekcja 1: DOSTĘPNE POŻYCZKI
         loan_title = QLabel("Available Loan Offers")
         loan_title.setStyleSheet("color: #aaaaaa; font-weight: bold;")
         self.main_layout.addWidget(loan_title)
 
-        # --- ZMIANA: Tworzymy pusty układ na oferty, który wypełni refresh_view ---
         self.offers_container = QWidget()
         self.offers_layout = QHBoxLayout(self.offers_container)
         self.main_layout.addWidget(self.offers_container)
 
-        # Sekcja 2: AKTYWNE POŻYCZKI
         active_title = QLabel("Your Active Loans")
         active_title.setStyleSheet("color: #aaaaaa; font-weight: bold; margin-top: 20px;")
         self.main_layout.addWidget(active_title)
@@ -44,23 +40,19 @@ class BankView(QWidget):
         self.main_layout.addWidget(self.scroll)
 
     def create_loan_offer_card(self, offer):
-        # 1. Pobieramy aktualną liczbę pożyczek
         active_loans = self.save_data.get('active_loans', [])
         num_active = len(active_loans)
         
-        # 2. Obliczamy karę (+75% za każdą aktywną pożyczkę)
         penalty_multiplier = 1.0 + (num_active * 0.75)
         adjusted_interest = offer['interest'] * penalty_multiplier
         
-        # 3. Obliczamy kwoty do wyświetlenia
         base_total = offer['amount'] * (1 + offer['interest'])
         actual_total = offer['amount'] * (1 + adjusted_interest)
         penalty_cost = actual_total - base_total
         monthly = actual_total / offer['months']
         
-        # UI - Wygląd karty
         card = QFrame()
-        border_color = offer['color'] if num_active == 0 else "#e67e22" # Pomarańcz przy karze
+        border_color = offer['color'] if num_active == 0 else "#e67e22" 
         card.setStyleSheet(f"background: #252525; border: 2px solid {border_color}; border-radius: 12px; padding: 15px;")
         lay = QVBoxLayout(card)
         
@@ -68,7 +60,6 @@ class BankView(QWidget):
         amt_lbl.setFont(QFont("Arial", 18, QFont.Weight.Bold))
         amt_lbl.setStyleSheet(f"color: {offer['color']}; border: none;")
         
-        # Rozbicie kosztów w opisie
         if num_active > 0:
             costs_txt = f"Total: ${actual_total:,.2f}\n(Base: ${base_total:,.2f} + Penalty: ${penalty_cost:,.2f})"
             rate_txt = f"{adjusted_interest*100:.1f}% (+{num_active*75}% penalty)"
@@ -83,7 +74,6 @@ class BankView(QWidget):
         btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.setStyleSheet(f"background: {border_color}; color: black; font-weight: bold; border-radius: 5px; height: 35px;")
         
-        # Przekazujemy przeliczone odsetki do funkcji zakupu
         btn.clicked.connect(lambda ch, o=offer, ai=adjusted_interest: self.take_loan(o, ai))
         
         lay.addWidget(amt_lbl)
@@ -95,13 +85,10 @@ class BankView(QWidget):
     def refresh_view(self, save_data=None):
         if save_data: self.save_data = save_data
         
-        # --- NOWOŚĆ: Czyścimy i generujemy oferty na nowo przy każdym odświeżeniu ---
-        # Dzięki temu kara +75% zostanie naliczona natychmiast po wzięciu pożyczki
         while self.offers_layout.count():
             child = self.offers_layout.takeAt(0)
             if child.widget(): child.widget().deleteLater()
 
-        # Te dane są teraz używane dynamicznie
         base_offers = [
             {"id": "small", "amount": 10000, "months": 10, "interest": 0.10, "color": "#3498db"},
             {"id": "medium", "amount": 100000, "months": 48, "interest": 0.20, "color": "#f1c40f"},
@@ -112,7 +99,6 @@ class BankView(QWidget):
             card = self.create_loan_offer_card(offer)
             self.offers_layout.addWidget(card)
 
-        # Reszta Twojego kodu do odświeżania aktywnych pożyczek
         while self.loans_layout.count():
             child = self.loans_layout.takeAt(0)
             if child.widget(): child.widget().deleteLater()
@@ -127,7 +113,6 @@ class BankView(QWidget):
         frame.setStyleSheet("background: #1a1a1a; border-radius: 10px; padding: 10px; margin-bottom: 5px;")
         lay = QHBoxLayout(frame)
 
-        # Lewa strona: Informacje i Pasek Postępu
         info_lay = QVBoxLayout()
         title = QLabel(f"<b>Loan: ${loan['principal']:,}</b>")
         title.setStyleSheet("color: white; border: none;")
@@ -145,22 +130,18 @@ class BankView(QWidget):
         info_lay.addWidget(status)
         lay.addLayout(info_lay, 2)
 
-        # Prawa strona: Panel spłaty z suwakiem
         repay_panel = QVBoxLayout()
         
-        # Suwak (Slider)
         slider_lay = QHBoxLayout()
         slider = QSlider(Qt.Orientation.Horizontal)
         slider.setMinimum(1)
         slider.setMaximum(loan['remaining_months'])
         slider.setCursor(Qt.CursorShape.PointingHandCursor)
         
-        # Etykieta ilości rat i kwoty
         val_lbl = QLabel(f"Pay 1 installment: ${loan['monthly_rate']:,.2f}")
         val_lbl.setStyleSheet("color: #2ecc71; font-weight: bold; font-size: 11px;")
         val_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # Funkcja aktualizująca tekst przy przesuwaniu suwaka
         def update_val(val, l=loan, lbl=val_lbl):
             amt = val * l['monthly_rate']
             lbl.setText(f"Pay {val} installments: ${amt:,.2f}")
@@ -171,7 +152,6 @@ class BankView(QWidget):
         repay_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         repay_btn.setStyleSheet("background: #27ae60; color: white; font-weight: bold; border-radius: 4px; padding: 5px;")
         
-        # Połączenie przycisku z funkcją spłaty
         repay_btn.clicked.connect(lambda ch, s=slider, idx=index: self.repay_custom(idx, s.value()))
 
         repay_panel.addWidget(val_lbl)
@@ -182,7 +162,6 @@ class BankView(QWidget):
         return frame
 
     def take_loan(self, offer, adjusted_interest):
-        # Tworzymy obiekt pożyczki z flagą karencji
         total_to_pay = offer['amount'] * (1 + adjusted_interest)
         
         new_loan = {
@@ -192,7 +171,7 @@ class BankView(QWidget):
             "monthly_rate": total_to_pay / offer['months'],
             "remaining_months": offer['months'],
             "paid_amount": 0,
-            "is_new": True # Karencja - brak spłaty w pierwszym miesiącu
+            "is_new": True
         }
         
         if 'active_loans' not in self.save_data: 
@@ -201,7 +180,6 @@ class BankView(QWidget):
         self.save_data['active_loans'].append(new_loan)
         self.save_data['balance'] += offer['amount']
         
-        # Logowanie z poprawną zmienną
         self.parent_ctrl.log_transaction(
             "Bank", 
             f"Loan Taken: ${offer['amount']:,} (Rate: {adjusted_interest*100:.1f}%)", 
@@ -210,7 +188,6 @@ class BankView(QWidget):
         
         self.parent_ctrl.update_money_display()
         
-        # KLUCZOWE: Odświeżamy widok, aby ceny kolejnych ofert od razu wzrosły!
         self.refresh_view() 
         
         QMessageBox.information(self, "Bank", f"Loan of ${offer['amount']:,} credited to your account.")
@@ -234,24 +211,20 @@ class BankView(QWidget):
         total_cost = num_installments * loan['monthly_rate']
         
         if self.save_data.get('balance', 0) >= total_cost:
-            # Pobranie środków
             self.save_data['balance'] -= total_cost
             
-            # Aktualizacja danych pożyczki
             loan['paid_amount'] += total_cost
             loan['remaining_months'] -= num_installments
             
-            # Logowanie
+            
             self.parent_ctrl.log_transaction("Bank", f"Extra Repayment ({num_installments} inst.)", -total_cost)
             
-            # Jeśli spłacono wszystko
             if loan['remaining_months'] <= 0:
                 self.save_data['active_loans'].pop(idx)
                 QMessageBox.information(self, "Bank", "Loan fully repaid!")
             else:
                 QMessageBox.information(self, "Bank", f"Successfully paid {num_installments} installments.")
             
-            # Odświeżenie
             self.parent_ctrl.update_money_display()
             self.refresh_view()
         else:

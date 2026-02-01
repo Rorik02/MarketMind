@@ -32,7 +32,6 @@ class LoadGameWindow(QDialog):
         self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.title)
 
-        # Scroll area for saves
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
         self.scroll_widget = QWidget()
@@ -46,7 +45,6 @@ class LoadGameWindow(QDialog):
         self.load_saves()
         self.apply_theme()
 
-    # === THEME HANDLING ===
     def apply_theme(self):
         """Apply theme colors."""
         c = self.theme.get_colors()
@@ -56,10 +54,8 @@ class LoadGameWindow(QDialog):
         self.setAutoFillBackground(True)
         self.title.setStyleSheet(f"color: {c['text']}; margin-bottom: 10px;")
 
-    # === LOAD SAVES ===
     def load_saves(self):
         """Display all available save files as cards with load & delete options."""
-        # Clear layout first
         for i in reversed(range(self.scroll_layout.count())):
             widget = self.scroll_layout.itemAt(i).widget()
             if widget:
@@ -81,7 +77,6 @@ class LoadGameWindow(QDialog):
             except Exception:
                 continue
 
-            # Card frame
             frame = QFrame()
             frame.setFrameShape(QFrame.Shape.StyledPanel)
             frame.setStyleSheet("""
@@ -96,7 +91,6 @@ class LoadGameWindow(QDialog):
             """)
             frame_layout = QVBoxLayout(frame)
 
-            # Basic info
             info = QLabel(
                 f"<b>{data['player_name']} {data['player_surname']}</b>  "
                 f"|  Mode: {data['mode']}<br>"
@@ -107,7 +101,6 @@ class LoadGameWindow(QDialog):
             info.setWordWrap(True)
             frame_layout.addWidget(info)
 
-            # Buttons (Load / Delete)
             btn_layout = QHBoxLayout()
             btn_load = QPushButton("▶ Load")
             btn_delete = QPushButton("🗑 Delete")
@@ -126,7 +119,6 @@ class LoadGameWindow(QDialog):
 
             self.scroll_layout.addWidget(frame)
 
-    # === LOAD SELECTED SAVE ===
     def load_selected_save(self, filename):
         """Load selected save file."""
         path = os.path.join(self.saves_dir, filename)
@@ -137,7 +129,6 @@ class LoadGameWindow(QDialog):
             QMessageBox.warning(self, "Error", f"Failed to load save file:\n{e}")
             return
 
-        # Save this as last loaded game
         self.theme.set_last_save(filename)
 
         QMessageBox.information(
@@ -148,7 +139,6 @@ class LoadGameWindow(QDialog):
             self.parent.start_game(data)
         self.close()
 
-    # === DELETE SAVE ===
     def delete_save(self, filename, widget):
         """Delete a save file after user confirmation."""
         confirm = QMessageBox.question(

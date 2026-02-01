@@ -12,7 +12,6 @@ class StockChartWindow(QDialog):
         self.symbol = symbol
         self.history_data = history_data
         
-        # Zabezpieczenie na wypadek braku historii
         if not history_data:
             self.current_price = 0
         else:
@@ -21,11 +20,9 @@ class StockChartWindow(QDialog):
         self.setWindowTitle(f"Market Chart - {symbol}")
         self.setMinimumSize(1000, 600)
         
-        # GŁÓWNY LAYOUT HORYZONTALNY
         self.main_layout = QHBoxLayout(self)
         self.setStyleSheet("background-color: #1e1e1e; color: white;")
 
-        # --- LEWA STRONA: WYKRES ---
         self.left_container = QVBoxLayout()
         
         self.plot_widget = pg.PlotWidget()
@@ -39,12 +36,10 @@ class StockChartWindow(QDialog):
         self.left_container.addWidget(self.info_label)
         self.main_layout.addLayout(self.left_container, 3) 
 
-        # --- PRAWA STRONA: PANEL ZAKUPU ---
         self.right_panel = QVBoxLayout()
         self.right_panel.setSpacing(15)
         self.right_panel.setContentsMargins(10, 0, 0, 0)
         
-        # Dynamiczny tytuł z sektorem
         title_text = f"TRADE {symbol}"
         title = QLabel(title_text)
         title.setStyleSheet("font-size: 20px; font-weight: bold; color: #2ecc71;")
@@ -54,7 +49,6 @@ class StockChartWindow(QDialog):
         self.price_display.setStyleSheet("font-size: 15px; color: #aaaaaa;")
         self.right_panel.addWidget(self.price_display)
 
-        # Layout wejścia ilości z przyciskiem MAX
         input_container = QHBoxLayout()
         input_container.setSpacing(0)
         
@@ -180,20 +174,16 @@ class StockChartWindow(QDialog):
                 QMessageBox.warning(self, "Brak środków", "Nie stać Cię na ten zakup!")
                 return
 
-            # Logika portfela
             market_data = main_game.save_data.get('market_data', {})
-            # Sprawdzamy w której sekcji jest symbol, aby pobrać kategorię
             p_key = "stocks" if self.symbol in market_data.get('stocks', {}) else "crypto"
             asset_info = market_data[p_key][self.symbol]
             
-            # Pobieramy/Tworzymy sekcję portfela
             if 'portfolio' not in main_game.save_data:
                 main_game.save_data['portfolio'] = {"stocks": {}, "crypto": {}}
             
             portfolio = main_game.save_data['portfolio'].setdefault(p_key, {})
             p_item = portfolio.setdefault(self.symbol, {"amount": 0, "avg_price": 0, "name": asset_info['name']})
             
-            # Obliczanie nowej średniej ceny (Weighted Average)
             current_total_value = p_item["amount"] * p_item["avg_price"]
             new_amount = p_item["amount"] + amount
             new_avg = (current_total_value + total_cost) / new_amount
@@ -203,7 +193,6 @@ class StockChartWindow(QDialog):
             
             main_game.save_data['balance'] -= total_cost
             
-            # Logowanie i odświeżanie
             main_game.log_transaction("Giełda", f"Zakup {amount} {self.symbol}", -total_cost)
             main_game.update_money_display() 
             

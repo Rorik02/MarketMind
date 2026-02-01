@@ -13,12 +13,10 @@ class DashboardView(QWidget):
         self.layout = QVBoxLayout(self)
         self.setStyleSheet("background-color: #121212; color: white;")
 
-        # --- GÓRA: TYTUŁ ---
         header = QLabel("DASHBOARD FINANSOWY")
         header.setStyleSheet("font-size: 24px; font-weight: bold; color: #3a96dd; margin-bottom: 10px;")
         self.layout.addWidget(header)
 
-        # --- ŚRODEK: STATYSTYKI + WYKRES ---
         self.top_content = QHBoxLayout()
         
         self.stats_layout = QVBoxLayout()
@@ -50,13 +48,11 @@ class DashboardView(QWidget):
         self.top_content.addWidget(self.plot_widget, 1)
         self.layout.addLayout(self.top_content)
 
-        # --- PODSUMOWANIE NET WORTH ---
         self.total_net_worth = QLabel("NET WORTH: $0.00")
         self.total_net_worth.setStyleSheet("font-size: 24px; font-weight: bold; color: #2ecc71; margin: 10px 0;")
         self.total_net_worth.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.total_net_worth)
 
-        # --- DÓŁ: HISTORIA TRANSAKCJI ---
 
 
     def calculate_val(self, save_data, json_file, save_key):
@@ -72,7 +68,6 @@ class DashboardView(QWidget):
         return total
 
     def refresh_view(self, save_data):
-        # 1. Obliczenia
         cash = save_data.get('balance', 0)
         market_val = 0
         portfolio = save_data.get('portfolio', {})
@@ -93,7 +88,6 @@ class DashboardView(QWidget):
             self.stat_widgets[name].setText(f"{name}: [${val:,.2f}]")
         self.total_net_worth.setText(f"NET WORTH: ${total:,.2f}")
 
-        # 2. Wykres
         self.plot_widget.clear()
         if total > 0:
             current_angle = 0

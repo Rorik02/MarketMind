@@ -4,11 +4,10 @@ import math
 import random
 from datetime import datetime, timedelta
 from PyQt6.QtWidgets import (QWidget, QLabel, QVBoxLayout, QHBoxLayout, 
-                             QFrame, QPushButton, QStackedWidget, QMessageBox, QLineEdit)
+                             QFrame, QPushButton, QStackedWidget, QMessageBox, QLineEdit,)
 from PyQt6.QtGui import QFont, QColor, QPalette, QPixmap
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QTimer
 
-# Importujemy modularne widoki
 from ui.views.home_view import HomeView
 from ui.views.household_view import HouseholdView
 from ui.views.vehicle_view import VehicleView 
@@ -20,21 +19,24 @@ from ui.views.dashboard_view import DashboardView
 from ui.views.history_view import HistoryView
 from ui.views.bank_view import BankView
 from utils.event_manager import EventManager
+from utils.achievement_manager import AchievementManager
+from ui.views.achievements_view import AchievementsView
+from ui.widgets.toast import AchievementToast
+
 
 class GameView(QWidget):
     def __init__(self, parent=None, theme=None, save_data=None):
         super().__init__(parent)
         self.parent = parent
+        self.toast_queue = []
+        self.is_toast_showing = False
         
-        # 1. NAJPIERW PRZYPISUJEMY DANE (To musi być na samym początku!)
-        self.theme = theme # <--- TO ROZWIĄZUJE TWÓJ OBECNY BŁĄD
+        self.theme = theme 
         self.save_data = save_data or {}
-        self.time_btns = [] # <--- BEZPIECZNIK (pusta lista)
+        self.time_btns = [] 
         
-        # 2. INICJALIZACJA MANAGERA EVENTÓW
         self.event_manager = EventManager()
         
-        # 3. KONFIGURACJA CZASU
         date_str = self.save_data.get('created', '2026-01-14 00:00')
         self.current_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
 
@@ -42,21 +44,17 @@ class GameView(QWidget):
         self.main_layout.setContentsMargins(15, 15, 15, 15)
         self.main_layout.setSpacing(15)
 
-        # 4. TWORZENIE ELEMENTÓW INTERFEJSU (Wypełni self.time_btns)
-        # Przenosimy to wyżej, aby obiekty istniały przed widokami
+        
         self.header = self.create_header()
         
-        # 5. CONTENT AREA I WIDOKI MODULARNE
         self.content_layout = QHBoxLayout()
         self.content_layout.setSpacing(20)
         self.side_menu = self.create_side_menu()
 
-        # Workspace Stack
         self.workspace_stack = QStackedWidget()
 
         self.event_cooldown_days = 0
         
-        # Teraz przekazanie self.theme zadziała, bo self.theme już istnieje
         self.view_home = HomeView(self, self.theme, self.save_data)
         self.view_markets = MarketsView(self)
         self.view_portfolio = PortfolioView(self)
@@ -68,8 +66,8 @@ class GameView(QWidget):
         self.view_vehicles = VehicleView(self, self.theme, self.save_data)
         self.view_valuables = ValuablesView(self, self.theme, self.save_data)
         self.view_employment = EmploymentView(self, self.theme, self.save_data)
+        self.view_achievements = AchievementsView(self, self.theme, self.save_data) 
 
-        # Dodanie do stosu (indeksy muszą się zgadzać z switch_view)
         self.workspace_stack.addWidget(self.view_home)      # 0
         self.workspace_stack.addWidget(self.view_dashboard) # 1
         self.workspace_stack.addWidget(self.view_markets)   # 2
@@ -82,19 +80,20 @@ class GameView(QWidget):
         self.workspace_stack.addWidget(self.view_employment)# 9
         self.workspace_stack.addWidget(self.view_history)   # 10
         self.workspace_stack.addWidget(self.view_bank)      # 11
+        self.workspace_stack.addWidget(self.view_achievements) # 12
 
-        # 6. SKŁADANIE LAYOUTU
         self.main_layout.addWidget(self.header)
         self.content_layout.addWidget(self.side_menu, 1)
         self.content_layout.addWidget(self.workspace_stack, 4)
         self.main_layout.addLayout(self.content_layout)
 
-        # 7. LOGIKA KOŃCOWA
         self.connect_menu_logic()
         self.setup_initial_state(self.save_data)
         
-        # Na samym końcu nakładamy style
         self.apply_theme()
+        self.save_data['max_prestige'] = self.calculate_total_game_prestige()
+        self.achievement_manager = AchievementManager(self)
+
 
     def setup_initial_state(self, save_data):
         """Inicjalizuje historię i odświeża widok giełdy."""
@@ -103,18 +102,16 @@ class GameView(QWidget):
         for cat in ['stocks', 'crypto']:
             items = market_data.get(cat, {})
             for symbol, data in items.items():
-                # Tworzymy startowy punkt historii, jeśli go brakuje
+            
                 if 'history' not in data or not data['history']:
                     data['history'] = [{
                         "date": self.current_datetime.strftime("%Y-%m-%d"),
                         "price": data['current_price']
                     }]
         
-        # Teraz view_markets na pewno już istnieje
         if hasattr(self, 'view_markets'):
             self.view_markets.refresh_view(self.save_data)
 
-    # --- METODY NAWIGACJI ---
     def open_home(self):
         self.view_home.refresh_view(self.save_data)
         self.workspace_stack.setCurrentIndex(0)
@@ -128,11 +125,9 @@ class GameView(QWidget):
     def open_vehicle_manager(self): self.workspace_stack.setCurrentIndex(7)
     def open_valuables_manager(self): self.workspace_stack.setCurrentIndex(8)
 
-    # --- LOGIKA CZASU I FINANSÓW ---
     def advance_time(self, hours):
         old_date = self.current_datetime
 
-        # 1. Zabezpieczenie przed długiem
         if self.save_data.get('balance', 0) < 0:
             msg = QMessageBox(self)
             msg.setWindowTitle("Financial Alert")
@@ -142,7 +137,6 @@ class GameView(QWidget):
             msg.exec()
             return
 
-        # 2. Logika COOLDOWNU (zmniejszanie licznika)
         days_to_subtract = hours / 24
         if not hasattr(self, 'event_cooldown_days'):
             self.event_cooldown_days = 0
@@ -151,25 +145,21 @@ class GameView(QWidget):
             self.event_cooldown_days -= days_to_subtract
             if self.event_cooldown_days < 0: self.event_cooldown_days = 0
 
-        # 3. GŁÓWNA PĘTLA CZASU (Zunifikowana)
         if hours >= 24:
             days_to_jump = hours // 24
             for _ in range(days_to_jump):
                 self.current_datetime += timedelta(days=1)
                 
-                # Przetwarzamy logikę rynkową i eventy raz na dobę
                 self.event_manager.process_day()
                 self.simulate_market_movement()
                 self.check_death_chance()
         else:
             self.current_datetime += timedelta(hours=hours)
 
-        # 4. Aktualizacja danych zapisu
         self.save_data['current_game_date'] = self.current_datetime.strftime("%Y-%m-%d")
         self.save_data['created'] = self.current_datetime.strftime("%Y-%m-%d %H:%M")
         self.update_date_display()
 
-        # 5. Logika kursów edukacyjnych
         if self.save_data.get('active_course'):
             course = self.save_data['active_course']
             course['remaining_hours'] -= hours
@@ -180,31 +170,25 @@ class GameView(QWidget):
                 self.save_data['active_course'] = None
                 QMessageBox.information(self, "Education", f"Course Finished: {course['name']}")
 
-        # 6. LOSOWANIE NOWEGO EVENTU (Z cooldownem 6 miesięcy)
-        if hours >= 720: # Tylko przy skoku o miesiąc
+        if hours >= 720:
             self.process_monthly_finances()
             
-            # Warunek: brak aktywnego eventu ORAZ licznik cooldownu na zero
             if not self.event_manager.active_events and self.event_cooldown_days <= 0:
-            # Szansa tylko 15% (zamiast 40%) - eventy mają być rzadkim świętem/tragedią
                 if random.random() < 0.15:
                     events = self.event_manager.events_db
                     
                     if events:
-                        # Pobieramy wagi z bazy (jeśli brakuje wagi, przyjmujemy 1)
                         weights = [e.get('weight', 1) for e in events]
                         
-                        # Losowanie ważone: im większa waga, tym częściej występuje
                         random_event = random.choices(events, weights=weights, k=1)[0]
                         
-                        # Aktywujemy wylosowany event
                         self.event_manager.trigger_event_by_id(random_event['id'])
                         
-                        # Ustawiamy blokadę na 180 dni (6 miesięcy)
                         self.event_cooldown_days = 365
                         print(f"DEBUG: Wylosowano event: {random_event['name']} (Waga: {random_event.get('weight', 1)})")
 
-        # 7. Odświeżanie UI
+        self.achievement_manager.check_all()
+
         self.update_news_feed()
         self.refresh_active_view()
 
@@ -219,7 +203,6 @@ class GameView(QWidget):
 
     def process_monthly_finances(self):
         """Główna metoda rozliczająca miesiąc: pensje, dywidendy, koszty i POŻYCZKI."""
-        # --- 1. PENSJA I UTRZYMANIE (Co miesiąc) ---
         job_id = self.save_data.get('current_job')
         salary = 0
         if job_id:
@@ -231,14 +214,12 @@ class GameView(QWidget):
         total_loan_costs = 0
         loans = self.save_data.get('active_loans', [])
         
-       # --- 2. OBSŁUGA POŻYCZEK Z KARENCJĄ ---
         total_loan_costs = 0
         loans = self.save_data.get('active_loans', [])
         
         for loan in loans[:]:
-            # Sprawdzenie karencji: jeśli pożyczka jest nowa, pomijamy spłatę w tym cyklu
             if loan.get('is_new', False):
-                loan['is_new'] = False # Zdejmujemy flagę, spłata zacznie się w przyszłym miesiącu
+                loan['is_new'] = False 
                 continue
 
             loan['remaining_months'] -= 1
@@ -249,7 +230,6 @@ class GameView(QWidget):
                 loans.remove(loan)
                 QMessageBox.information(self, "Bank", f"Twoja pożyczka ({loan['type']}) została spłacona!")
 
-        # --- 3. DYWIDENDY KWARTALNE (Marzec, Czerwiec, Wrzesień, Grudzień) ---
         total_dividends = 0
         current_month = self.current_datetime.month
         
@@ -264,7 +244,6 @@ class GameView(QWidget):
                     div_rate = m_info.get('dividend_yield', 0) 
                     total_dividends += (amount * current_price * div_rate)
 
-        # --- 4. LOGOWANIE DO HISTORII (📜) ---
         if salary > 0:
             self.log_transaction("Praca", f"Pensja: {self.save_data.get('current_title', 'Pracownik')}", salary)
         
@@ -275,14 +254,10 @@ class GameView(QWidget):
             self.log_transaction("Opłaty", "Utrzymanie nieruchomości", -total_upkeep)
             
         if total_loan_costs > 0:
-            # Logujemy ratę pożyczki jako wydatek bankowy
             self.log_transaction("Bank", "Automatyczna rata pożyczki", -total_loan_costs)
 
-        # --- 5. FINALNA AKTUALIZACJA BALANSU ---
-        # Uwzględniamy dochody i wszystkie koszty, w tym raty
         self.save_data['balance'] += (salary + total_dividends - total_upkeep - total_loan_costs)
 
-        # --- 6. ODŚWIEŻENIE INTERFEJSU ---
         self.update_money_display()
         if hasattr(self, 'view_home'):
             self.view_home.refresh_view(self.save_data)
@@ -290,7 +265,6 @@ class GameView(QWidget):
         if self.workspace_stack.currentIndex() == 10:
             self.view_history.refresh_view(self.save_data)
             
-        # Odśwież widok banku, jeśli jest otwarty, aby zaktualizować paski postępu
         if hasattr(self, 'view_bank'):
             self.view_bank.refresh_view(self.save_data)
 
@@ -322,7 +296,6 @@ class GameView(QWidget):
         except: pass
         return total
 
-    # --- UI COMPONENTS ---
     def create_header(self):
         frame = QFrame()
         frame.setFixedHeight(100)
@@ -330,7 +303,6 @@ class GameView(QWidget):
         layout.setContentsMargins(15, 0, 15, 0)
         layout.setSpacing(10)
 
-        # --- LEWA: GRACZ ---
         self.player_area = QWidget()
         self.player_area.setStyleSheet("background: transparent; border: none;")
         p_layout = QHBoxLayout(self.player_area)
@@ -347,23 +319,20 @@ class GameView(QWidget):
         p_layout.addWidget(self.avatar_lbl)
         p_layout.addWidget(self.player_info)
 
-        # --- ŚRODEK: GRUPA FINANSOWA (Z POPRAWIONYMI KURSORAMI) ---
         center_group = QWidget()
         finance_layout = QHBoxLayout(center_group)
         finance_layout.setContentsMargins(0, 0, 0, 0)
         finance_layout.setSpacing(15)
         finance_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # 1. Przycisk News (Rączka przy najechaniu)
         self.btn_news = QPushButton("Market is stable")
-        self.btn_news.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+        self.btn_news.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_news.setStyleSheet("color: #aaaaaa; font-style: italic; border: none; background: transparent; font-size: 13px;")
         self.btn_news.clicked.connect(self.show_event_details)
         
-        # 2. Przycisk Bank (Rączka przy najechaniu)
         self.btn_bank = QPushButton("🏦 BANK")
         self.btn_bank.setFixedSize(80, 45)
-        self.btn_bank.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+        self.btn_bank.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_bank.setStyleSheet("background: #2c3e50; color: #ecf0f1; border-radius: 22px; font-weight: bold;")
         self.btn_bank.clicked.connect(lambda: self.switch_view(11))
         
@@ -371,10 +340,9 @@ class GameView(QWidget):
         self.money_lbl.setFont(QFont("Arial", 28, QFont.Weight.Bold))
         self.money_lbl.setStyleSheet("color: #2ecc71; border: none; background: transparent;")
         
-        # 3. Przycisk Historia (Rączka przy najechaniu)
         self.btn_history = QPushButton("📜")
         self.btn_history.setFixedSize(45, 45)
-        self.btn_history.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+        self.btn_history.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_history.setStyleSheet("background-color: #2a2a2a; color: white; border-radius: 22px; font-size: 20px;")
         self.btn_history.clicked.connect(lambda: self.switch_view(10))
 
@@ -383,13 +351,11 @@ class GameView(QWidget):
         finance_layout.addWidget(self.money_lbl)
         finance_layout.addWidget(self.btn_history)
 
-        # --- PRAWA: CZAS I SYSTEM (POPRAWIONY KALENDARZ I KURSORY) ---
         self.right_container = QWidget()
         r_layout = QHBoxLayout(self.right_container)
         r_layout.setContentsMargins(0, 0, 0, 0)
         r_layout.setSpacing(10)
 
-        # Poprawiony Kontener Kalendarza
         self.date_container = QFrame()
         self.date_container.setStyleSheet("""
             QFrame {
@@ -409,12 +375,11 @@ class GameView(QWidget):
         d_inner_layout.addWidget(self.date_lbl)
         r_layout.addWidget(self.date_container)
         
-        # Przycisk Czasu (Rączka przy najechaniu)
         self.time_btns = []
         for label, hours in [("+1h", 1), ("+1d", 24), ("+1w", 168), ("+1m", 720)]:
             btn = QPushButton(label)
             btn.setFixedSize(60, 38)
-            btn.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+            btn.setCursor(Qt.CursorShape.PointingHandCursor)
             btn.setStyleSheet("""
                 QPushButton { background-color: #2a2a2a; color: white; border-radius: 5px; }
                 QPushButton:hover { background-color: #3a3a3a; }
@@ -423,10 +388,9 @@ class GameView(QWidget):
             r_layout.addWidget(btn)
             self.time_btns.append(btn)
 
-        # Przycisk System (Rączka przy najechaniu)
         self.btn_system = QPushButton("⚙️ SYSTEM")
         self.btn_system.setFixedSize(110, 40)
-        self.btn_system.setCursor(Qt.CursorShape.PointingHandCursor) # <--- DODANO
+        self.btn_system.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_system.setStyleSheet("""
             QPushButton { background-color: #3a96dd; color: white; border-radius: 5px; font-weight: bold; }
             QPushButton:hover { background-color: #4aa6ed; }
@@ -475,7 +439,6 @@ class GameView(QWidget):
             layout.addWidget(btn)
             self.sys_btns.append(btn)
 
-        # --- KONSOLA DEWELOPERSKA ---
         console_container = QFrame()
         console_container.setFixedWidth(320)
         console_container.setStyleSheet("background: #000; border: 1px solid #0f0; border-radius: 5px; margin-top: 20px;")
@@ -514,7 +477,7 @@ class GameView(QWidget):
                 return f"Added ${amount:,.2f}"
             except: return "Error"
 
-        elif command == "event" and len(args) > 0: # NOWA KOMENDA
+        elif command == "event" and len(args) > 0:
             try:
                 event_id = args[0].upper()
                 result = self.event_manager.trigger_event_by_id(event_id)
@@ -531,14 +494,12 @@ class GameView(QWidget):
                 return f"Added {amount} prestige bonus"
             except: return "Error"
 
-        # --- TWOJA NOWA KOMENDA TESTOWA ---
         elif command == "kill":
             try:
                 dob_str = self.save_data.get('date_of_birth', '1990-01-01')
                 dob = datetime.strptime(dob_str, "%Y-%m-%d")
                 age = self.current_datetime.year - dob.year
                 
-                # Wywołujemy funkcję raportu, którą wcześniej przygotowaliśmy
                 self.trigger_end_game(age)
                 return f"Szymon died for science at age {age}. Report generated."
             except Exception as e:
@@ -548,7 +509,6 @@ class GameView(QWidget):
             events = self.event_manager.events_db
             weights = [e.get('weight', 1) for e in events]
             total = sum(weights)
-            # Pokazuje szansę dla top 3 najbardziej prawdopodobnych eventów
             top_events = sorted(events, key=lambda x: x.get('weight', 1), reverse=True)[:3]
             res = "Top Odds: " + ", ".join([f"{e['name']} ({e['weight']/total*100:.1f}%)" for e in top_events])
             return res
@@ -575,7 +535,7 @@ class GameView(QWidget):
         layout.setSpacing(18)
         layout.setContentsMargins(12, 25, 12, 25)
         self.menu_btns = []
-        items = ["🏠 HOME", "📊 Dashboard", "📈 Markets", "💼 Portfolio", "🏢 Business"]
+        items = ["🏠 HOME", "📊 Dashboard", "📈 Markets", "💼 Portfolio"]
         for text in items:
             btn = QPushButton(text)
             btn.setFixedHeight(65)
@@ -596,21 +556,22 @@ class GameView(QWidget):
 
     def connect_menu_logic(self):
         for i, btn in enumerate(self.menu_btns):
-            # i=2 to indeks zakładki Markets w Twoim workspace_stack
             btn.clicked.connect(lambda checked, index=i: self.switch_view(index))
 
     def switch_view(self, index):
         self.workspace_stack.setCurrentIndex(index)
         if index == 2:
             self.view_markets.refresh_view(self.save_data)
-        if index == 3: # Zakładka Portfolio
+        if index == 3:
             self.view_portfolio.refresh_view(self.save_data)
         if index == 1:  
             self.view_dashboard.refresh_view(self.save_data)
-        if index == 10: # To musi tu być!
+        if index == 10: 
             self.view_history.refresh_view(self.save_data)
         if index == 11:
             self.view_bank.refresh_view(self.save_data)
+        if index == 12:
+            self.view_achievements.refresh_view(self.save_data) #
     
     def switch_workspace(self, index):
         """Przełącza widok i odświeża dane jeśli to konieczne."""
@@ -630,7 +591,6 @@ class GameView(QWidget):
         self.btn_system.setStyleSheet("background: #3a96dd; color: white; border-radius: 5px; font-weight: bold;")
         for b in self.time_btns: b.setStyleSheet("background: #3a3a3a; color: white; border-radius: 5px; font-weight: bold;")
 
-        # --- POPRAWIONA STYLIZACJA OKIEN KOMUNIKATÓW ---
         msg_style = f"""
             QMessageBox {{
                 background-color: #1a1a1a;
@@ -662,18 +622,14 @@ class GameView(QWidget):
 
     def check_death_chance(self):
         """Sprawdza szansę na zgon na podstawie aktualnego wieku."""
-        # Pobieramy datę urodzenia z zapisu
         dob_str = self.save_data.get('date_of_birth', '1990-01-01')
         dob = datetime.strptime(dob_str, "%Y-%m-%d")
         
-        # Obliczamy wiek w aktualnym czasie gry
         age = self.current_datetime.year - dob.year
         
-        # Twoja formuła: 18 lat -> ~0%, 100 lat -> ~99%
         base = 1.12
         annual_chance = (pow(base, age - 18) / pow(base, 100 - 18)) * 100
         
-        # Ponieważ sprawdzamy to często, dzielimy szansę roczną przez 365 dni
         import random
         daily_chance = annual_chance / 365
         if random.random() * 100 < daily_chance:
@@ -687,7 +643,6 @@ class GameView(QWidget):
             cash = self.save_data.get('balance', 0)
             total_prestige = self.save_data.get('prestige', 0)
             
-            # 1. Property Valuation
             props_val = 0
             owned_props = self.save_data.get('owned_properties', [])
             import os, json
@@ -699,7 +654,6 @@ class GameView(QWidget):
                         if p['id'] in owned_props: props_val += p.get('price', 0)
 
 
-            # 2. Vehicle Valuation
             vehs_val = 0
             owned_vehs = self.save_data.get('owned_vehicles', [])
             vehs_path = os.path.join(os.path.dirname(__file__), "..", "data", "vehicles.json")
@@ -709,9 +663,7 @@ class GameView(QWidget):
                     for v in vehs_data:
                         if v['id'] in owned_vehs: vehs_val += v.get('price', 0)
 
-            # 3. FIX: Valuables Valuation (Using your specific logic)
             items_val = 0
-            # Twoja metoda korzysta z klucza 'owned_valuables'
             owned_ids = self.save_data.get('owned_valuables', [])
             valuables_path = os.path.join(os.path.dirname(__file__), "..", "data", "valuables.json")
             
@@ -725,7 +677,6 @@ class GameView(QWidget):
 
             total_net_worth = cash + props_val + vehs_val + items_val
 
-            # English Report HTML
             report = (
                 f"<div style='color: white;'>"
                 f"<h2 style='color: #e74c3c; text-align: center;'>GAME OVER</h2>"
@@ -764,38 +715,28 @@ class GameView(QWidget):
         for category in ['stocks', 'crypto']:
             items = market_data.get(category, {})
             for symbol, data in items.items():
-                # 1. Pobierz modyfikator z EventManagera
-                # Zakładamy, że w data masz klucz 'category_id' lub mapujemy ręcznie
                 sector = data.get('category', category).lower() 
                 event_modifier = self.event_manager.get_modifier_for_symbol(symbol, sector)
 
-                # 2. Oblicz nową cenę
-                # bazowa fluktuacja (szum rynkowy)
                 volatility = 0.02 if category == 'stocks' else 0.05
                 base_change = 1 + random.uniform(-volatility, volatility)
                 
-                # Finalna zmiana: szum * modyfikator wydarzenia
-                # Jeśli event_modifier to 1.25 (przełom tech), cena wzrośnie mocniej
                 total_change = base_change * event_modifier
                 
                 data['current_price'] = round(data['current_price'] * total_change, 2)
 
-                # 3. ZABEZPIECZENIE: Historia
                 if 'history' not in data or not isinstance(data['history'], list):
                     data['history'] = []
 
-                # 4. Dodaj punkt do historii
                 data['history'].append({
                     "date": self.current_datetime.strftime("%Y-%m-%d"),
                     "price": data['current_price']
                 })
 
-                # 5. Ograniczenie historii
                 if len(data['history']) > 30:
                     data['history'].pop(0)
 
     def log_transaction(self, category, description, amount):
-        # Upewniamy się, że klucz istnieje w słowniku zapisu
         if 'transaction_history' not in self.save_data:
             self.save_data['transaction_history'] = []
             
@@ -806,11 +747,8 @@ class GameView(QWidget):
             "amount": float(amount)
         }
         
-        # Wstawiamy do listy
         self.save_data['transaction_history'].insert(0, new_entry)
         
-        # WYMUSZENIE: Jeśli używasz wielu widoków, upewnij się, że 
-        # HistoryView dostanie informację o nowej liście
         if hasattr(self, 'view_history'):
             self.view_history.history_data = self.save_data['transaction_history']
 
@@ -825,9 +763,9 @@ class GameView(QWidget):
         msg.exec()
         
         if msg.clickedButton() == btn_bank:
-            self.switch_view(11) # Załóżmy, że BankView to indeks 11
+            self.switch_view(11)
         else:
-            self.switch_view(3) # Portfolio to indeks 3
+            self.switch_view(3)
 
     def fix_existing_dividends(self):
         """Naprawia zepsute dywidendy wczytane z zapisu (np. 143.0 -> 0.0143)."""
@@ -836,9 +774,7 @@ class GameView(QWidget):
         for cat in ['stocks', 'crypto']:
             for symbol, data in market_data.get(cat, {}).items():
                 div = data.get('dividend_yield', 0)
-                # Jeśli dywidenda kwartalna przekracza 5% (0.05), to jest błąd
                 if div > 0.05:
-                    # Zamieniamy np. 143.0 na 0.0143 (czyli 1.43% na kwartał)
                     data['dividend_yield'] = round(div / 100, 6)
                     count += 1
         if count > 0:
@@ -855,7 +791,6 @@ class GameView(QWidget):
         impact_text = "Positively" if impact_val > 1.0 else "Negatively"
         color = "#2ecc71" if impact_val > 1.0 else "#e74c3c"
         
-        # --- INTELIGENTNE OKREŚLANIE CELU ---
         target_type = ev.get('target_type')
         target_id = ev.get('target_id', '').upper()
         
@@ -870,7 +805,6 @@ class GameView(QWidget):
         msg = QMessageBox(self)
         msg.setWindowTitle("🚨 MARKET ANALYSIS")
         
-        # Budujemy treść HTML
         html_content = f"""
             <div style='min-width: 350px; font-family: Arial;'>
                 <h2 style='color: {color}; margin-bottom: 0;'>{ev['name']}</h2>
@@ -896,11 +830,10 @@ class GameView(QWidget):
             self.btn_news.setStyleSheet("color: #aaaaaa; font-style: italic; border: none; background: transparent; font-size: 13px;")
             return
 
-        # Jeśli jest aktywny event
-        ev_data = active[-1] # Pobieramy ostatni
+        ev_data = active[-1]
         ev = ev_data['event']
         
-        print(f"DEBUG: Aktualizacja newsów. Aktywny event: {ev['name']}") # Sprawdź to w konsoli!
+        print(f"DEBUG: Aktualizacja newsów. Aktywny event: {ev['name']}")
 
         self.btn_news.setText(f"(NEWS) {ev['name']}")
         self.btn_news.setStyleSheet("""
@@ -914,3 +847,40 @@ class GameView(QWidget):
                 font-size: 13px;
             }
         """)
+
+    def calculate_total_game_prestige(self):
+        total = 0
+        data_dir = os.path.join(os.path.dirname(__file__), "data")
+        for file in ["properties.json", "vehicles.json", "valuables.json"]:
+            path = os.path.join(data_dir, file)
+            if os.path.exists(path):
+                with open(path, 'r', encoding='utf-8') as f:
+                    items = json.load(f)
+                    for item in items:
+                        total += item.get('prestige', 0)
+        return total
+    
+    def show_achievement_toast(self, ach_id):
+        self.toast_queue.append(ach_id)
+        self.process_toast_queue()
+
+    def process_toast_queue(self):
+        if not self.toast_queue or self.is_toast_showing:
+            return
+
+        self.is_toast_showing = True
+        ach_id = self.toast_queue.pop(0)
+
+        defs = getattr(self.achievement_manager, 'achievements', [])
+        ach_data = next((a for a in defs if a['id'] == ach_id), None)
+        
+        if ach_data:
+            toast = AchievementToast(self, ach_data['name'], ach_data['description'])
+            toast.raise_()
+            toast.show()
+
+            QTimer.singleShot(5500, self.reset_toast_flag)
+
+    def reset_toast_flag(self):
+        self.is_toast_showing = False
+        self.process_toast_queue()
