@@ -8,12 +8,12 @@ class PortfolioView(QWidget):
         super().__init__(parent)
         self.layout = QVBoxLayout(self)
         
-        self.label = QLabel("TWOJE AKTYWA")
+        self.label = QLabel("YOUR ASSETS")
         self.label.setStyleSheet("font-size: 22px; font-weight: bold; color: #2ecc71; margin: 10px 0px;")
         self.layout.addWidget(self.label)
 
         self.table = QTableWidget(0, 6)
-        self.table.setHorizontalHeaderLabels(["Aktywo", "Ilość", "Śr. Cena", "Aktualna", "Zysk/Strata", "Akcja"])
+        self.table.setHorizontalHeaderLabels(["Asset", "Amount", "Avg. Price", "Current Price", "Profit/Loss", "Action"])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
         
@@ -24,7 +24,7 @@ class PortfolioView(QWidget):
         self.layout.addWidget(self.table)
 
     def refresh_view(self, save_data):
-        """Metoda wywoływana przez GameView przy zmianie zakładki."""
+        """Method called by GameView when changing tabs."""
         self.save_data = save_data
         portfolio = self.save_data.get('portfolio', {})
         market_data = self.save_data.get('market_data', {})
@@ -57,7 +57,7 @@ class PortfolioView(QWidget):
                 profit_item.setForeground(QColor("#2ecc71" if profit >= 0 else "#e74c3c"))
                 self.table.setItem(row, 4, profit_item)
                 
-                sell_btn = QPushButton("SPRZEDAJ")
+                sell_btn = QPushButton("SELL")
                 sell_btn.setStyleSheet("""
                     QPushButton { background-color: #c0392b; color: white; font-weight: bold; border-radius: 4px; padding: 5px; }
                     QPushButton:hover { background-color: #e74c3c; }
@@ -67,12 +67,12 @@ class PortfolioView(QWidget):
                 self.table.setCellWidget(row, 5, sell_btn)
 
     def execute_sell(self, symbol, category, current_price, owned_amount):
-        """Otwiera okno wyboru ilości przed sprzedażą."""
+        """Opens an input dialog to choose amount before selling."""
         from PyQt6.QtWidgets import QInputDialog
 
         amount_to_sell, ok = QInputDialog.getDouble(
-            self, "Sprzedaż", 
-            f"Ile {symbol} chcesz sprzedać? (Max: {owned_amount})",
+            self, "Sell Asset", 
+            f"How much {symbol} do you want to sell? (Max: {owned_amount})",
             value=owned_amount, min=0.01, max=owned_amount, decimals=2
         )
 
@@ -87,8 +87,7 @@ class PortfolioView(QWidget):
         if main_game:
             revenue = amount_to_sell * current_price
             
-            
-            main_game.log_transaction("Giełda", f"Sprzedaż {amount_to_sell:.2f} {symbol}", revenue)
+            main_game.log_transaction("Stock Market", f"Sold {amount_to_sell:.2f} {symbol}", revenue)
            
             main_game.save_data['balance'] += revenue
             main_game.save_data['portfolio'][category][symbol]['amount'] -= amount_to_sell
@@ -99,5 +98,5 @@ class PortfolioView(QWidget):
             main_game.update_money_display()
             self.refresh_view(main_game.save_data)
             
-            QMessageBox.information(self, "Sprzedano", 
-                f"Sprzedano {amount_to_sell:.2f} {symbol} za ${revenue:,.2f}")
+            QMessageBox.information(self, "Sale Confirmed", 
+                f"Sold {amount_to_sell:.2f} {symbol} for ${revenue:,.2f}")

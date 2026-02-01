@@ -7,7 +7,6 @@ from core.theme_manager import ThemeManager
 from utils.market_provider import MarketProvider
 
 class MainWindow(QMainWindow):
-    """Główne okno obsługujące logikę startową i widoki."""
 
     def __init__(self):
         super().__init__()
@@ -26,13 +25,12 @@ class MainWindow(QMainWindow):
         self.showFullScreen()
 
     def start_game(self, save_data):
-        """Uruchamia grę, wstrzykując przygotowane wcześniej dane rynkowe."""
         if hasattr(self, 'menu') and self.menu:
             self.menu.deleteLater()
             self.menu = None
             
         if 'market_data' not in save_data:
-            save_data['market_data'] = self.global_market_snapshot # Użyj załadowanego RAMu
+            save_data['market_data'] = self.global_market_snapshot
             print("Dane rynkowe przekazane do nowego zapisu bez pobierania.")
             
         self.game_view = GameView(self, self.theme, save_data)

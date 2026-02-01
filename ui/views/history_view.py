@@ -13,20 +13,20 @@ class HistoryView(QWidget):
         self.layout = QVBoxLayout(self)
         self.setStyleSheet("background-color: #121212; color: white;")
 
-        header = QLabel("📜 PEŁNA HISTORIA FINANSOWA")
+        header = QLabel("📜 FULL FINANCIAL HISTORY")
         header.setStyleSheet("font-size: 22px; font-weight: bold; color: #f1c40f;")
         self.layout.addWidget(header)
 
         self.table = QTableWidget(0, 4)
-        self.table.setHorizontalHeaderLabels(["Data", "Kategoria", "Opis", "Kwota"])
+        self.table.setHorizontalHeaderLabels(["Date", "Category", "Description", "Amount"])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.table.setStyleSheet("QTableWidget { background-color: #1a1a1a; color: #eee; }")
         self.layout.addWidget(self.table)
 
         nav_layout = QHBoxLayout()
-        self.prev_btn = QPushButton("⬅ Poprzednia strona")
-        self.next_btn = QPushButton("Następna strona ➡")
-        self.page_lbl = QLabel("Strona: 1 / 1")
+        self.prev_btn = QPushButton("⬅ Previous Page")
+        self.next_btn = QPushButton("Next Page ➡")
+        self.page_lbl = QLabel("Page: 1 / 1")
         
         for btn in [self.prev_btn, self.next_btn]:
             btn.setFixedSize(150, 30)
@@ -65,7 +65,7 @@ class HistoryView(QWidget):
             amt_item.setTextAlignment(Qt.AlignmentFlag.AlignRight)
             self.table.setItem(row, 3, amt_item)
 
-        self.page_lbl.setText(f"Strona: {self.current_page + 1} / {total_pages}")
+        self.page_lbl.setText(f"Page: {self.current_page + 1} / {total_pages}")
         self.prev_btn.setEnabled(self.current_page > 0)
         self.next_btn.setEnabled(self.current_page < total_pages - 1)
 

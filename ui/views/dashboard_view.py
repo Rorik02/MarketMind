@@ -13,7 +13,7 @@ class DashboardView(QWidget):
         self.layout = QVBoxLayout(self)
         self.setStyleSheet("background-color: #121212; color: white;")
 
-        header = QLabel("DASHBOARD FINANSOWY")
+        header = QLabel("FINANCIAL DASHBOARD")
         header.setStyleSheet("font-size: 24px; font-weight: bold; color: #3a96dd; margin-bottom: 10px;")
         self.layout.addWidget(header)
 
@@ -22,11 +22,11 @@ class DashboardView(QWidget):
         self.stats_layout = QVBoxLayout()
         self.stat_widgets = {}
         self.categories_config = [
-            ("Gotówka", "#2ecc71"),
-            ("Akcje i Krypto", "#3a96dd"),
-            ("Pojazdy", "#f1c40f"),
-            ("Nieruchomości", "#9b59b6"),
-            ("Drogocenności", "#e67e22") 
+            ("Cash", "#2ecc71"),
+            ("Stocks & Crypto", "#3a96dd"),
+            ("Vehicles", "#f1c40f"),
+            ("Properties", "#9b59b6"),
+            ("Valuables", "#e67e22") 
         ]
         
         for name, color in self.categories_config:
@@ -52,8 +52,6 @@ class DashboardView(QWidget):
         self.total_net_worth.setStyleSheet("font-size: 24px; font-weight: bold; color: #2ecc71; margin: 10px 0;")
         self.total_net_worth.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.total_net_worth)
-
-
 
     def calculate_val(self, save_data, json_file, save_key):
         owned_ids = save_data.get(save_key, [])
@@ -82,7 +80,13 @@ class DashboardView(QWidget):
         valuables_val = self.calculate_val(save_data, "valuables.json", "owned_valuables")
         
         total = cash + market_val + vehicles_val + houses_val + valuables_val
-        vals = {"Gotówka": cash, "Akcje i Krypto": market_val, "Pojazdy": vehicles_val, "Nieruchomości": houses_val, "Drogocenności": valuables_val}
+        vals = {
+            "Cash": cash, 
+            "Stocks & Crypto": market_val, 
+            "Vehicles": vehicles_val, 
+            "Properties": houses_val, 
+            "Valuables": valuables_val
+        }
         
         for name, val in vals.items():
             self.stat_widgets[name].setText(f"{name}: [${val:,.2f}]")

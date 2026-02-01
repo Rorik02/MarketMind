@@ -1,13 +1,13 @@
 [
-    {"id": "crs_sales_01", "name": "Komunikacja i Sprzedaż", "cost": 4500, "days": 60},
-    {"id": "crs_it_01", "name": "Serwis i Naprawa PC", "cost": 6000, "days": 90},
-    {"id": "crs_fin_01", "name": "Podstawy Księgowości", "cost": 12000, "days": 120},
+    {"id": "crs_sales_01", "name": "Communication & Sales", "cost": 4500, "days": 60},
+    {"id": "crs_it_01", "name": "PC Service & Repair", "cost": 6000, "days": 90},
+    {"id": "crs_fin_01", "name": "Accounting Fundamentals", "cost": 12000, "days": 120},
     {"id": "crs_mkt_01", "name": "Social Media Marketing", "cost": 3500, "days": 45},
-    {"id": "crs_it_02", "name": "Programowanie Python Pro", "cost": 25000, "days": 180},
+    {"id": "crs_it_02", "name": "Python Programming Pro", "cost": 25000, "days": 180},
     {"id": "crs_mkt_02", "name": "UX/UI Design Masterclass", "cost": 18000, "days": 150},
-    {"id": "crs_mng_01", "name": "Zarządzanie Zespołem", "cost": 15000, "days": 90},
-    {"id": "crs_eng_01", "name": "Uprawnienia Inżynierskie", "cost": 35000, "days": 210},
-    {"id": "crs_it_03", "name": "Architektura Chmurowa", "cost": 50000, "days": 240},
-    {"id": "crs_fin_02", "name": "Studia MBA", "cost": 120000, "days": 365},
-    {"id": "crs_mng_02", "name": "Strategia Biznesowa", "cost": 75000, "days": 270}
+    {"id": "crs_mng_01", "name": "Team Management", "cost": 15000, "days": 90},
+    {"id": "crs_eng_01", "name": "Engineering Qualifications", "cost": 35000, "days": 210},
+    {"id": "crs_it_03", "name": "Cloud Architecture", "cost": 50000, "days": 240},
+    {"id": "crs_fin_02", "name": "MBA Studies", "cost": 120000, "days": 365},
+    {"id": "crs_mng_02", "name": "Business Strategy", "cost": 75000, "days": 270}
 ]

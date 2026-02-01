@@ -1,212 +1,212 @@
 [
     {
         "id": "prop_00",
-        "name": "Kamienica pogórnicza",
-        "location": "ul. Szybikowa, Zabrze",
+        "name": "Post-Mining Tenement",
+        "location": "Szybikowa St, Zabrze",
         "price": 0,
         "upkeep": 450,
         "prestige": 0,
         "image": "mine_house.png",
-        "description": "Twoje pierwsze cztery kąty w historycznej, choć nieco zaniedbanej kamienicy."
+        "description": "Your first four walls in a historic, albeit slightly neglected, tenement building."
     },
     {
         "id": "prop_01",
-        "name": "Kawalerka",
-        "location": "ul. Mała, Łódź",
+        "name": "Studio Apartment",
+        "location": "Mala St, Lodz",
         "price": 120000,
         "upkeep": 600,
         "prestige": 5,
         "image": "studio_apt.png",
-        "description": "Przytulna i nowoczesna kawalerka. Idealna dla singla zaczynającego karierę."
+        "description": "A cozy and modern studio. Perfect for a single professional starting their career."
     },
     {
         "id": "prop_02",
-        "name": "Mieszkanie na obrzeżach",
-        "location": "ul. Polna, Warszawa (Białołęka)",
+        "name": "Suburban Flat",
+        "location": "Polna St, Warsaw (Bialoleka)",
         "price": 280000,
         "upkeep": 950,
         "prestige": 12,
         "image": "suburb_apt.png",
-        "description": "Spokojna okolica z dala od zgiełku miasta. Więcej przestrzeni za rozsądną cenę."
+        "description": "A quiet neighborhood away from the city hustle. More space for a reasonable price."
     },
     {
         "id": "prop_03",
-        "name": "Mieszkanie w bloku",
-        "location": "ul. Wspólna, Poznań",
+        "name": "Standard Apartment",
+        "location": "Wspolna St, Poznan",
         "price": 450000,
         "upkeep": 1200,
         "prestige": 20,
         "image": "block_apt.png",
-        "description": "Klasyczne mieszkanie w dobrze skomunikowanej dzielnicy."
+        "description": "A classic apartment in a well-connected district."
     },
     {
         "id": "prop_04",
-        "name": "Mały dom jednorodzinny (A)",
-        "location": "ul. Ogrodowa, Kraków",
+        "name": "Small Family House (A)",
+        "location": "Ogrodowa St, Krakow",
         "price": 750000,
         "upkeep": 2100,
         "prestige": 40,
         "image": "house_small_a.png",
-        "description": "Uroczy dom z małym ogródkiem. Pierwszy krok do prawdziwej prywatności."
+        "description": "A charming house with a small garden. The first step to true privacy."
     },
     {
         "id": "prop_05",
-        "name": "Mały dom jednorodzinny (B)",
-        "location": "ul. Cicha, Gdańsk",
+        "name": "Small Family House (B)",
+        "location": "Cicha St, Gdansk",
         "price": 920000,
         "upkeep": 2400,
         "prestige": 50,
         "image": "house_small_b.png",
-        "description": "Solidny dom w nadmorskiej dzielnicy. Prestiż i komfort dla rodziny."
+        "description": "A solid house in a coastal district. Prestige and comfort for the family."
     },
     {
         "id": "prop_06",
-        "name": "Mieszkanie w wieżowcu",
-        "location": "Al. Jerozolimskie, Warszawa",
+        "name": "High-Rise Apartment",
+        "location": "Jerozolimskie Ave, Warsaw",
         "price": 1500000,
         "upkeep": 3500,
         "prestige": 80,
         "image": "skyscraper_apt.png",
-        "description": "Widok na panoramę stolicy z 20. piętra. Poczuj puls miasta."
+        "description": "A view of the capital's skyline from the 20th floor. Feel the pulse of the city."
     },
     {
         "id": "prop_07",
-        "name": "Nowoczesny apartament",
-        "location": "ul. Szklana, Wrocław",
+        "name": "Modern Apartment",
+        "location": "Szklana St, Wroclaw",
         "price": 2200000,
         "upkeep": 4800,
         "prestige": 120,
         "image": "modern_apt.png",
-        "description": "Przeszklone ściany i inteligentny system zarządzania domem."
+        "description": "Glass walls and a smart home management system."
     },
     {
         "id": "prop_08",
-        "name": "Nowoczesny apartament (Lux)",
-        "location": "ul. Złota 44, Warszawa",
+        "name": "Luxury Apartment (Ultra)",
+        "location": "Zlota 44, Warsaw",
         "price": 4500000,
         "upkeep": 7500,
         "prestige": 250,
         "image": "ultra_apt.png",
-        "description": "Jeden z najbardziej prestiżowych adresów w kraju. Luksus bez kompromisów."
+        "description": "One of the most prestigious addresses in the country. Luxury without compromise."
     },
     {
         "id": "prop_09",
-        "name": "Dom nad jeziorem",
-        "location": "ul. Mazurska, Mikołajki",
+        "name": "Lakefront House",
+        "location": "Mazurska St, Mikolajki",
         "price": 5800000,
         "upkeep": 8200,
         "prestige": 300,
         "image": "lake_house.png",
-        "description": "Prywatny pomost i zapach lasu. Idealna odskocznia od biznesu."
+        "description": "A private pier and the scent of the forest. The perfect escape from business."
     },
     {
         "id": "prop_10",
-        "name": "Dom nad morzem",
-        "location": "ul. Klifowa, Gdynia Orłowo",
+        "name": "Seaside House",
+        "location": "Klifowa St, Gdynia Orlowo",
         "price": 8500000,
         "upkeep": 12000,
         "prestige": 450,
         "image": "sea_house.png",
-        "description": "Rezydencja na samym klifie. Szum fal budzi Cię każdego ranka."
+        "description": "A residence right on the cliff. The sound of waves wakes you up every morning."
     },
     {
         "id": "prop_11",
-        "name": "Penthouse",
-        "location": "Sky Tower, Wrocław",
+        "name": "Sky Penthouse",
+        "location": "Sky Tower, Wroclaw",
         "price": 12000000,
         "upkeep": 18000,
         "prestige": 600,
         "image": "penthouse.png",
-        "description": "Wierzchołek luksusu. Własny basen na dachu wieżowca."
+        "description": "The pinnacle of luxury. Your own rooftop pool on a skyscraper."
     },
     {
         "id": "prop_12",
-        "name": "Luksusowa willa",
+        "name": "Luxury Villa",
         "location": "Konstancin-Jeziorna",
         "price": 25000000,
         "upkeep": 35000,
         "prestige": 900,
         "image": "villa_lux.png",
-        "description": "Ogromna posiadłość w najbardziej elitarnym sąsiedztwie."
+        "description": "A massive estate in the most elite neighborhood."
     },
     {
         "id": "prop_13",
-        "name": "Willa (M. Śródziemne)",
-        "location": "Costa del Sol, Hiszpania",
+        "name": "Mediterranean Villa",
+        "location": "Costa del Sol, Spain",
         "price": 45000000,
         "upkeep": 60000,
         "prestige": 1500,
         "image": "villa_mediterranean.png",
-        "description": "Śródziemnomorska architektura, gaj oliwny i błękitna woda."
+        "description": "Mediterranean architecture, an olive grove, and azure waters."
     },
     {
         "id": "prop_14",
-        "name": "Willa (Ocean Atlantycki)",
+        "name": "Atlantic Ocean Villa",
         "location": "Miami Beach, USA",
         "price": 78000000,
         "upkeep": 95000,
         "prestige": 2800,
         "image": "villa_miami.png",
-        "description": "Nowoczesna bryła ze szkła i betonu tuż przy plaży w Miami."
+        "description": "A modern glass and concrete structure right on the Miami beach."
     },
     {
         "id": "prop_15",
-        "name": "Rezydencja (prywatny teren)",
+        "name": "Private Estate",
         "location": "Beverly Hills, USA",
         "price": 120000000,
         "upkeep": 150000,
         "prestige": 4500,
         "image": "mansion_beverly.png",
-        "description": "Dom gwiazd. Kinowa sala, 12 sypialni i lądowisko dla helikopterów."
+        "description": "A home for the stars. Cinema room, 12 bedrooms, and a helipad."
     },
     {
         "id": "prop_16",
-        "name": "Pałac",
-        "location": "ul. Królewska, okolice Paryża",
+        "name": "Grand Palace",
+        "location": "Krolewska St, Paris Suburbs",
         "price": 350000000,
         "upkeep": 450000,
         "prestige": 10000,
         "image": "palace_france.png",
-        "description": "Historyczna posiadłość z ogrodami w stylu wersalskim."
+        "description": "A historic estate with Versailles-style gardens."
     },
     {
         "id": "prop_17",
-        "name": "Rezydencja z własnym terenem",
+        "name": "Hamptons Estate",
         "location": "The Hamptons, USA",
         "price": 520000000,
         "upkeep": 600000,
         "prestige": 18000,
         "image": "estate_hamptons.png",
-        "description": "Ogromny teren z prywatnym lasem i polem golfowym."
+        "description": "A massive property with a private forest and a golf course."
     },
     {
         "id": "prop_18",
-        "name": "Posiadłość Ultra Luxury",
-        "location": "Emirates Hills, Dubaj",
+        "name": "Ultra-Luxury Mansion",
+        "location": "Emirates Hills, Dubai",
         "price": 850000000,
         "upkeep": 1100000,
         "prestige": 30000,
         "image": "dubai_ultra.png",
-        "description": "Złote wykończenia, podziemny garaż na 50 aut i widok na Burj Khalifa."
+        "description": "Gold finishes, an underground garage for 50 cars, and a view of the Burj Khalifa."
     },
     {
         "id": "prop_19",
-        "name": "Posiadłość na wyspie",
-        "location": "Necker Island, Karaiby",
+        "name": "Private Island Mansion",
+        "location": "Necker Island, Caribbean",
         "price": 1400000000,
         "upkeep": 1800000,
         "prestige": 65000,
         "image": "island_mansion.png",
-        "description": "Cała wyspa należy do Ciebie. Szczyt izolacji i luksusu."
+        "description": "The entire island belongs to you. The ultimate in isolation and luxury."
     },
     {
         "id": "prop_20",
-        "name": "Dom na Wyspie Świata",
-        "location": "The World Islands, Dubaj",
+        "name": "World Island Estate",
+        "location": "The World Islands, Dubai",
         "price": 2800000000,
         "upkeep": 3500000,
         "prestige": 120000,
         "image": "world_island_dubai.png",
-        "description": "Inżynieryjny majstersztyk na sztucznym archipelagu. Najdroższy adres na planecie."
+        "description": "An engineering masterpiece on an artificial archipelago. The most expensive address on the planet."
     }
 ]

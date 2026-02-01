@@ -16,7 +16,6 @@ class HomeView(QFrame):
         self.main_layout.setContentsMargins(30, 30, 30, 30)
         self.main_layout.setSpacing(30)
 
-        # --- 1. TOP SECTION: PROFILE ---
         top_container = QHBoxLayout()
         
         self.profile_box = QFrame()
@@ -43,12 +42,10 @@ class HomeView(QFrame):
         top_container.addStretch()
         self.main_layout.addLayout(top_container)
 
-        # --- 2. GRID AREA (Z PRZYPISANYMI INDEKSAMI) ---
         grid = QGridLayout()
         grid.setSpacing(20)
 
-        # Zakładając indeksy: 4-House, 5-Vehicles, 6-Valuables, 9-Employment, 12-Achievements
-        # Jeśli masz inne indeksy w workspace_stack, zmień te cyfry poniżej!
+    
         self.house_tile = self.create_module_tile("🏠 HOUSEHOLD", True, target_view_index=6)
         self.house_tile.setObjectName("HouseTile")
         grid.addWidget(self.house_tile, 0, 0, 2, 1)

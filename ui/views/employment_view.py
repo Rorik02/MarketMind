@@ -38,6 +38,7 @@ class EmploymentView(QFrame):
             }
         """)
         self.back_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.back_btn.clicked.connect(self.safe_go_back)
 
         header.addWidget(title)
         header.addStretch()
@@ -79,6 +80,12 @@ class EmploymentView(QFrame):
         
         self.main_layout.addWidget(self.tabs)
         self.refresh_tabs()
+
+    def safe_go_back(self):
+        if hasattr(self.parent_ctrl, 'workspace_stack'):
+            self.parent_ctrl.workspace_stack.setCurrentIndex(0)
+        elif hasattr(self.parent_ctrl, 'return_to_home'):
+            self.parent_ctrl.return_to_home()
 
     def load_data(self, filename):
         path = os.path.join(os.path.dirname(__file__), "..", "..", "data", filename)

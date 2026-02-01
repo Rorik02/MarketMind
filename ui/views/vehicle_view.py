@@ -42,6 +42,7 @@ class VehicleView(QFrame):
         self.back_btn = QPushButton("⬅️ Back to Home")
         self.back_btn.setFixedSize(150, 35)
         self.back_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.back_btn.clicked.connect(self.safe_go_back)
         header.addWidget(title)
         header.addStretch()
         header.addWidget(self.back_btn)
@@ -69,6 +70,12 @@ class VehicleView(QFrame):
         self.main_layout.addWidget(self.scroll)
 
         self.refresh_list("owned")
+
+    def safe_go_back(self):
+        if hasattr(self.parent_ctrl, 'workspace_stack'):
+            self.parent_ctrl.workspace_stack.setCurrentIndex(0)
+        elif hasattr(self.parent_ctrl, 'return_to_home'):
+            self.parent_ctrl.return_to_home()
 
     def refresh_list(self, mode="owned"):
         self.container.setUpdatesEnabled(False)
@@ -134,7 +141,6 @@ class VehicleView(QFrame):
         self.list_layout.addWidget(card)
 
     def buy_vehicle(self, veh):
-        """Logika zakupu pojazdu z zapisem do historii i powiadomieniem."""
         if self.save_data.get('balance', 0) >= veh['price']:
             price = veh['price']
             

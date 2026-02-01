@@ -241,9 +241,7 @@ class MainMenu(QWidget):
             self.game_view.deleteLater()
             self.game_view = None
             
-        # Import inside the method to avoid circular imports
         from ui.main_menu import MainMenu
-        # Re-initialize the Main Menu and pass 'self' as parent
         self.menu = MainMenu(self) 
         self.setCentralWidget(self.menu) #
 

@@ -884,3 +884,6 @@ class GameView(QWidget):
     def reset_toast_flag(self):
         self.is_toast_showing = False
         self.process_toast_queue()
+
+    def return_to_home(self):
+        self.workspace_stack.setCurrentIndex(0)
